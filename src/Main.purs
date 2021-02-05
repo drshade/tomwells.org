@@ -6,7 +6,7 @@ import Concur.React.Run (runWidgetInDom)
 import Content (blogArticles, restful_in_peace, what_i_look_for_in_a_developer)
 import Data.Either (either)
 import Data.Foldable (find)
-import Data.Maybe (fromMaybe)
+import Data.Maybe (fromMaybe, maybe)
 import Domain (Page(..)) as Domain
 import Effect (Effect)
 import Functions (fuzzyFindArticleBySlug)
@@ -15,12 +15,12 @@ import Render (renderPage)
 import Routing.PushState (makeInterface)
 
 routeToPage :: Route -> Domain.Page
-routeToPage BlogSummary = Domain.ArticleRollup { articles: blogArticles }
+routeToPage BlogSummary = Domain.ListOfArticles blogArticles
 routeToPage (BlogArticle slug) =
     let
         found = fuzzyFindArticleBySlug blogArticles slug
     in
-    fromMaybe Domain.NotFound found
+    maybe Domain.NotFound Domain.SingleArticle found
 routeToPage Résumé = Domain.CV
 routeToPage Contact = Domain.Contact
 routeToPage NotFound = Domain.NotFound

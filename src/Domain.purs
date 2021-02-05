@@ -9,19 +9,20 @@ import Data.Generic.Rep (class Generic)
 import Data.Generic.Rep.Eq (genericEq)
 import Data.Generic.Rep.Show (genericShow)
 
+newtype Article = Article
+    { slug :: String
+    , title :: String
+    , keywords :: Array String
+    , cover :: Image
+    , summary :: String
+    , body :: Array FlowComponent
+    , author :: Author
+    , date :: Date
+    }
+
 data Page
-    = Article
-        { slug :: String
-        , title :: String
-        , keywords :: Array String
-        , cover :: Image
-        , body :: Array FlowComponent
-        , author :: Author
-        , date :: Date
-        }
-    | ArticleRollup 
-        { articles :: Array Page
-        }
+    = SingleArticle Article
+    | ListOfArticles (Array Article)
     | CV
     | Contact
     | NotFound

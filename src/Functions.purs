@@ -18,7 +18,7 @@ import Data.Time (Time(Time))
 import Data.Time.Component (Hour, Millisecond, Minute, Second)
 import Data.Tuple (Tuple(..))
 import Debug.Trace (trace)
-import Domain (Page(..))
+import Domain (Article(..), Page(..))
 import Effect.Class.Console (log)
 
 constructDate :: Int -> Int -> Int -> Date
@@ -49,17 +49,14 @@ deslugify input =
         <<< replaceAll (Pattern "_") (Replacement " ") 
 
 -- Using a fancy fuzzy matcher for this
-fuzzyFindArticleBySlug :: Array Page -> String -> Maybe Page
-fuzzyFindArticleBySlug pages slug =
+fuzzyFindArticleBySlug :: Array Article -> String -> Maybe Article
+fuzzyFindArticleBySlug articles slug =
     -- Rank all the pages by fuzzy distance from target slug
     let
-        dists :: Array (Tuple Rational Page)
-        dists = pages <#> (\p -> 
-            case p of
-                x @ (Article a) -> 
-                    let fuzzystr = unwrap $ matchStr true (deslugify a.slug) (deslugify slug)
-                    in Just $ Tuple fuzzystr.ratio x
-                _ -> Nothing
+        dists :: Array (Tuple Rational Article)
+        dists = articles <#> (\(Article a) -> 
+            let fuzzystr = unwrap $ matchStr true (deslugify a.slug) (deslugify slug)
+            in Just $ Tuple fuzzystr.ratio (Article a)
         ) # catMaybes
 
         sorted = dists # sortWith (\(Tuple ratio page) -> ratio) # reverse
@@ -67,10 +64,8 @@ fuzzyFindArticleBySlug pages slug =
         -- Cool debug the matching
         debug = 
             "Slug: " <> (deslugify slug) <> "\n"
-                <> (sorted <#> (\(Tuple ratio page) -> 
-                    case page of
-                        Article a -> (deslugify a.slug) <> " -> " <> show (toNumber ratio)
-                        _ -> "invalid page"
+                <> (sorted <#> (\(Tuple ratio (Article a)) -> 
+                    (deslugify a.slug) <> " -> " <> show (toNumber ratio)
                 ) # joinWith "\n")
         _ = trace (debug) (\_ -> unit)
 
@@ -78,6 +73,12 @@ fuzzyFindArticleBySlug pages slug =
         minimumRatio = 0.5
     in 
     sorted 
-        # filter (\(Tuple ratio page) -> (toNumber ratio) >= minimumRatio) 
-        <#> (\(Tuple ratio page) -> page) 
+        # filter (\(Tuple ratio article) -> (toNumber ratio) >= minimumRatio) 
+        <#> (\(Tuple ratio article) -> article) 
         # head
+
+sortedByMostRecent :: Array Article -> Array Article
+sortedByMostRecent articles =
+    articles 
+        # sortWith (\(Article a) -> a.date) 
+        # reverse

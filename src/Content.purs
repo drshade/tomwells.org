@@ -3,7 +3,7 @@ module Content where
 import Prelude
 
 import Data.Maybe (Maybe(..))
-import Domain (Author(..), Bullets(..), FlowComponent(..), Image(..), Link(..), Page(..), Quote(..))
+import Domain (Article(..), Author(..), Bullets(..), FlowComponent(..), Image(..), Link(..), Page(..), Quote(..))
 import Functions (constructDate)
 
 tomwells :: Author
@@ -13,7 +13,7 @@ tomwells =
     , bio: "Towards an AI-first, hyper-scaled, functional reactive universe!"
     }
 
-blogArticles :: Array Page
+blogArticles :: Array Article
 blogArticles = 
     [ restful_in_peace
     , what_i_look_for_in_a_developer
@@ -24,7 +24,7 @@ blogArticles =
     , a_word_on_monads
     ]
 
-practical_functional_programming :: Page
+practical_functional_programming :: Article
 practical_functional_programming = Article
     { slug: "practical-functional-programming"
     , title: "Practical functional programming"
@@ -32,13 +32,14 @@ practical_functional_programming = Article
     , cover: { src: "/images/articles/no_cover.png", alt: "No cover", caption: Nothing }
     , author: tomwells
     , date: constructDate 2015 12 3
+    , summary: "No summary yet"
     , body: 
         [ FlowSection "Placeholder for practical-functional-programming"
         , FlowParagraph "Need to be written!"
         ]
     }
 
-intro_to_fluid_infrastructure :: Page
+intro_to_fluid_infrastructure :: Article
 intro_to_fluid_infrastructure = Article
     { slug: "intro-to-fluid-infrastructure"
     , title: "Intro to Fluid Infrastructure"
@@ -46,13 +47,14 @@ intro_to_fluid_infrastructure = Article
     , cover: { src: "/images/articles/no_cover.png", alt: "No cover", caption: Nothing }
     , author: tomwells
     , date: constructDate 2016 9 25
+    , summary: "No summary yet"
     , body: 
         [ FlowSection "Placeholder for intro-to-fluid-infrastructure"
         , FlowParagraph "Need to be written!"
         ]
     }
 
-code_101_pass_by_reference :: Page
+code_101_pass_by_reference :: Article
 code_101_pass_by_reference = Article
     { slug: "code-101-pass-by-reference"
     , title: "Code 101: Pass by reference"
@@ -60,13 +62,14 @@ code_101_pass_by_reference = Article
     , cover: { src: "/images/articles/no_cover.png", alt: "No cover", caption: Nothing }
     , author: tomwells
     , date: constructDate 2014 6 9
+    , summary: "No summary yet"
     , body: 
         [ FlowSection "Placeholder for code-101-pass-by-reference"
         , FlowParagraph "Need to be written!"
         ]
     }
 
-livescript_rocking_your_world :: Page
+livescript_rocking_your_world :: Article
 livescript_rocking_your_world = Article
     { slug: "livescript-rocking-your-world"
     , title: "LiveScript <| Rocking your world.js"
@@ -74,13 +77,14 @@ livescript_rocking_your_world = Article
     , cover: { src: "/images/articles/no_cover.png", alt: "No cover", caption: Nothing }
     , author: tomwells
     , date: constructDate 2014 5 30
+    , summary: "No summary yet"
     , body: 
         [ FlowSection "Placeholder for livescript-rocking-your-world"
         , FlowParagraph "Need to be written!"
         ]
     }
 
-a_word_on_monads :: Page
+a_word_on_monads :: Article
 a_word_on_monads = Article
     { slug: "a-word-on-monads"
     , title: "A word on monads"
@@ -88,13 +92,14 @@ a_word_on_monads = Article
     , cover: { src: "/images/articles/no_cover.png", alt: "No cover", caption: Nothing }
     , author: tomwells
     , date: constructDate 2014 4 15
+    , summary: "No summary yet"
     , body: 
         [ FlowSection "Placeholder for a-word-on-monads"
         , FlowParagraph "Need to be written!"
         ]
     }
 
-restful_in_peace :: Page
+restful_in_peace :: Article
 restful_in_peace = Article
     { slug: "restful-in-peace"
     , title: "REST(ful) in peace..."
@@ -102,6 +107,7 @@ restful_in_peace = Article
     , cover: { src: "/images/articles/restful_in_peace/cover.png", alt: "REST(ful) in peace", caption: Nothing }
     , author: tomwells
     , date: constructDate 2019 5 10
+    , summary: "No summary yet"
     , body: 
         [ FlowSection "REST is best? ¯\\_(ツ)_/¯"
         , FlowParagraph "We obviously all love REST - and it's become the standard least-surprising choice to make when building any type of service these days, be it monolithic, microservice, web, or whatever."
@@ -172,7 +178,7 @@ restful_in_peace = Article
         ]
     }
 
-what_i_look_for_in_a_developer :: Page
+what_i_look_for_in_a_developer :: Article
 what_i_look_for_in_a_developer = Article
     { slug: "what-i-look-for-in-a-developer"
     , title: "What I look for in a developer"
@@ -180,6 +186,7 @@ what_i_look_for_in_a_developer = Article
     , cover: { src: "/images/articles/restful_in_peace/cover.png", alt: "REST(ful) in peace", caption: Nothing }
     , author: tomwells
     , date: constructDate 2016 10 17
+    , summary: "No summary yet"
     , body: 
         [ FlowParagraph "I interview prospective developers for my company almost every week, and over time have developed a bit of a sixth sense for sussing out talent. Here are a couple of the hallmarks that I look out for during an interview."
         , FlowSection "Low ego"
