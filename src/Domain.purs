@@ -9,6 +9,16 @@ import Data.Generic.Rep (class Generic)
 import Data.Generic.Rep.Eq (genericEq)
 import Data.Generic.Rep.Show (genericShow)
 
+data Page
+    = SingleArticle Article
+    | ListOfArticles (Array Article)
+    | CV
+    | Contact
+    | NotFound
+
+data PageActions
+    = GotoPage Page
+
 newtype Article = Article
     { slug :: String
     , title :: String
@@ -19,13 +29,6 @@ newtype Article = Article
     , author :: Author
     , date :: Date
     }
-
-data Page
-    = SingleArticle Article
-    | ListOfArticles (Array Article)
-    | CV
-    | Contact
-    | NotFound
 
 type Author =
     { name :: String
