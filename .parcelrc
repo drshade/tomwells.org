@@ -1,0 +1,8 @@
+// in your .parcelrc
+{
+  extends: ['@parcel/config-default'],
+  transformers: {
+    '*.png': ['@parcel/transformer-raw'],
+    '*.jpg': ['@parcel/transformer-raw']
+  }
+}

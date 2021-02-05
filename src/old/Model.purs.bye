@@ -1,0 +1,38 @@
+module Model where
+
+import Prelude
+
+import Data.Either (either)
+import Data.Generic.Rep (class Generic)
+import Data.Generic.Rep.Eq (genericEq)
+import Data.Generic.Rep.Show (genericShow)
+import Routing.Duplex (RouteDuplex', parse, path, print, root, segment, string)
+import Routing.Duplex.Generic (noArgs, sum)
+
+data Page
+    = Welcome
+    | BlogSummary
+    | BlogArticle String
+    | Résumé
+    | Contact
+    | NotFound
+
+derive instance genericPage :: Generic Page _
+instance eqPage :: Eq Page where eq = genericEq
+instance showPage :: Show Page where show = genericShow
+
+routes :: RouteDuplex' Page
+routes = root $ sum
+    { "Welcome": noArgs
+    , "BlogSummary": path "blog" noArgs
+    , "BlogArticle": path "blog" (string segment)
+    , "Résumé": path "cv" noArgs
+    , "Contact": path "contact" noArgs
+    , "NotFound": path "not-found" noArgs
+    }
+
+-- Our lekker handlers for turning URLs into Pages and back again
+parseRoute :: String -> Page
+parseRoute pathname = either (\_ -> NotFound) identity $ parse routes pathname
+printRoute :: Page -> String
+printRoute = print routes

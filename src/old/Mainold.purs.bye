@@ -1,0 +1,135 @@
+module Mainold where
+
+import Prelude
+
+import Concur.Core.Types (Widget)
+import Concur.React (HTML)
+import Concur.React.DOM as DOM
+import Concur.React.Props as PROPS
+import Concur.React.Run (runWidgetInDom)
+import Control.Alt ((<|>))
+import Data.Either (Either(..), either)
+import Data.Foldable (oneOf)
+import Data.Generic.Rep (class Generic)
+import Data.Generic.Rep.Eq (genericEq)
+import Data.Generic.Rep.Show (genericShow)
+import Data.Maybe (Maybe(..))
+import Effect (Effect)
+import Effect.Class (liftEffect)
+import Effect.Console (log)
+import Effect.Unsafe (unsafePerformEffect)
+import Foreign (unsafeFromForeign, unsafeToForeign)
+import Routing (match)
+import Routing.Match (Match(..), end, lit, root, str)
+import Routing.PushState (PushStateInterface, makeInterface, matches)
+import Simple.JSON (read, write)
+import Web.Event.EventTarget (EventListener, addEventListener, eventListener)
+import Web.HTML (window)
+import Web.HTML.Event.EventTypes (load)
+import Web.HTML.Event.HashChangeEvent.EventTypes (hashchange)
+import Web.HTML.History (DocumentTitle(..), URL(..), pushState, state)
+import Web.HTML.Location (hash, host, hostname, href, origin, pathname, port, protocol, search, setPathname)
+import Web.HTML.Window (history, location, toEventTarget)
+
+data Page
+    = Welcome
+    | BlogSummary
+    | BlogArticle String
+    | Résumé
+    | Contact
+    | NotFound
+
+derive instance genericPage :: Generic Page _
+instance eqPage :: Eq Page where eq = genericEq
+instance showPage :: Show Page where show = genericShow
+
+routeMatcher :: Match Page
+routeMatcher = 
+    root *> oneOf
+        [ BlogArticle <$> (lit "blog" *> str)
+        , BlogSummary <$ lit "blog"
+        , Résumé <$ lit "cv"
+        , Contact <$ lit "contact"
+        , Welcome <$ end
+        , pure NotFound
+        ]
+
+toRoute :: Page -> String
+toRoute = case _ of
+    BlogArticle title -> "/blog/" <> title
+    BlogSummary -> "/blog"
+    Résumé -> "/cv"
+    Contact -> "/contact"
+    Welcome -> "/"
+    NotFound -> "/not-found"
+
+pageWidget :: Page -> Widget HTML ShellActions
+pageWidget Welcome = DOM.text $ "WELCOME PAGE!"
+
+pageWidget BlogSummary = 
+    (DOM.text $ "BLOG SUMMARY!")
+        <|> DOM.a [ (Navigate (BlogArticle "Article 1")) <$ PROPS.onClick ] [ DOM.text "[Article 1]" ]
+        <|> DOM.a [ (Navigate (BlogArticle "Article 2")) <$ PROPS.onClick ] [ DOM.text "[Article 2]" ]
+        <|> DOM.a [ (Navigate (BlogArticle "Article 3")) <$ PROPS.onClick ] [ DOM.text "[Article 3]" ]
+
+pageWidget (BlogArticle title) = DOM.text $ "Blog article called " <> title
+
+pageWidget Résumé = DOM.text $ "CV PAGE!"
+
+pageWidget Contact = DOM.text $ "Contact page!"
+
+pageWidget NotFound = DOM.text $ "404 NOT FOUND!"
+
+data ShellActions
+    = Navigate Page
+    | Increment
+
+shellWidget :: forall a. PushStateInterface -> Page -> Int -> Widget HTML a
+shellWidget navInterface page thestate = do
+    -- Page into history
+    
+    (DOM.text $ "tomwells.org -> ")
+        <|> DOM.a [ (Navigate Welcome) <$ PROPS.onClick ] [ DOM.text "[Welcome]" ]
+        <|> DOM.a [ (Navigate BlogSummary) <$ PROPS.onClick ] [ DOM.text "[Blog]" ]
+        <|> DOM.a [ (Navigate Résumé) <$ PROPS.onClick ] [ DOM.text "[Résumé]" ]
+        <|> DOM.a [ (Navigate Contact) <$ PROPS.onClick ] [ DOM.text "[Contact]" ]
+        <|> DOM.a [ Increment <$ PROPS.onClick ] [ DOM.text $ " [ " <> show thestate <> " ] "]
+        <|> (pageWidget page)
+        >>= (case _ of
+            Navigate toPage -> do
+                _ <- liftEffect $ log $ "pushing navigate to " <> show toPage
+
+                -- Push the current pages state
+                _ <- liftEffect $ navInterface.pushState (write thestate) (toRoute toPage)
+
+                shellWidget navInterface toPage thestate
+            Increment -> do
+                shellWidget navInterface page (thestate + 1)
+        )
+
+-- Find the Page that reflects the current location (i.e. the one currently in window.location)
+currentPage :: Effect Page
+currentPage = do
+    pathname <- window >>= location >>= pathname
+    
+    -- We don't need search yet, but could be useful in the future? e.g. -> ?blah=foo
+    search <- window >>= location >>= search
+
+    -- Parse the route, specifying NotFound as the error (Left) case
+    pure $ either (\_ -> NotFound) identity $ match routeMatcher pathname
+
+main :: Effect Unit
+main = do
+        -- -- Get the page we just landed on
+        page <- currentPage
+
+        -- Setup hooks so that we can handle navigating using pushState() (incl back + forward browser buttons)
+        navInterface <- makeInterface
+        _ <- navInterface # matches routeMatcher (\prevRoute newRoute -> do
+            log $ "routing from " <> show prevRoute <> " to " <> show newRoute
+            when (prevRoute /= (Just newRoute)) 
+                $ runWidgetInDom "root" $ shellWidget navInterface newRoute (-2)
+        )
+
+        -- run the widget
+        runWidgetInDom "root" $ shellWidget navInterface page (-3)

@@ -1,0 +1,62 @@
+
+module Skeleton where
+
+import Prelude
+
+import Concur.Core.Types (Widget, effAction)
+import Concur.React (HTML)
+import Concur.React.DOM as DOM
+import Concur.React.Props as PROPS
+import Control.Alt ((<|>))
+import Data.Array (snoc)
+import Data.Maybe (Maybe(..))
+import Data.String (Pattern(..), singleton, split, uncons)
+import Data.Time.Duration (Milliseconds)
+import Effect.Aff (Milliseconds(..), delay)
+import Effect.Aff.Class (liftAff)
+import Effect.Class (liftEffect)
+import Effect.Class.Console (log)
+import Effect.Random (randomRange)
+import Effect.Timer (setTimeout)
+import Model (Page)
+import Routing.PushState (PushStateInterface)
+
+text2dom :: forall a. String -> Array (Widget HTML a)
+text2dom input =
+    split (Pattern "\n") input
+        <#> (\line ->
+            DOM.div [] [] <|> DOM.span [] [ DOM.text line ]
+        )
+
+enter :: forall a. String -> Boolean -> Widget HTML a
+enter text moving =
+    DOM.div
+        [ PROPS.classList [Just "jumbo", Just "font-3"] ]
+        (snoc (text2dom text) (DOM.span [ PROPS._id if moving then "cursor-moving" else "cursor" ] [ DOM.text "#" ]))
+
+jumboIntro :: String -> String -> Widget HTML Unit
+jumboIntro visible nonvisible = 
+    do
+    delayamount <- liftEffect $ randomRange 50.0 150.0
+    _ <- liftAff (delay (Milliseconds delayamount)) <|> enter visible true
+    case uncons nonvisible of
+        Just { head, tail} -> jumboIntro (visible <> singleton head) tail
+        Nothing -> do
+            _ <- liftAff (delay (Milliseconds 500.0)) <|> enter visible false
+            enter (visible <> "\n") false
+
+
+skeleton :: forall a. PushStateInterface -> Page -> Int -> Widget HTML a
+skeleton navInterface thisPage state = do
+    DOM.div
+        [] 
+        [ DOM.div [ PROPS._id "site-header-outer" ] 
+            [ DOM.div [ PROPS._id "site-header-inner" ] 
+                [ DOM.div [ PROPS._id "site-nav" ] [ DOM.text "NAV" ] 
+                , DOM.div [ PROPS._id "site-header-content" ]
+                    [ DOM.h1' [ DOM.text "tomwells.org" ]
+                    , DOM.h2' [ DOM.text "Hello, World!" ]
+                    ]
+                ]
+            ]
+        ]

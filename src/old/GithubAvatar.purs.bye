@@ -1,0 +1,77 @@
+module GithubAvatar where
+
+import Prelude
+
+import Affjax as AX
+import Affjax.ResponseFormat as AXRF
+import Concur.Core (Widget)
+import Concur.React (HTML)
+import Concur.React.DOM as D
+import Concur.React.Props (unsafeTargetValue)
+import Concur.React.Props as P
+import Concur.React.Run (runWidgetInDom)
+import Control.Alt ((<|>))
+import Data.Argonaut.Decode.Class (decodeJson)
+import Data.Either (Either(..), hush)
+import Data.Generic.Rep (class Generic)
+import Data.Generic.Rep.Show (genericShow)
+import Data.Maybe (Maybe, fromMaybe)
+import Data.String (length)
+import Effect (Effect)
+import Effect.Aff.Class (liftAff)
+
+data UsernameWidgetAction
+    = Focused
+    | Blurred
+    | Changed String
+    | Completed String
+
+derive instance genericUsernameWidgetAction :: Generic UsernameWidgetAction _
+instance showUsernameWidgetAction :: Show UsernameWidgetAction where show = genericShow
+
+usernameWidget :: UsernameWidgetAction -> String -> Widget HTML String
+usernameWidget state username = do
+    event <- 
+        D.input 
+            [ P.placeholder "github username"
+            , Focused <$ P.onFocus
+            , Blurred <$ P.onBlur
+            , (Changed <<< unsafeTargetValue) <$> P.onChange
+            ]
+        <|> D.button [ (Completed username) <$ P.onClick, P.disabled (length username < 3) ] [ D.text "lookup" ]
+        <|> D.br'
+        <|> D.text ("Component state: " <> show state <> " Username: " <> username)
+    case event of
+        Completed name -> pure $ name
+        Changed name -> usernameWidget event name
+        _ -> usernameWidget event username
+
+type GithubUserResponse =
+    { login :: String
+    , avatar_url :: String
+    -- there are other fields which we dont care about...
+    }
+
+lookupGithubAvatar :: String -> Widget HTML String
+lookupGithubAvatar username =
+    let url = ("https://api.github.com/users/" <> username) in
+    do
+        resp <- liftAff (AX.get AXRF.json url) <|> D.text "Loading..."
+        case resp of
+            Left _ -> pure $ donkeyUrl
+            Right ok -> 
+                pure $ map _.avatar_url githubprofile # fromMaybe donkeyUrl
+                where githubprofile = hush $ decodeJson ok.body :: Maybe GithubUserResponse
+
+donkeyUrl :: String
+donkeyUrl = "https://modernfarmer.com/wp-content/uploads/2014/12/shrekfeature.jpg"
+
+imageWidget :: forall a. String -> Widget HTML a
+imageWidget srcUrl =
+    D.img [ P.src srcUrl, P.width "300" ]
+
+main :: Effect Unit
+main = 
+    runWidgetInDom "root" 
+        $ usernameWidget Blurred "" >>= lookupGithubAvatar >>= imageWidget
+

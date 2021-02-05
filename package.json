@@ -1,0 +1,26 @@
+{
+  "name": "tomwells.org",
+  "version": "1.0.0",
+  "description": "",
+  "main": "public/index.html",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "clean": "rm -rf output dist .parcel-cache .psci_modules",
+    "build": "spago build && parcel build public/index.html public/images/**/*.png public/images/**/*.jpg",
+    "serve": "parcel serve public/index.html public/images/**/*.png public/images/**/*.jpg --open"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.0.0-beta.1",
+    "purescript": "^0.13.8",
+    "purty": "^6.3.0",
+    "spago": "^0.19.0"
+  },
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}

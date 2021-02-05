@@ -1,0 +1,83 @@
+module Mainold2 where
+
+import Prelude
+
+import Concur.Core.Types (Widget)
+import Concur.React (HTML)
+import Concur.React.DOM as DOM
+import Concur.React.Props as PROPS
+import Concur.React.Run (runWidgetInDom)
+import Control.Alt ((<|>))
+import Data.Either (Either(..), either)
+import Effect (Effect)
+import Effect.Class (liftEffect)
+import Effect.Console (log)
+import Model (Page(..), parseRoute, printRoute)
+import Routing.Duplex (RouteDuplex', parse, path, print, root, segment, string)
+import Routing.Duplex.Generic (noArgs, sum)
+import Routing.PushState (PushStateInterface, makeInterface)
+import Simple.JSON (read, write)
+import Skeleton (jumboIntro, skeleton)
+import Web.HTML (window)
+import Web.HTML.Location (pathname)
+import Web.HTML.Window (location)
+
+pageWidget :: Page -> Widget HTML ShellActions
+pageWidget Welcome = DOM.text $ "WELCOME PAGE!"
+pageWidget BlogSummary = 
+    (DOM.text $ "BLOG SUMMARY!")
+        <|> DOM.a [ (Navigate (BlogArticle "Article 1")) <$ PROPS.onClick ] [ DOM.text "[Article 1]" ]
+        <|> DOM.a [ (Navigate (BlogArticle "Article 2")) <$ PROPS.onClick ] [ DOM.text "[Article 2]" ]
+        <|> DOM.a [ (Navigate (BlogArticle "Article 3")) <$ PROPS.onClick ] [ DOM.text "[Article 3]" ]
+pageWidget (BlogArticle title) = DOM.text $ "Blog article called " <> title
+pageWidget Résumé = DOM.text $ "CV PAGE!"
+pageWidget Contact = DOM.text $ "Contact page!"
+pageWidget NotFound = DOM.text $ "NOT FOUND!"
+
+data ShellActions
+    = Navigate Page
+    | Increment
+
+shellWidget :: forall a. PushStateInterface -> Page -> Int -> Widget HTML a
+shellWidget navInterface thisPage state = do
+    (DOM.text $ "tomwells.org -> ")
+        <|> DOM.a [ (Navigate Welcome) <$ PROPS.onClick ] [ DOM.text "[Welcome]" ]
+        <|> DOM.a [ (Navigate BlogSummary) <$ PROPS.onClick ] [ DOM.text "[Blog]" ]
+        <|> DOM.a [ (Navigate Résumé) <$ PROPS.onClick ] [ DOM.text "[Résumé]" ]
+        <|> DOM.a [ (Navigate Contact) <$ PROPS.onClick ] [ DOM.text "[Contact]" ]
+        <|> DOM.a [ Increment <$ PROPS.onClick ] [ DOM.text $ " [ " <> show state <> " ] "]
+        <|> (pageWidget thisPage)
+        >>= (case _ of
+            Navigate toPage -> do
+                _ <- liftEffect $ log $ "navigating from " <> show thisPage <> " (" <> printRoute thisPage <> ")" <> " to " <> show toPage <> " (" <> printRoute toPage <> ")"
+
+                -- Push the current pages state
+                _ <- liftEffect $ log $ "pushing " <> show state <> " to " <> printRoute toPage
+                _ <- liftEffect $ navInterface.pushState (write state) (printRoute toPage)
+
+                -- I dont think this actually matters - because the pushState above will trigger the
+                -- navInterface listener and that will cause the transistion
+                shellWidget navInterface thisPage state
+            Increment -> 
+                let newstate = state + 1 in
+                do
+                _ <- liftEffect $ navInterface.replaceState (write newstate) (printRoute thisPage)
+                shellWidget navInterface thisPage newstate
+        )
+
+main :: Effect Unit
+main = do
+        -- Setup hooks so that we can handle navigating using pushState() (incl back + forward browser buttons)
+        navInterface <- makeInterface
+        _ <- navInterface.listen (\location ->
+            let newRoute = parseRoute location.pathname in
+            case read location.state of
+                Left err -> unit <$ log "No state, therefore no page change - this is probably an error of some sort"
+                Right (poppedState :: Int) -> runWidgetInDom "root" $ skeleton navInterface newRoute poppedState
+        )
+
+        -- Get the page we just landed on (from window.location basically)
+        page <- window >>= location >>= pathname <#> parseRoute
+
+        -- run the widget, with starting state and the current page
+        runWidgetInDom "root" $ jumboIntro "$ " ". tomwells.org/helloworld.sh"
