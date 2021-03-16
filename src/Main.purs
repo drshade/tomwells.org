@@ -1,38 +1,39 @@
-module Main where
+module TomWellsOrg.Main where
 
 import Prelude
 
-import Concur.Core (Widget(..))
+import Concur.Core (Widget)
 import Concur.React (HTML)
 import Concur.React.Run (runWidgetInDom)
-import Content (blogArticles, restful_in_peace, what_i_look_for_in_a_developer)
-import Data.Either (either)
-import Data.Foldable (find)
-import Data.Maybe (fromMaybe, maybe)
-import Domain (Article(..))
-import Domain (Page(..), PageActions(..)) as Domain
+import Data.Maybe (maybe)
 import Effect (Effect)
 import Effect.Class (liftEffect)
-import Foreign (Foreign, unsafeToForeign)
-import Functions (fuzzyFindArticleBySlug)
-import Nav (Route(..), currentRoute, parseRoute, printRoute)
-import Render (renderPage, withNavbar)
+import Foreign (unsafeToForeign)
 import Routing.PushState (PushStateInterface, makeInterface)
+import TomWellsOrg.Blog (articles)
+import TomWellsOrg.Domain (Article(..), Page(..), PageActions(..)) as Domain
+import TomWellsOrg.Functions (fuzzyFindArticleBySlug)
+import TomWellsOrg.Nav (Route(..), currentRoute, parseRoute, printRoute)
+import TomWellsOrg.Render (renderPage, withNavbar)
+import TomWellsOrg.Stream (content)
 
 routeToPage :: Route -> Domain.Page
-routeToPage BlogSummary = Domain.ListOfArticles blogArticles
+routeToPage BlogSummary = Domain.ListOfArticles articles
 routeToPage (BlogArticle slug) =
     let
-        found = fuzzyFindArticleBySlug blogArticles slug
+        found = fuzzyFindArticleBySlug articles slug
     in
     maybe Domain.NotFound Domain.SingleArticle found
+routeToPage Stream = Domain.Stream content
 routeToPage Résumé = Domain.CV
 routeToPage Contact = Domain.Contact
 routeToPage NotFound = Domain.NotFound
 
+
 pageToRoute :: Domain.Page -> Route
 pageToRoute (Domain.ListOfArticles _) = BlogSummary
-pageToRoute (Domain.SingleArticle (Article a)) = BlogArticle a.slug
+pageToRoute (Domain.SingleArticle (Domain.Article a)) = BlogArticle a.slug
+pageToRoute (Domain.Stream _) = Stream
 pageToRoute (Domain.CV) = Résumé
 pageToRoute (Domain.Contact) = Contact
 pageToRoute (Domain.NotFound) = NotFound

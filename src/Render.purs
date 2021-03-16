@@ -1,4 +1,4 @@
-module Render where
+module TomWellsOrg.Render where
 
 import Prelude
 
@@ -6,14 +6,18 @@ import Concur.Core (Widget)
 import Concur.React (HTML)
 import Concur.React.DOM as DOM
 import Concur.React.Props as Props
-import Content (blogArticles)
 import Control.Alt ((<|>))
 import Data.Maybe (fromMaybe)
-import Domain (Article(..), FlowComponent(..), Page(..), PageActions(..))
-import Functions (printDate, sortedByMostRecent)
+import TomWellsOrg.Art as Art
+import TomWellsOrg.Blog (articles)
+import TomWellsOrg.Domain (Article(..), FlowComponent(..), Page(..), PageActions(..), StreamEntry)
+import TomWellsOrg.Functions (printDate, sortedByMostRecent)
+import TomWellsOrg.Stream (content) as Stream
+import TomWellsOrg.CV (content) as CV 
 
 renderFlowComponent :: forall a. FlowComponent -> Widget HTML a
 renderFlowComponent (FlowParagraph text) = DOM.p [] [ DOM.text text ]
+renderFlowComponent (FlowMajorHeader text) = DOM.h1 [] [ DOM.text text ]
 renderFlowComponent (FlowSection text) = DOM.h2 [] [ DOM.text text ]
 renderFlowComponent (FlowLink link) = DOM.a [ Props.href link.link ] [ DOM.text link.title ]
 renderFlowComponent (FlowQuote quote) = DOM.p [] [ DOM.text $ "\"" <> quote.quote <> "\" - " <> quote.author  ]
@@ -21,19 +25,28 @@ renderFlowComponent (FlowImage image) =
     DOM.img [ Props.src image.src, Props.alt image.alt, Props.width "100%" ]
     <|> (image.caption <#> (\caption -> DOM.div [ Props.className "caption" ] [ DOM.text $ "(" <> caption <> ")" ]) # fromMaybe (DOM.div' []) )
 renderFlowComponent (FlowBullets bullets) =
-    DOM.p []
-        [ DOM.text bullets.start ]
-    <|> (DOM.ul [] 
-            (bullets.points <#> \point -> DOM.li [] [ DOM.text point ])
-        )
+    DOM.p [] [ DOM.text bullets.start ]
+    <|> (DOM.ul [] (bullets.points <#> \point -> DOM.li [] [ DOM.text point ]))
+renderFlowComponent (FlowYouTube video) =
+    DOM.iframe 
+        [ Props.width "800"
+        , Props.height "450"
+        , Props.src ("https://www.youtube.com/embed/" <> video.id) 
+        , Props.frameBorder "0"
+        , Props.allowFullScreen true
+        ] []
 
 renderFlowComponent _ = DOM.h2 [] [ DOM.text "COMPONENT HERE" ]
 
 withNavbar :: Widget HTML PageActions -> Widget HTML PageActions
 withNavbar component = do
-    DOM.div []
-        [ DOM.a [ (GotoPage (ListOfArticles blogArticles)) <$ Props.onClick ] [ DOM.text "Home" ]
+    DOM.div [ Props.className "centered" ]
+        [ DOM.a [ (GotoPage (Stream Stream.content)) <$ Props.onClick ] [ DOM.text "Stream" ]
+        , DOM.text " | "
+        , DOM.a [ (GotoPage (ListOfArticles articles)) <$ Props.onClick ] [ DOM.text "Blog" ]
+        , DOM.text " | "
         , DOM.a [ (GotoPage CV) <$ Props.onClick ] [ DOM.text "About me" ]
+        , DOM.text " | "
         , DOM.a [ (GotoPage Contact) <$ Props.onClick ] [ DOM.text "Contact" ]
         ]
     <|> component
@@ -56,17 +69,40 @@ renderPage (ListOfArticles articles) =
         render' :: Article -> Widget HTML PageActions
         render' (Article article) = 
             DOM.div []
-                [ DOM.a [ (GotoPage (SingleArticle (Article article)) <$ Props.onClick) ] [ DOM.text article.title ]
-                , DOM.text " - "
-                , DOM.text article.summary
+                [ DOM.text "$> "
+                , DOM.a [ (GotoPage (SingleArticle (Article article)) <$ Props.onClick) ] [ DOM.text article.title ]
+                , DOM.text $ " (" <> printDate article.date <> ")"
                 ]
     in
-    DOM.h1 []
-        [ DOM.img [ Props.src "/images/header-finger.jpg", Props.width "100%" ]
-        , DOM.text "Published Articles"
-        ]
+    DOM.div [] [ DOM.pre [ Props.className "centered" ] [ DOM.text Art.blog ] ]
+    <|> (DOM.div [] [ DOM.text "Things i've written down" ] )
+    <|> (DOM.div [] [ DOM.text "------------------------" ] )
     <|> (DOM.div [] (articles # sortedByMostRecent <#> render'))
 
-renderPage CV = DOM.h1 [] [ DOM.text "CV RENDERER 2" ]
-renderPage Contact = DOM.h1 [] [ DOM.text "CONTACT RENDERER" ]
+renderPage (Stream content) =
+    let
+        render' :: StreamEntry -> Widget HTML PageActions
+        render' { date, entry } =
+            (DOM.div [] 
+                (entry <#> renderFlowComponent)
+                <|> DOM.div [] [ DOM.text $ "(uploaded " <> printDate date <> ")" ]
+            )
+    in
+        DOM.div []
+            [ DOM.pre [ Props.className "centered" ] [ DOM.text Art.stream ]
+            ]
+            <|> DOM.div [] (content <#> render')
+
+renderPage CV = 
+    DOM.div []
+        [ DOM.pre [ Props.className "centered" ] [ DOM.text Art.cv ]
+        , (DOM.div [] (CV.content <#> renderFlowComponent))
+        ]
+
+renderPage Contact = 
+    DOM.div [] [ DOM.pre [ Props.className "centered" ] [ DOM.text Art.contact ] ]
+    <|> (DOM.div [] [ DOM.text "email $> tom@tomwells.org" ])
+    <|> (DOM.div [] [ DOM.text "linkedin $> https://www.linkedin.com/in/tomwells80/" ])
+    <|> (DOM.div [] [ DOM.text "youtube $> https://www.youtube.com/c/TomWells" ])
+
 renderPage NotFound = DOM.h1 [] [ DOM.text "NOT FOUND RENDERER 2" ]

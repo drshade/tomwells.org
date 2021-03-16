@@ -11,13 +11,11 @@ You can edit this file as you like.
   , "foreign"
   , "formatters"
   , "fuzzy"
-  , "generics-rep"
   , "js-timers"
   , "psci-support"
   , "random"
   , "routing"
   , "routing-duplex"
-  , "simple-json"
   , "strings"
   , "web-html"
   ]

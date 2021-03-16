@@ -8,16 +8,16 @@
   },
   "scripts": {
     "clean": "rm -rf output dist .parcel-cache .psci_modules",
-    "build": "spago build && parcel build public/index.html public/images/**/*.png public/images/**/*.jpg",
-    "serve": "parcel serve public/index.html public/images/**/*.png public/images/**/*.jpg --open"
+    "build": "spago build && parcel build public/index.html public/images/**/*.png public/images/**/*.jpg public/images/**/*.jpeg",
+    "serve": "parcel serve public/index.html public/images/**/*.png public/images/**/*.jpg public/images/**/*.jpeg --open"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "parcel": "^2.0.0-beta.1",
-    "purescript": "^0.13.8",
+    "purescript": "^0.14.0",
     "purty": "^6.3.0",
-    "spago": "^0.19.0"
+    "spago": "^0.19.1"
   },
   "dependencies": {
     "react": "^17.0.1",

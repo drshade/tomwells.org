@@ -4,10 +4,7 @@ import Prelude
 
 import Data.Array (sortWith)
 import Data.Fuzzy (FuzzyStr(..), matchStr)
-import Data.Tuple (Tuple(..))
-import Debug.Trace (trace)
 import Effect (Effect)
-import Effect.Class.Console (log)
 
 matchTest :: Unit -> Effect Unit
 matchTest _ =
@@ -22,7 +19,7 @@ matchTest _ =
             ]
         fuzzies = cases <#> (\c -> matchStr true input c)
         sorted = fuzzies # sortWith (\(FuzzyStr f) -> f.ratio)
-        _ = trace (sorted) (\_ -> unit)
+        -- _ = trace (sorted) (\_ -> unit)
     in
     pure unit
 

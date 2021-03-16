@@ -104,8 +104,35 @@ in  upstream
       }
 -------------------------------
 -}
-
 let upstream =
-      https://github.com/purescript/package-sets/releases/download/psc-0.13.8-20210118/packages.dhall sha256:a59c5c93a68d5d066f3815a89f398bcf00e130a51cb185b2da29b20e2d8ae115
+      https://github.com/purescript/package-sets/releases/download/psc-0.14.0-20210313/packages.dhall sha256:ba6368b31902aad206851fec930e89465440ebf5a1fe0391f8be396e2d2f1d87
 
 in  upstream
+  with simple-json = 
+    { dependencies = 
+      [ "variant"
+      , "globals"
+      ]
+    , repo = "https://github.com/justinwoo/purescript-simple-json.git"
+    , version = "v7.0.0"
+    }
+  with fuzzy = 
+    { repo = "https://github.com/drshade/purescript-fuzzy.git"
+    , version = "6fa72cb4b696c8ad179614522d577a8b0f3eaa3b"
+    , dependencies =
+      [ "console"
+      , "datetime"
+      , "effect"
+      , "foldable-traversable"
+      , "foreign-object"
+      , "newtype"
+      , "ordered-collections"
+      , "prelude"
+      , "psci-support"
+      , "rationals"
+      , "strings"
+      , "test-unit"
+      , "tuples"
+      ]
+    }
+

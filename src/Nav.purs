@@ -1,4 +1,4 @@
-module Nav where
+module TomWellsOrg.Nav where
 
 import Prelude
 
@@ -14,6 +14,7 @@ import Web.HTML.Window (location)
 data Route
     = BlogSummary
     | BlogArticle String
+    | Stream
     | Résumé
     | Contact
     | NotFound
@@ -24,6 +25,7 @@ routes :: RouteDuplex' Route
 routes = root $ sum
     { "BlogSummary": noArgs
     , "BlogArticle": path "blog" (string segment)
+    , "Stream": path "stream" noArgs
     , "Résumé": path "cv" noArgs
     , "Contact": path "contact" noArgs
     , "NotFound": path "notfound" noArgs

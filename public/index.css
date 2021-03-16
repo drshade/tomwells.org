@@ -1,12 +1,8 @@
 body {
-	font-family: 'IBM Plex Sans', sans-serif;
+	font-family: 'IBM Plex Mono', monospace;
 	color: #000000;
 	background-color: #ffffff53;
 	font-size: 1.01em;
-
-	/* padding-left: 20%;
-	padding-right: 20%; */
-
 	margin-left: 20%;
 	margin-right: 20%;
 	min-width: 500px;
@@ -19,6 +15,10 @@ body {
 	}
 }
 
+.centered {
+	text-align: center;
+}
+
 h1 {
 	font-family: 'IBM Plex Mono', monospace;
 	font-size: 2em;
@@ -29,7 +29,10 @@ h2 {
 	font-size: 1.2em;
 	text-align: right;
 }
-
+iframe {
+	display: block;
+	margin: 0 auto;
+}
 .caption {
 	text-align: center;
 	font-style: italic;

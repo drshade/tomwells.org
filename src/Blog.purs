@@ -1,10 +1,10 @@
-module Content where
+module TomWellsOrg.Blog where
 
 import Prelude
 
 import Data.Maybe (Maybe(..))
-import Domain (Article(..), Author(..), Bullets(..), FlowComponent(..), Image(..), Link(..), Page(..), Quote(..))
-import Functions (constructDate)
+import TomWellsOrg.Domain (Article(..), Author, FlowComponent(..))
+import TomWellsOrg.Functions (constructDate)
 
 tomwells :: Author
 tomwells = 
@@ -13,8 +13,8 @@ tomwells =
     , bio: "Towards an AI-first, hyper-scaled, functional reactive universe!"
     }
 
-blogArticles :: Array Article
-blogArticles = 
+articles :: Array Article
+articles =
     [ restful_in_peace
     , what_i_look_for_in_a_developer
     , practical_functional_programming

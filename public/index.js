@@ -1,2 +1,2 @@
-import Main from "../output/Main";
+import Main from "../output/TomWellsOrg.Main";
 Main.main();

@@ -1,17 +1,12 @@
-module Domain where
-
-import Prelude
+module TomWellsOrg.Domain where
 
 import Data.Date (Date)
 import Data.Maybe (Maybe)
 
-import Data.Generic.Rep (class Generic)
-import Data.Generic.Rep.Eq (genericEq)
-import Data.Generic.Rep.Show (genericShow)
-
 data Page
     = SingleArticle Article
     | ListOfArticles (Array Article)
+    | Stream (Array StreamEntry)
     | CV
     | Contact
     | NotFound
@@ -51,9 +46,8 @@ type Image =
     , caption :: Maybe String
     }
 
-newtype YouTube = YouTube
-    { src :: String
-    , preview :: String
+type YouTube =
+    { id :: String
     }
 
 type Link =
@@ -71,8 +65,14 @@ type Bullets =
     , points :: Array String
     }
 
+type StreamEntry =
+    { date :: Date
+    , entry :: Array FlowComponent 
+    }
+
 data FlowComponent
     = FlowParagraph String
+    | FlowMajorHeader String
     | FlowSection String
     | FlowLink Link
     | FlowQuote Quote
