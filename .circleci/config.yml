@@ -20,10 +20,6 @@ jobs:
           # Need to install a tool called sysconfcpus to overwrite the number of
           # reported cpus - which purescript compiler uses (circleci reports 32, but
           # that is not true)
-          # Also...
-          # Fix an issue with the purescript pre-compiled binary, which expects to find
-          # a library called "libtinfo.so.5" - so we just hack it by symlinking to the newer
-          # "libtinfo.so.6" which does exist
           name: Patch system - Build and install sysconfcpus, symlink libtinfo.so
           command: |
             if test -f "/usr/local/bin/sysconfcpus"; then
@@ -34,13 +30,17 @@ jobs:
               cd ..
               rm -rf libsysconfcpus
             fi
-      - run:
-          command:
-            sudo ln -s /usr/lib/x86_64-linux-gnu/libtinfo.so.6 /usr/lib/x86_64-linux-gnu/libtinfo.so.5
       - save_cache:
           key: platform-patches-x
           paths:
             - /usr/local/bin/sysconfcpus
+      - run:
+          # Also...
+          # Fix an issue with the purescript pre-compiled binary, which expects to find
+          # a library called "libtinfo.so.5" - so we just hack it by symlinking to the newer
+          # "libtinfo.so.6" which does exist
+          command:
+            sudo ln -s /usr/lib/x86_64-linux-gnu/libtinfo.so.6 /usr/lib/x86_64-linux-gnu/libtinfo.so.5
       - run:
           command: npm install
       - save_cache:
