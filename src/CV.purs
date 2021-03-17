@@ -5,7 +5,8 @@ import TomWellsOrg.Domain (FlowComponent(..))
 
 content :: Array FlowComponent
 content = 
-    [ FlowMajorHeader "TL;DR"
+    [ FlowImage { src: "/images/cv/its_me.jpeg", alt: "Its me!", caption: Just "It's me!" }
+    , FlowMajorHeader "TL;DR"
     , FlowParagraph "I'm a well rounded technologist who is effective at bridging the development and business worlds. Able to solve problems rapidly by drawing upon my extensive knowledge base of programming languages, frameworks and experience building large hyper-scale, distributed, realtime and data-driven platforms."
     , FlowParagraph "I spend my life researching and applying ideas to projects which allows me to keep immersed in emerging technologies, tools and approaches to solving problems. These very often translate directly into revenue generating activities within my current role as Chief Disruption Officer at Synthesis, where I'm attracted to projects which have large amounts of 'unknown'. In fact, 'unknown' is one of my favourite places to be."
     , FlowParagraph "I am a great communicator, and tend to gravitate towards building strong relationships with key stakeholders in any engagement I work on. I am a proponent of Agile, Lean Startup and ideas like Loonshots and always try to steer stakeholders to focus on the user experience and end-user value on any project."
@@ -160,7 +161,7 @@ content =
     , FlowImage { src: "/images/cv/sanpc.jpeg", alt: "SANPC", caption: Just "South African Navy Patrol Corvette" }
     , FlowYouTube { id: "KrW1oQq9f3k" }
 
-    , FlowMajorHeader "My lifestyle"
+    , FlowMajorHeader "Outside of work"
     , FlowParagraph "I have a beautiful wife and 2 smart, energetic and assertive young daughters who remind me to look at the world through their inquisitive eyes every day, and keep me young. These two little beings are the reason for everything really - working hard, continuously learning and building a better world."
     , FlowParagraph "I spend a lot of time on my bicycles, either ripping up the neighbourhood trails on my singlespeed mountain bike, leading the peleton at the cradle of humankind on my road bike, exploring the drakensberg on my dual suspension mountain bike or trying to better my ironman bike split on my time-trial racing machine."
     , FlowParagraph "I've done a few 'epic' events in my life including Expedition Africa 2019 in Rodriguez (adventure race - 380km, 5 days), 2x Ironman South Africa Triathlons (3.9km swim, 180km cycle, 42km run), Joberg2c (mountain bike - 9 days, 1000km) and millions of smaller events."
