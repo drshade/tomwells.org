@@ -13,7 +13,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - platform-patches-z
+            - platform-patches-a
             - npm-install-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - build-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
       - run:
@@ -31,10 +31,10 @@ jobs:
               rm -rf libsysconfcpus
             fi
       - save_cache:
-          key: platform-patches-z
+          key: platform-patches-a
           paths:
             - /usr/local/bin/sysconfcpus
-            - /usr/local/lib/libsysconfcpus.*
+            - /usr/local/lib/
       - run:
           # Also...
           # Fix an issue with the purescript pre-compiled binary, which expects to find
