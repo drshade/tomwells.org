@@ -10,9 +10,12 @@ jobs:
   build-and-deploy:
     <<: *defaults
     steps:
+      - checkout
       - restore_cache:
           keys:
             - platform-patches
+            - npm-install-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
+            - build-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
       - run:
           # Need to install a tool called sysconfcpus to overwrite the number of
           # reported cpus - which purescript compiler uses (circleci reports 32, but
@@ -37,11 +40,19 @@ jobs:
           paths:
             - /usr/lib/x86_64-linux-gnu/libtinfo.so.5
             - /usr/local/bin/sysconfcpus
-      - checkout
       - run:
           command: npm install
+      - save_cache:
+          key: npm-install-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
       - run:
           command: sysconfcpus -n 2 npm run build
+      - save_cache:
+          key: build-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
+          paths:
+            - .spago
+            - output
       - run: 
           command: npm run bundle
       - run:
