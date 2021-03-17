@@ -13,7 +13,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - platform-patches-a
+            - platform-patch-1
             - npm-install-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - build-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
       - run:
@@ -31,7 +31,7 @@ jobs:
               rm -rf libsysconfcpus
             fi
       - save_cache:
-          key: platform-patches-a
+          key: platform-patch-1
           paths:
             - /usr/local/bin/sysconfcpus
             - /usr/local/lib/
