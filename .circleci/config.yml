@@ -46,6 +46,6 @@ jobs:
 workflows:
   build:
     jobs:
-      build-and-deploy:
-        context:
-          - TOM-EC3-AWS
+      - build-and-deploy:
+          context:
+            - TOM-EC3-AWS
