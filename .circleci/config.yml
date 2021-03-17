@@ -39,4 +39,6 @@ workflows:
   build:
     jobs:
       - setup-sysconfcpus
-      - build-and-deploy
+      - build-and-deploy:
+          requires:
+            - setup-sysconfcpus
