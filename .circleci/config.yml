@@ -9,7 +9,7 @@ jobs:
       - run:
           command: git clone https://github.com/obmarg/libsysconfcpus
       - run:
-          command: cd libsysconfcpus && ./configure && make && make install 
+          command: cd libsysconfcpus && ./configure && make && sudo make install 
       # - checkout
       # - node/install-packages
       # - restore_cache:
