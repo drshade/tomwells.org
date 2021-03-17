@@ -18,11 +18,11 @@ jobs:
       - node/install-packages
       - restore_cache:
           keys:
-            - purescript-compile-deps-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
+            - purescript-compile-deps-x{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
       - run:
           command: sysconfcpus -n 2 npm run build
       - save_cache:
-          key: purescript-compile-deps-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
+          key: purescript-compile-deps-x{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
           paths:
             - .spago
             - output
