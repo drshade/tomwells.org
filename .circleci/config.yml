@@ -24,7 +24,7 @@ jobs:
           # Fix an issue with the purescript pre-compiled binary, which expects to find
           # a library called "libtinfo.so.5" - so we just hack it by symlinking to the newer
           # "libtinfo.so.6" which does exist
-          name: Build and install sysconfcpus
+          name: Patch system - Build and install sysconfcpus, symlink libtinfo.so
           command: |
             if test -f "/usr/local/bin/sysconfcpus"; then
               echo "Already exists, skipping"
@@ -33,12 +33,13 @@ jobs:
               cd libsysconfcpus && ./configure && make && sudo make install 
               cd ..
               rm -rf libsysconfcpus
-              sudo ln -s /usr/lib/x86_64-linux-gnu/libtinfo.so.6 /usr/lib/x86_64-linux-gnu/libtinfo.so.5
             fi
+      - run:
+          command:
+            sudo ln -s /usr/lib/x86_64-linux-gnu/libtinfo.so.6 /usr/lib/x86_64-linux-gnu/libtinfo.so.5
       - save_cache:
           key: platform-patches
           paths:
-            - /usr/lib/x86_64-linux-gnu/libtinfo.so.5
             - /usr/local/bin/sysconfcpus
       - run:
           command: npm install
