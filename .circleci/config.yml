@@ -9,6 +9,9 @@ jobs:
   build-and-deploy:
     <<: *defaults
     steps:
+      - restore_cache:
+          keys:
+            - platform-patches
       - run:
           # Need to install a tool called sysconfcpus to overwrite the number of
           # reported cpus - which purescript compiler uses (circleci reports 32, but
@@ -16,7 +19,8 @@ jobs:
           name: Build and install sysconfcpus
           command: 
             >-
-            git clone https://github.com/obmarg/libsysconfcpus 
+            [ ! -f /usr/local/bin/sysconfcpus ] 
+            && git clone https://github.com/obmarg/libsysconfcpus 
             && cd libsysconfcpus && ./configure && make && sudo make install 
             && cd ..
             && rm -rf libsysconfcpus
