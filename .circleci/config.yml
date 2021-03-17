@@ -16,8 +16,6 @@ jobs:
             && cd libsysconfcpus && ./configure && make && sudo make install \
             && rm -rf libsysconfcpus
       # - run:
-      #     command: 
-      # - run:
       #     command: sysconfcpus -n 2 cat /proc/cpuinfo
       # - run: 
       #     command: rm -rf libsysconfcpus
