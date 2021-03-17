@@ -8,6 +8,8 @@ jobs:
     steps:
       - run:
           command: curl -O http://www.kev.pulo.com.au/libsysconfcpus/files/libsysconfcpus-0.5.tar.gz
+      - run:
+          command: tar xvfz libsysconfcpus-0.5.tar.gz
       # - checkout
       # - node/install-packages
       # - restore_cache:
