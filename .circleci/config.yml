@@ -3,22 +3,24 @@ version: 2.1
 defaults: &defaults
   working_directory: ~/tomwells.org
   docker:
-    - image: cimg/node:14.16-browsers
-  environment:
-    RTS_ARGS: +RTS -N2 -RTS
+    - image: cimg/node:15.11-browsers
 
 jobs:
   build-and-deploy:
     <<: *defaults
     steps:
       - run:
-          command: git clone https://github.com/obmarg/libsysconfcpus
-      - run:
-          command: cd libsysconfcpus && ./configure && make && sudo make install 
-      - run:
-          command: sysconfcpus -n 2 cat /proc/cpuinfo
-      - run: 
-          command: rm -rf libsysconfcpus
+          command: 
+            >-
+            git clone https://github.com/obmarg/libsysconfcpus \
+            & cd libsysconfcpus && ./configure && make && sudo make install \
+            & rm -rf libsysconfcpus
+      # - run:
+      #     command: 
+      # - run:
+      #     command: sysconfcpus -n 2 cat /proc/cpuinfo
+      # - run: 
+      #     command: rm -rf libsysconfcpus
       # - run:
       #     command: sudo find / | grep libtinfo.so
       - run:
