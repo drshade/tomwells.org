@@ -1,13 +1,11 @@
 module TomWellsOrg.CV where
 
-import Prelude
-
 import Data.Maybe (Maybe(..))
 import TomWellsOrg.Domain (FlowComponent(..))
 
 content :: Array FlowComponent
 content = 
-    [ FlowMajorHeader "TL;DR (test)"
+    [ FlowMajorHeader "TL;DR"
     , FlowParagraph "I'm a well rounded technologist who is effective at bridging the development and business worlds. Able to solve problems rapidly by drawing upon my extensive knowledge base of programming languages, frameworks and experience building large hyper-scale, distributed, realtime and data-driven platforms."
     , FlowParagraph "I spend my life researching and applying ideas to projects which allows me to keep immersed in emerging technologies, tools and approaches to solving problems. These very often translate directly into revenue generating activities within my current role as Chief Disruption Officer at Synthesis, where I'm attracted to projects which have large amounts of 'unknown'. In fact, 'unknown' is one of my favourite places to be."
     , FlowParagraph "I am a great communicator, and tend to gravitate towards building strong relationships with key stakeholders in any engagement I work on. I am a proponent of Agile, Lean Startup and ideas like Loonshots and always try to steer stakeholders to focus on the user experience and end-user value on any project."
