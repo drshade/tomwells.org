@@ -28,10 +28,11 @@ jobs:
           command: sudo ln -s /usr/lib/x86_64-linux-gnu/libtinfo.so.6 /usr/lib/x86_64-linux-gnu/libtinfo.so.5
       - run:
           command: which sysconfcpus
-      # - save_cache:
-      #     key: platform-patches
-      #     paths:
-      #       - /usr/lib/x86_64-linux-gnu/
+      - save_cache:
+          key: platform-patches
+          paths:
+            - /usr/lib/x86_64-linux-gnu/libtinfo.so.5
+            - /usr/local/bin/sysconfcpus
       - checkout
       - run:
           command: npm install
