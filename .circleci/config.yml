@@ -43,7 +43,7 @@ jobs:
           command:
             sudo ln -s /usr/lib/x86_64-linux-gnu/libtinfo.so.6 /usr/lib/x86_64-linux-gnu/libtinfo.so.5
       - run:
-          command: npm install
+          command: npm install --no-save
       - save_cache:
           key: npm-install-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
           paths:
