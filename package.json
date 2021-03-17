@@ -2,16 +2,15 @@
   "name": "tomwells.org",
   "version": "1.0.0",
   "description": "",
-  "main": "public/index.html",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "clean": "rm -rf output dist .parcel-cache .psci_modules",
+    "clean": "rm -rf output dist .parcel-cache .psci_modules .spago",
     "build": "spago build && parcel build public/index.html public/images/**/*.png public/images/**/*.jpg public/images/**/*.jpeg",
     "serve": "parcel serve public/index.html public/images/**/*.png public/images/**/*.jpg public/images/**/*.jpeg --open"
   },
-  "author": "",
+  "author": "Tom Wells <tom@tomwells.org>",
   "license": "ISC",
   "devDependencies": {
     "parcel": "^2.0.0-beta.1",
