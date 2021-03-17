@@ -1,10 +1,15 @@
 version: 2.1
-orbs:
-  node: circleci/node@4.2.0
+
+defaults: &defaults
+  working_directory: ~/tomwells.org
+  docker:
+    - image: cimg/node:14.16-browsers
+  environment:
+    RTS_ARGS: +RTS -N2 -RTS
+
 jobs:
   build-and-deploy:
-    docker: 
-      - image: cimg/node:14.16-browsers
+    <<: *defaults
     steps:
       # - run:
       #     command: git clone https://github.com/obmarg/libsysconfcpus
@@ -17,6 +22,7 @@ jobs:
       # - run:
       #     command: sudo find / | grep libtinfo.so
       - run:
+          name: Symlink libtinfo.so (pre-compiled purescript needs this)
           command: sudo ln -s /usr/lib/x86_64-linux-gnu/libtinfo.so.6 /usr/lib/x86_64-linux-gnu/libtinfo.so.5
       - checkout
       - run:
@@ -26,8 +32,6 @@ jobs:
       #       - purescript-compile-deps-x{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
       - run:
           command: npm run build
-          environment:
-            RTS_ARGS: +RTS -N2 -RTS
       # - save_cache:
       #     key: purescript-compile-deps-x{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
       #     paths:
