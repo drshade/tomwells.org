@@ -4,6 +4,7 @@ defaults: &defaults
   working_directory: ~/tomwells.org
   docker:
     - image: cimg/node:15.11-browsers
+      user: root
 
 jobs:
   build-and-deploy:
