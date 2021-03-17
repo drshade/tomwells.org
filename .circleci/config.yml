@@ -10,10 +10,12 @@ jobs:
     <<: *defaults
     steps:
       - run:
+          name: Build and install sysconfcpus
           command: 
             >-
             git clone https://github.com/obmarg/libsysconfcpus 
             && cd libsysconfcpus && ./configure && make && sudo make install 
+            && cd ..
             && rm -rf libsysconfcpus
       # - run:
       #     command: sysconfcpus -n 2 cat /proc/cpuinfo
