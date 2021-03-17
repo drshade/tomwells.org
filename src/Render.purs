@@ -101,8 +101,20 @@ renderPage CV =
 
 renderPage Contact = 
     DOM.div [] [ DOM.pre [ Props.className "centered" ] [ DOM.text Art.contact ] ]
-    <|> (DOM.div [] [ DOM.text "email $> tom@tomwells.org" ])
-    <|> (DOM.div [] [ DOM.text "linkedin $> https://www.linkedin.com/in/tomwells80/" ])
-    <|> (DOM.div [] [ DOM.text "youtube $> https://www.youtube.com/c/TomWells" ])
+    <|> (DOM.div [] [ DOM.text "email $> tom(>>=)tomwells.org" ])
+    <|> (DOM.div [] 
+            [ DOM.text "linkedin $> " 
+            , DOM.a 
+                [ Props.href "https://www.linkedin.com/in/tomwells80/" ]
+                [ DOM.text "https://www.linkedin.com/in/tomwells80/" ]
+            ]
+        )
+    <|> (DOM.div [] 
+            [ DOM.text "youtube $> "
+            , DOM.a
+                [ Props.href "https://www.youtube.com/c/TomWells" ]
+                [ DOM.text "https://www.youtube.com/c/TomWells" ]
+            ]
+        )
 
-renderPage NotFound = DOM.h1 [] [ DOM.text "NOT FOUND RENDERER 2" ]
+renderPage NotFound = DOM.h1 [] [ DOM.text "NOT FOUND!" ]
