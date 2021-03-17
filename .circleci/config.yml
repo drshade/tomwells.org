@@ -4,7 +4,7 @@ orbs:
 jobs:
   build-and-deploy:
     docker: 
-      - image: cimg/node:12.5-browsers
+      - image: cimg/node:14.16-browsers
     steps:
       # - run:
       #     command: git clone https://github.com/obmarg/libsysconfcpus
