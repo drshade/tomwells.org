@@ -10,6 +10,10 @@ jobs:
           command: git clone https://github.com/obmarg/libsysconfcpus
       - run:
           command: cd libsysconfcpus && ./configure && make && sudo make install 
+      - run:
+          command: cat /proc/cpuinfo
+      - run:
+          command: sysconfcpus -n 2 cat /proc/cpuinfo
       # - checkout
       # - node/install-packages
       # - restore_cache:
