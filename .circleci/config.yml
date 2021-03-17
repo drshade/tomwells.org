@@ -11,25 +11,23 @@ jobs:
       - run:
           command: cd libsysconfcpus && ./configure && make && sudo make install 
       - run:
-          command: cat /proc/cpuinfo
-      - run:
           command: sysconfcpus -n 2 cat /proc/cpuinfo
-      # - checkout
-      # - node/install-packages
-      # - restore_cache:
-      #     keys:
-      #       - purescript-compile-deps-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
-      # - run:
-      #     command: npm run build
-      # - save_cache:
-      #     key: purescript-compile-deps-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
-      #     paths:
-      #       - .spago
-      #       - output
-      # - run: 
-      #     command: npm run bundle
-      # - run:
-      #     command: npm run deploy
+      - checkout
+      - node/install-packages
+      - restore_cache:
+          keys:
+            - purescript-compile-deps-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
+      - run:
+          command: sysconfcpus -n 2 npm run build
+      - save_cache:
+          key: purescript-compile-deps-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
+          paths:
+            - .spago
+            - output
+      - run: 
+          command: sysconfcpus -n 2 npm run bundle
+      - run:
+          command: sysconfcpus -n 2 npm run deploy
 workflows:
   build:
     jobs:
