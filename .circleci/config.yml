@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@2.0.2
 jobs:
-  build:
+  build-and-deploy:
     executor:
       name: node/default
     steps:
@@ -18,7 +18,11 @@ jobs:
           paths:
             - .spago
             - output
+      - run: 
+          command: npm run bundle
+      - run:
+          command: npm run deploy
 workflows:
   build:
     jobs:
-      - build
+      - build-and-deploy
