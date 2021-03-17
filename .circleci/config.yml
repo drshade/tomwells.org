@@ -15,7 +15,8 @@ jobs:
       - run: 
           command: rm -rf libsysconfcpus
       - checkout
-      - node/install-packages
+      - run:
+          command: npm install
       - restore_cache:
           keys:
             - purescript-compile-deps-x{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
@@ -27,9 +28,9 @@ jobs:
             - .spago
             - output
       - run: 
-          command: sysconfcpus -n 2 npm run bundle
+          command: npm run bundle
       - run:
-          command: sysconfcpus -n 2 npm run deploy
+          command: npm run deploy
 workflows:
   build:
     jobs:
