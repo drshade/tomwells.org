@@ -1,27 +1,29 @@
 version: 2.1
 orbs:
-  node: circleci/node@2.0.2
+  node: circleci/node@4.2.0
 jobs:
   build-and-deploy:
     executor:
       name: node/default
     steps:
-      - checkout
-      - node/install-packages
-      - restore_cache:
-          keys:
-            - purescript-compile-deps-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
       - run:
-          command: npm run build
-      - save_cache:
-          key: purescript-compile-deps-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
-          paths:
-            - .spago
-            - output
-      - run: 
-          command: npm run bundle
-      - run:
-          command: npm run deploy
+          command: curl -O http://www.kev.pulo.com.au/libsysconfcpus/files/libsysconfcpus-0.5.tar.gz
+      # - checkout
+      # - node/install-packages
+      # - restore_cache:
+      #     keys:
+      #       - purescript-compile-deps-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
+      # - run:
+      #     command: npm run build
+      # - save_cache:
+      #     key: purescript-compile-deps-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
+      #     paths:
+      #       - .spago
+      #       - output
+      # - run: 
+      #     command: npm run bundle
+      # - run:
+      #     command: npm run deploy
 workflows:
   build:
     jobs:
