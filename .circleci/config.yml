@@ -18,12 +18,15 @@ jobs:
           # reported cpus - which purescript compiler uses (circleci reports 32, but
           # that is not true)
           name: Build and install sysconfcpus
-          command: 
-            >-
-            git clone https://github.com/obmarg/libsysconfcpus 
-            && cd libsysconfcpus && ./configure && make && sudo make install 
-            && cd ..
-            && rm -rf libsysconfcpus
+          command: |
+            if test -f "/usr/local/bin/sysconfcpus"; then
+              echo "Already exists, skipping"
+            else
+              git clone https://github.com/obmarg/libsysconfcpus 
+              cd libsysconfcpus && ./configure && make && sudo make install 
+              cd ..
+              rm -rf libsysconfcpus
+            fi
       - run:
           # Fix an issue with the purescript pre-compiled binary, which expects to find
           # a library called "libtinfo.so.5" - so we just hack it by symlinking to the newer
