@@ -13,7 +13,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - platform-patches
+            - platform-patches-x
             - npm-install-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - build-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
       - run:
@@ -38,7 +38,7 @@ jobs:
           command:
             sudo ln -s /usr/lib/x86_64-linux-gnu/libtinfo.so.6 /usr/lib/x86_64-linux-gnu/libtinfo.so.5
       - save_cache:
-          key: platform-patches
+          key: platform-patches-x
           paths:
             - /usr/local/bin/sysconfcpus
       - run:
