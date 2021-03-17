@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@4.2.0
 jobs:
-  setup-sysconfcpus:
+  build-and-deploy:
     docker: 
       - image: cimg/node:15.11.0
     steps:
@@ -14,11 +14,6 @@ jobs:
           command: sysconfcpus -n 2 cat /proc/cpuinfo
       - run: 
           command: rm -rf libsysconfcpus
-  
-  build-and-deploy:
-    executor:
-      name: node/default
-    steps:
       - checkout
       - node/install-packages
       - restore_cache:
@@ -38,7 +33,4 @@ jobs:
 workflows:
   build:
     jobs:
-      - setup-sysconfcpus
-      - build-and-deploy:
-          requires:
-            - setup-sysconfcpus
+      - build-and-deploy
