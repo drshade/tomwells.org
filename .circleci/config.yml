@@ -14,8 +14,8 @@ jobs:
       #     command: sysconfcpus -n 2 cat /proc/cpuinfo
       # - run: 
       #     command: rm -rf libsysconfcpus
-      - run:
-          command: sudo find / | grep libtinfo.so
+      # - run:
+      #     command: sudo find / | grep libtinfo.so
       - run:
           command: sudo ln -s /usr/lib/x86_64-linux-gnu/libtinfo.so.6 /usr/lib/x86_64-linux-gnu/libtinfo.so.5
       - checkout
