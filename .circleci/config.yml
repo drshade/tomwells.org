@@ -2,9 +2,9 @@ version: 2.1
 orbs:
   node: circleci/node@4.2.0
 jobs:
-  build-and-deploy:
-    executor:
-      name: node/default
+  setup-sysconfcpus:
+    docker: 
+      - image: cimg/node:15.11.0
     steps:
       - run:
           command: git clone https://github.com/obmarg/libsysconfcpus
@@ -14,6 +14,11 @@ jobs:
           command: sysconfcpus -n 2 cat /proc/cpuinfo
       - run: 
           command: rm -rf libsysconfcpus
+  
+  build-and-deploy:
+    executor:
+      name: node/default
+    steps:
       - checkout
       - node/install-packages
       - restore_cache:
@@ -33,4 +38,5 @@ jobs:
 workflows:
   build:
     jobs:
+      - setup-sysconfcpus
       - build-and-deploy
