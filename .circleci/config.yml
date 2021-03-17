@@ -12,6 +12,8 @@ jobs:
           command: cd libsysconfcpus && ./configure && make && sudo make install 
       - run:
           command: sysconfcpus -n 2 cat /proc/cpuinfo
+      - run: 
+          command: rm -rf libsysconfcpus
       - checkout
       - node/install-packages
       - restore_cache:
