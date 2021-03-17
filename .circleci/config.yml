@@ -11,14 +11,14 @@ jobs:
   build-and-deploy:
     <<: *defaults
     steps:
-      # - run:
-      #     command: git clone https://github.com/obmarg/libsysconfcpus
-      # - run:
-      #     command: cd libsysconfcpus && ./configure && make && sudo make install 
-      # - run:
-      #     command: sysconfcpus -n 2 cat /proc/cpuinfo
-      # - run: 
-      #     command: rm -rf libsysconfcpus
+      - run:
+          command: git clone https://github.com/obmarg/libsysconfcpus
+      - run:
+          command: cd libsysconfcpus && ./configure && make && sudo make install 
+      - run:
+          command: sysconfcpus -n 2 cat /proc/cpuinfo
+      - run: 
+          command: rm -rf libsysconfcpus
       # - run:
       #     command: sudo find / | grep libtinfo.so
       - run:
@@ -31,7 +31,7 @@ jobs:
       #     keys:
       #       - purescript-compile-deps-x{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
       - run:
-          command: npm run build
+          command: sysconfcpus -n 2 npm run build
       # - save_cache:
       #     key: purescript-compile-deps-x{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
       #     paths:
