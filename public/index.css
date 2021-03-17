@@ -38,4 +38,9 @@ iframe {
 	font-style: italic;
 	font-size: small;
 }
-
+a {
+	cursor: pointer;
+}
+a:hover {
+	text-decoration: underline;
+}

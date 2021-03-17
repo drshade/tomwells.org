@@ -23,9 +23,9 @@ derive instance genericRoute :: Generic Route _
 
 routes :: RouteDuplex' Route
 routes = root $ sum
-    { "BlogSummary": noArgs
+    { "BlogSummary": path "blog" noArgs
     , "BlogArticle": path "blog" (string segment)
-    , "Stream": path "stream" noArgs
+    , "Stream": noArgs
     , "Résumé": path "cv" noArgs
     , "Contact": path "contact" noArgs
     , "NotFound": path "notfound" noArgs
