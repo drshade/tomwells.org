@@ -13,8 +13,8 @@ jobs:
           command: 
             >-
             git clone https://github.com/obmarg/libsysconfcpus \
-            & cd libsysconfcpus && ./configure && make && sudo make install \
-            & rm -rf libsysconfcpus
+            && cd libsysconfcpus && ./configure && make && sudo make install \
+            && rm -rf libsysconfcpus
       # - run:
       #     command: 
       # - run:
