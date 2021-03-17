@@ -10,6 +10,9 @@ jobs:
     <<: *defaults
     steps:
       - run:
+          # Need to install a tool called sysconfcpus to overwrite the number of
+          # reported cpus - which purescript compiler uses (circleci reports 32, but
+          # that is not true)
           name: Build and install sysconfcpus
           command: 
             >-
@@ -17,28 +20,24 @@ jobs:
             && cd libsysconfcpus && ./configure && make && sudo make install 
             && cd ..
             && rm -rf libsysconfcpus
-      # - run:
-      #     command: sysconfcpus -n 2 cat /proc/cpuinfo
-      # - run: 
-      #     command: rm -rf libsysconfcpus
-      # - run:
-      #     command: sudo find / | grep libtinfo.so
       - run:
+          # Fix an issue with the purescript pre-compiled binary, which expects to find
+          # a library called "libtinfo.so.5" - so we just hack it by symlinking to the newer
+          # "libtinfo.so.6" which does exist
           name: Symlink libtinfo.so (pre-compiled purescript needs this)
           command: sudo ln -s /usr/lib/x86_64-linux-gnu/libtinfo.so.6 /usr/lib/x86_64-linux-gnu/libtinfo.so.5
+      - run:
+          command: which sysconfcpus
+      # - save_cache:
+      #     key: platform-patches
+      #     paths:
+      #       - /usr/lib/x86_64-linux-gnu/
+      
       - checkout
       - run:
           command: npm install
-      # - restore_cache:
-      #     keys:
-      #       - purescript-compile-deps-x{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
       - run:
           command: sysconfcpus -n 2 npm run build
-      # - save_cache:
-      #     key: purescript-compile-deps-x{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
-      #     paths:
-      #       - .spago
-      #       - output
       - run: 
           command: npm run bundle
       - run:
