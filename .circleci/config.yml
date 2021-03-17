@@ -7,11 +7,9 @@ jobs:
       name: node/default
     steps:
       - run:
-          command: curl -O http://www.kev.pulo.com.au/libsysconfcpus/files/libsysconfcpus-0.5.tar.gz
+          command: git clone https://github.com/obmarg/libsysconfcpus
       - run:
-          command: tar xvfz libsysconfcpus-0.5.tar.gz
-      - run:
-          command: cd libsysconfcpus-0.5 && ./configure && make && make install 
+          command: cd libsysconfcpus && ./configure && make && make install 
       # - checkout
       # - node/install-packages
       # - restore_cache:
