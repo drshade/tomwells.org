@@ -13,6 +13,7 @@ import Routing.PushState (PushStateInterface, makeInterface)
 import TomWellsOrg.Blog (articles)
 import TomWellsOrg.Domain (Article(..), Page(..), PageActions(..)) as Domain
 import TomWellsOrg.Functions (fuzzyFindArticleBySlug)
+import TomWellsOrg.Highlight (applyHighlighting)
 import TomWellsOrg.Nav (Route(..), currentRoute, parseRoute, printRoute)
 import TomWellsOrg.Render (renderPage, withNavbar)
 import TomWellsOrg.Stream (content)
@@ -54,7 +55,13 @@ main = do
         let newRoute = parseRoute location.pathname in
         
         -- If we wanted to pop the location.state here we could do so first
-        runWidgetInDom "root" $ actionHandler navInterface $ withNavbar $ renderPage $ routeToPage newRoute
+        (runWidgetInDom "root" 
+            $ actionHandler navInterface 
+            $ withNavbar 
+            $ renderPage 
+            $ routeToPage newRoute)
+            -- Apply code highlighting after render
+            >>= (\_ -> applyHighlighting unit)
     )
 
     -- Get the page we just landed on
