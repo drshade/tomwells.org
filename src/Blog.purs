@@ -35,7 +35,8 @@ practical_functional_programming = Article
     , summary: "No summary yet"
     , body: 
         [ FlowParagraph "I *cringe* when I see this sort of code:"
-        , FlowSourceCode { lang: CSharp, body: """
+        , FlowSourceCode { lang: CSharp, body: 
+            """
             var names = new List<string> { "tom", "dan", "warren" };
 
             // Find the longest name in the list
@@ -45,13 +46,15 @@ practical_functional_programming = Article
                 if (name.Length > longest.Length) {
                     longest = name;
                 }
-            }"""
+            }
+            """
         }
         , FlowParagraph "Why is it so cringe-worthy? Because it's buggy and full of assumptions. Its very hard to write code like that this that isn't buggy, and really this is grade 11 style programming (no disrespect to any talented grade 11'ers out there!). "
         , FlowParagraph "Mainstream languages (e.g. Java, C#, etc) are introducing more and more features which promote a functional programming paradigm and when used correctly can rid the world of this style of code."
         , FlowParagraph ".NET developers who use LINQ and Lambda expressions have been doing it (possibly unknowingly) for years, and writing nice clean code by making use of higher-order functions:"
 
-        , FlowSourceCode { lang: CSharp, body: """
+        , FlowSourceCode { lang: CSharp, body: 
+            """
             var names = new List<string> { "tom", "dan", "warren" };
 
             // Find the longest name in the list
@@ -60,7 +63,8 @@ practical_functional_programming = Article
                             .OrderByDescending((name) => name.Length)
                             .First();
 
-            Console.Out.WriteLine ("The longest name is: {0}", longest);"""
+            Console.Out.WriteLine ("The longest name is: {0}", longest);
+            """
         }
         , FlowParagraph "This version is so much safer - and much simpler to understand. There is no mutation occurring either. Either the variable _longest_ exists or it doesn't. No halfway state while the code is running."
         , FlowParagraph "Use this stuff! You can find equivalents in most mainstream languages, my favourite being prelude for livescript."
@@ -173,7 +177,8 @@ code_101_pass_by_reference = Article
         , FlowSection "The mysterious _pass by reference_ thing"
         , FlowParagraph "And that actually there is no such thing as _'pass by reference'_ but simply that when passing a reference-type (aka. 'object' in java, c# or 'pointer to object' in c++) that it is actually the reference which is passed by value itself. I.e. a copy of a memory address points to the same piece of memory as the original memory address. This super-simple concept is fundamental to understanding almost everything there is to know about how stack and heap memory works."
         , FlowParagraph "The below code examples attempt to show what I mean. This is pseudo-code'ish, and anyone who knows java, c#, c or c++ should be able to follow."
-        , FlowSourceCode { lang: CSharp, body: """
+        , FlowSourceCode { lang: CSharp, body: 
+            """
             void reset(int x)
             {
                 x = 5;
@@ -182,12 +187,14 @@ code_101_pass_by_reference = Article
             int a = 10;
             reset(a);
 
-            print ("A is " + a); // Should print '10'"""
+            print ("A is " + a); // Should print '10'
+            """
         }
         , FlowParagraph "If you are surprised that '10' is printed above, then you definitely need to research this topic. Basically, a copy of the value contained by the variable 'a' is assigned to the method parameter 'x', which is in it's own right a separate variable. Thus when the value 5 is assigned to the variable 'x', it does not magically get also assigned back to 'a'. Therefore 'a' remains as it was, set to it's original value of '10' when the reset() function returns."
         , FlowParagraph "Only once you _get_ the above, can you move onto the difficulty in understanding the _'reference'_ bit."
         , FlowParagraph "So now lets make it more complex, introducing the mysterious _'reference'_ by way of an object (as before, lets assume java or c#):"
-        , FlowSourceCode { lang: CSharp, body: """
+        , FlowSourceCode { lang: CSharp, body: 
+            """
             class Dog
             {
                 public Dog(int w)
@@ -205,15 +212,18 @@ code_101_pass_by_reference = Article
             Dog a = new Dog(10);
             reset(a);
 
-            print ("A is " + a.v); // Should print '10' still..."""
+            print ("A is " + a.v); // Should print '10' still...
+            """
         }
         , FlowParagraph "Ok, so now we've introduced a _'reference'_ type to overcome our issue in the previous example, and it may now come as a big surprise that this approach still has not had the desired effect of setting our value in the reset() function. Infact, the problem is _EXACTLY_ the same as our previous one. The variable 'x' is a _COPY_ of the value of the variable 'a', the only difference being that it just so happens to contain a reference to an object. When you assign some other value to 'x', it simply takes on the new value, it _does not_ magically pass this value back onto 'a'."
         , FlowParagraph "The only way to make meaningful use of the reference is to look-through to the original object:"
-        , FlowSourceCode { lang: CSharp, body: """
+        , FlowSourceCode { lang: CSharp, body: 
+            """
             void reset(Dog x)
             {
                 x.v = 5;
-            }"""
+            }
+            """
         }
         , FlowParagraph "If this seems basic and obvious - then good, you get it. If it doesn't, please re-produce this example and play with it until you're comfortable with the concept."
         , FlowParagraph "This particular problem is one that I love to explore in interview situations for potential developer roles - and after 3 years of running over 50 such sessions can honestly say that not more than 5-10% of developers _'get'_ this. And it may seem like something quite academic, and not important for real-world programming, and maybe only confined to languages like java, c#, c or c++ - but alas NO - this is fairly fundamental in even understanding stuff like AngularJS data binding in JS."
@@ -237,12 +247,14 @@ livescript_rocking_your_world = Article
 
         , FlowSection "2. Scope traps"
         , FlowParagraph "Variables are defined global by default (x=5;), unless you attach the magical 'var' keyword to them (var x=5;). Ouch."
-        , FlowSourceCode { lang: JavaScript, body: """
+        , FlowSourceCode { lang: JavaScript, body: 
+            """
             if ('1' == true) {
                 x = 5;     // win! you have polluted global
                 var y = 5; // fail! you kept it local...
             }
-        """}
+            """
+        }
 
         , FlowSection "3. Surprising behaviour"
         , FlowParagraph "A for-in-loop over a list returns the index into the list instead of each element, BUT a for-in-loop over an object returns the key to the object (win). Ok, ok, if you understand that the for-in-loop always returns the 'index' into the list or 'index' into the object thats totally consistent. The point is that I often find myself writing little mini for-in-loops while i'm developing to remind myself of what exactly is returned - meaning it's obviously weird :)"
@@ -268,16 +280,19 @@ a_word_on_monads = Article
     , body: 
         [ FlowParagraph "A clever guy once said that once you understand what a monad is you lose the ability to explain what it is to other people - and he's (almost) right. Monads are a weird and wonderful thing, but sometimes are easiest to understand when given an example of one."
         , FlowParagraph "I'm going to try and do this by example, so to set the scene - lets use something like the following data structure:"
-        , FlowSourceCode { lang: Haskell, body: """
+        , FlowSourceCode { lang: Haskell, body: 
+            """
             data Person = Person {
                 name :: String,
                 mother :: Maybe Person,
                 father :: Maybe Person
             }
-        """}
+            """
+        }
         , FlowParagraph "So it's super simple. A Person has a name, and optionally has a mother and/or father, specified by the type Maybe Person for each."
         , FlowParagraph "Ok so lets get some test data:"
-        , FlowSourceCode { lang: Haskell, body: """
+        , FlowSourceCode { lang: Haskell, body: 
+            """
             gemma = Person {
                 name = "Gemma",
                 mother = Just Person {
@@ -307,9 +322,11 @@ a_word_on_monads = Article
                     }
                 }
             }
-        """}
+            """
+        }
         , FlowParagraph "Sorry that uber terse, but it's simply:"
-        , FlowSourceCode { lang: Haskell, body: """
+        , FlowSourceCode { lang: Haskell, body: 
+            """
                     Sandy
                    /
          Michelle <
@@ -319,9 +336,11 @@ Gemma <      Kate   Tim
        Tom <
             \
              Bob
-        """}
+            """
+        }
         , FlowParagraph "Next lets write a function which finds the the maternal grandparent (i.e. the mother of the mother):"
-        , FlowSourceCode { lang: Haskell, body: """
+        , FlowSourceCode { lang: Haskell, body: 
+            """
             maternalgrandmother :: Person -> Maybe Person
             maternalgrandmother p =
             case mother p of
@@ -330,17 +349,21 @@ Gemma <      Kate   Tim
                     case mother mom of
                         Nothing -> Nothing
                         Just granny -> Just granny
-        """}
+            """
+        }
         , FlowParagraph "The above is the simplest implementation, and simply solves the question by asking the following questions:"
-        , FlowSourceCode { lang: Pseudo, body: """
+        , FlowSourceCode { lang: Pseudo, body: 
+            """
             1. Does the person have a mother?
             2a. If not, then return Nothing.
             2b. If so, then does the mother have a mother?
             3a. If not, then return Nothing.
             3b. If so, then return that person (the granny).
-        """}
+            """
+        }
         , FlowParagraph "And of course this would go on and on if we were looking for the grandgrandmother, and grandgrandgrandmother etc. So this is the sort of repetition where a monad might be useful. So in the above example, let me highlight the crap that we'd like to abstract out:"
-        , FlowSourceCode { lang: Haskell, body: """
+        , FlowSourceCode { lang: Haskell, body: 
+            """
                 maternalgrandmother :: Person -> Maybe Person
                 maternalgrandmother p =
                 case mother p of
@@ -349,9 +372,11 @@ Gemma <      Kate   Tim
                         case mother mom of
                             Nothing -> Nothing
                             Just granny -> Just granny
-        """}
+            """
+        }
         , FlowParagraph "I.e. we just want the mother of the passed in person, and then the mother of that person - any interim value that happens to be Nothing should return Nothing back to the caller. Simple. So at best we want something like this:"
-        , FlowSourceCode { lang: Haskell, body: """
+        , FlowSourceCode { lang: Haskell, body: 
+            """
             maternalgrandmother :: Person -> Maybe Person
             maternalgrandmother p = mother $ mother p
                 -- with the caveat that it should return Nothing
@@ -359,18 +384,21 @@ Gemma <      Kate   Tim
                 -- Nothing. 'mother mother p' may be Nothing too
                 -- but thats ok, because we return a Maybe Person
                 -- so all good there
-        """}
+            """
+        }
         , FlowParagraph "So this is basically our ideal implementation, but we're missing the mechanism to implement the 'return Nothing when interim results are Nothing' bit. It's captured nicely in the comment, but the compiler unfortunately isn't that clever. So this is where MONADS come in!"
         , FlowParagraph "The best sorta one-liner explanation of MONADS I could give is that they attempt to abstract the mechanism of computation of expressions in a particular context. I.e. in imperative languages, statements and expressions are computed in order, top to bottom. Obviously you have flow-control constructs to guide the computation in one way or another, but implictly the program will execute the statement on the next line once it's done with the current statement. This is a given."
         , FlowParagraph "HOWEVER - in a functional context (i.e. in haskell) - this 'one statement after the next computation strategy' is NOT a given, and infact the decision of HOW to compute, and the ORDER that computation occurs is the responsibility of the current MONAD in play."
         , FlowParagraph "So without going into how to actually define your own MONAD, lets rather just look at some existing ones and how they are used. For the example above, the perfect solution is called the MAYBE MONAD (surprise!). And it simply says keep evaluating functions bound into the monad until a function evals to Nothing then return Nothing (stop evalutating subsequent bound functions), otherwise return the evalation of the final bound function."
-        , FlowSourceCode { lang: Haskell, body: """
+        , FlowSourceCode { lang: Haskell, body: 
+            """
             maternalgrandmother2 :: Person -> Maybe Person
             maternalgrandmother2 p =
             mother p >>=
                 (\m -> mother m >>=
                     (\g -> return (g)))
-        """}
+            """
+        }
         ]
     }
 

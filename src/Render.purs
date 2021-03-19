@@ -35,6 +35,8 @@ renderFlowComponent (FlowYouTube video) =
         , Props.frameBorder "0"
         , Props.allowFullScreen true
         ] []
+renderFlowComponent (FlowSourceCode { lang, body }) =
+    DOM.pre [] [ DOM.text body ]
 
 renderFlowComponent _ = DOM.h2 [] [ DOM.text "COMPONENT HERE" ]
 
