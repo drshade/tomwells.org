@@ -34,6 +34,9 @@ type Author =
 data Language
     = PureScript
     | JavaScript
+    | CSharp
+    | Pseudo
+    | Haskell
 
 type SourceCode =
     { lang :: Language
