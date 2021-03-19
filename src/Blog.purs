@@ -29,13 +29,39 @@ practical_functional_programming = Article
     { slug: "practical-functional-programming"
     , title: "Practical functional programming"
     , keywords: ["functional programming"]
-    , cover: { src: "/images/articles/no_cover.png", alt: "No cover", caption: Nothing }
+    , cover: { src: "/images/covers/code.png", alt: "code", caption: Nothing }
     , author: tomwells
     , date: constructDate 2015 12 3
     , summary: "No summary yet"
     , body: 
-        [ FlowSection "Placeholder for practical-functional-programming"
-        , FlowParagraph "Need to be written!"
+        [ FlowParagraph "I *cringe* when I see this sort of code:"
+        , FlowParagraph """
+            var names = new List<string> { "tom", "dan", "warren" };
+
+            // Find the longest name in the list
+            //
+            var longest = names.First();
+            foreach (var name in names) {
+                if (name.Length > longest.Length) {
+                    longest = name;
+                }
+            }"""
+        , FlowParagraph "Why is it so cringe-worthy? Because it's buggy and full of assumptions. Its very hard to write code like that this that isn't buggy, and really this is grade 11 style programming (no disrespect to any talented grade 11'ers out there!). "
+        , FlowParagraph "Mainstream languages (e.g. Java, C#, etc) are introducing more and more features which promote a functional programming paradigm and when used correctly can rid the world of this style of code."
+        , FlowParagraph ".NET developers who use LINQ and Lambda expressions have been doing it (possibly unknowingly) for years, and writing nice clean code by making use of higher-order functions:"
+
+        , FlowParagraph """
+            var names = new List<string> { "tom", "dan", "warren" };
+
+            // Find the longest name in the list
+            //
+            var longest = names
+                            .OrderByDescending((name) => name.Length)
+                            .First();
+
+            Console.Out.WriteLine ("The longest name is: {0}", longest);"""
+        , FlowParagraph "This version is so much safer - and much simpler to understand. There is no mutation occurring either. Either the variable _longest_ exists or it doesn't. No halfway state while the code is running."
+        , FlowParagraph "Use this stuff! You can find equivalents in most mainstream languages, my favourite being prelude for livescript."
         ]
     }
 
@@ -44,13 +70,90 @@ intro_to_fluid_infrastructure = Article
     { slug: "intro-to-fluid-infrastructure"
     , title: "Intro to Fluid Infrastructure"
     , keywords: ["infrastructure"]
-    , cover: { src: "/images/articles/no_cover.png", alt: "No cover", caption: Nothing }
+    , cover: { src: "/images/articles/fluid_architecture/slide1.jpeg", alt: "Intro to fluid architecture", caption: Nothing }
     , author: tomwells
     , date: constructDate 2016 9 25
     , summary: "No summary yet"
     , body: 
-        [ FlowSection "Placeholder for intro-to-fluid-infrastructure"
-        , FlowParagraph "Need to be written!"
+        [ FlowParagraph "I gave a small talk to a couple of smart C-level people last week around my concept of Fluid Infrastructure."
+        , FlowParagraph "Below are my slides with commentary:"
+        , FlowImage $ { src: "/images/articles/fluid_architecture/slide2.jpeg", alt: "scale", caption: Just "a big word" }
+        , FlowParagraph "Before we dive into the fun stuff, lets first deal with this big scary concept called scale. I fear that it's terribly misunderstood, and that most people imagine that only the hugest of tech companies would ever really need it. I think that's wrong."
+        , FlowImage $ { src: "/images/articles/fluid_architecture/slide3.jpeg", alt: "scale", caption: Just "simple" }
+        , FlowParagraph "For me, scale is a mindset around simple economics. Matching supply to meet demand."
+        , FlowParagraph "I believe that traditional infrastructure teams tend to over-supply on our capacity by at least an order of magnitude (yes we do, and I will come back to this). And we tend to do this for good reasons, such as redundancy and planning for future growth. However with the availability of high quality cloud providers (such as AWS, Azure, Google, etc) the game is changing, and if we return to our simple goal of matching supply directly to demand we can swing our cost models back in our favour."
+        , FlowParagraph "Lets dive into a bit more detail and see if we can unpack this a little."
+
+        , FlowImage $ { src: "/images/articles/fluid_architecture/slide4.jpeg", alt: "typical load average graphs", caption: Just "typical load average graphs" }
+        , FlowParagraph "Lets start with something that should look very familiar to everyone - a typical load average graph. This could be anything, amount of CPU, amount of visitors to our website, transactions per second processed through a back-office, whatever makes sense."
+        , FlowParagraph "Although they are all very different - they share a couple of similarities. Lots of peaks and lots of troughs (white-space) during idle periods."
+        
+        , FlowImage $ { src: "/images/articles/fluid_architecture/slide5.jpeg", alt: "sizing for peaks", caption: Just "sizing for peaks" }
+        , FlowParagraph "This graph presents a challenge during infrastructure planning. We need to ensure we have enough capacity to process the load, but we also want to optimize our costs during idle periods. Of course, sizing for an average capacity would be bad - we would experience bad performance during high peak loads which might affect our customer and on the flip-size sizing for our peak would give us a great customer experience at the cost of very high levels of waste."
+        , FlowParagraph "It's clear that we need to re-think this model. And here we can quite clearly see our order of magnitude under-utilization (over-supply)."
+
+        , FlowImage $ { src: "/images/articles/fluid_architecture/slide6.jpeg", alt: "redundancy amplifies waste", caption: Just "redundancy amplifies waste" }
+        , FlowParagraph "The problem gets even worse when we start to model for redundancy. Even more under-utilization is locked in as we double and triple our infrastructure."
+        , FlowParagraph "Is it fair that we should double or triple our costs in order to achieve a simple level of redundancy? That's kind of like buying 2 extra cars, just in case your first car breaks down. Makes no sense."
+
+        , FlowImage $ { src: "/images/articles/fluid_architecture/slide7.jpeg", alt: "typical scaling up", caption: Just "typical scaling up" }
+        , FlowParagraph "A typical scaling up experience. We have an app that has 2 resources allocated (green - think hosts). This seems to deal with the demanded load OK initially."
+        , FlowParagraph "Over time the usage of our app increases, and during a heavy business period one day we find ourselves in a position where we can't handle the load (oops #1). We quickly scramble to resolve the issue by doubling our capacity, and using our human resources we are up and running within a few days/weeks."
+        , FlowParagraph "And for a growing business we simply repeat the process - double our capacity as our demand grows."
+        , FlowParagraph "This scenario highlights a couple of inefficiencies:"
+        , FlowParagraph "1. A slow response to demand"
+        , FlowParagraph "2. Doubling capacity after each incident is too coarse, effectively doubling our costs, when really all we needed was a small burst of capacity over a short period"
+        , FlowParagraph "3. We tend to never scale back down after these events. The damage to business, plus human pain and effort involved tends to justify the new higher costs. I've never met an infrastructure team that decided to reduce capacity back down to nominal levels once they were over the high load period"
+
+        , FlowImage $ { src: "/images/articles/fluid_architecture/slide8.jpeg", alt: "unit of scale", caption: Just "unit of scale" }
+        , FlowParagraph "Two dimensions are evident when looking at how to optimize this situation."
+        , FlowParagraph "1. Deployment time (x-axis) - the time taken to respond to an increase or decrease in demand, or how quickly we can react"
+        , FlowParagraph "2. Size of divisible unit (y-axis) - the size of each incremental adjustment to capacity (typically the infrastructure resource, such as host, network, memory, etc)"
+        , FlowParagraph "Clearly, the smaller we can make these 2 individual dimensions, the quicker we can react to demand at a more efficient cost."
+        , FlowParagraph "Lets look at demonstrating this in our example:"
+
+        , FlowImage $ { src: "/images/articles/fluid_architecture/slide9.jpeg", alt: "lets break it down", caption: Just "lets break it down" }
+        , FlowParagraph "Large machines, monthly response time."
+
+        , FlowImage $ { src: "/images/articles/fluid_architecture/slide10.jpeg", alt: "lets break it down", caption: Just "lets break it down" }
+        , FlowParagraph "Smaller machines (1 3rd the size of previous), with a weekly response time."
+        , FlowParagraph "Already in this basic example we have saved approx 28% (represented by non-green whitespace)."
+        , FlowParagraph "Starting to look like a game of Tetris? :)"
+
+        , FlowImage $ { src: "/images/articles/fluid_architecture/slide11.jpeg", alt: "lets break it down", caption: Just "lets break it down" }
+        , FlowParagraph "Even smaller, tiny machines (1 6th the size of original), with a shorter (daily?) response time."
+        , FlowParagraph "We've done better than before, with a total 33% saved overall."
+        , FlowParagraph "Very nice. A total 3rd chopped off the top of our infrastructure bill."
+        , FlowParagraph "This stuff is also very easy - with the right kind of support from the application itself (for another blog post) this pattern can be fairly simply achieved using AWS AutoScalingGroups in EC2 with the right rules in place."
+        , FlowParagraph "Although we have done well, we still haven’t achieved that order of magnitude saving that we know is possible, and this is very evident when we look at some other application usage examples."
+
+        , FlowImage $ { src: "/images/articles/fluid_architecture/slide12.jpeg", alt: "lets break it down", caption: Just "lets break it down" }
+        , FlowParagraph "It turns out that even when we reduce our divisible unit down to a tiny resource, most applications still spend most of the time idling."
+        , FlowParagraph "Unsurprisingly, the applications that idle the most are the low volume, back-office, batch type applications which make up the bulk of most organisations. They are the most wasteful, simply because they don't have enough work to do, and therefore cannot make any use of their provisioned capacity."
+        , FlowParagraph "The real challenge is to attempt to collapse this infrastructure down into a single fabric. Allocating a pool of resources to many applications."
+        , FlowParagraph "Of course, if we simply went ahead and tried to implement this, we would soon realize that application dependencies get in the way (i.e. each individual application relies on the base system to have dependencies installed, such as Java, .NET, etc, and these dependencies don't always play nicely in the same sandpit)."
+        , FlowParagraph "The good news is that encapsulating of application dependencies is no longer a problem - and easily solved using containers!"
+
+        , FlowImage $ { src: "/images/articles/fluid_architecture/slide13.jpeg", alt: "enter containers", caption: Just "enter containers" }
+        , FlowParagraph "Quick elevator pitch on containers:"
+        , FlowParagraph "In the old-world managing an application meant managing the virtual machine operating system. Virtual machines are big heavy monsters that take long to provision (humans), hard to move around and are generally plugged into the underlying infrastructure (well known IP addresses, file-systems, etc)."
+        , FlowParagraph "Containers on the other hand are able to stack up on top of container hosts fairly generically, they have zero dependencies on the underlying operating system and because they are extremely lightweight we can spin them up, shut them down and move them around our infrastructure very easily."
+        , FlowParagraph "However - the most important aspect is that containers include applications and their dependencies, but zero operating system kernel. Meaning that when we move them around, they move around carrying absolutely everything they need to launch."
+
+        , FlowImage $ { src: "/images/articles/fluid_architecture/slide14.jpeg", alt: "container architecture", caption: Just "container architecture" }
+        , FlowParagraph "A simple container architecture, lots of homogeneous (identical) hosts with various heterogeneous (varied) containers deployed above."
+
+        , FlowImage $ { src: "/images/articles/fluid_architecture/slide15.jpeg", alt: "combined usage", caption: Just "combined usage" }
+        , FlowParagraph "Take a look at the combined usage (supply/demand) of deploying all 3 applications to the new single container fabric. We have managed to reduce our total usage down to 15% waste, simply by allowing our low usage apps consume in a shared resource environment. Pretty impressive."
+
+        , FlowImage $ { src: "/images/articles/fluid_architecture/slide16.jpeg", alt: "fluid infrastructure", caption: Just "fluid infrastructure" }
+        , FlowParagraph "From a scalability perspective, we have an architecture that is both vertically and horizontally flexible (up & down)."
+        , FlowParagraph "Launching additional containers within the same resource group gives us our vertical scalability - and enables us to make better use of existing resources, plus provide for redundancy."
+        , FlowParagraph "Launching additional hosts within the resource group gives us our horizontal scalability - and enables us to grow or shrink the TOTAL capacity of the group."
+
+        , FlowImage $ { src: "/images/articles/fluid_architecture/slide17.jpeg", alt: "objectives", caption: Just "objectives" }
+        , FlowParagraph "A couple of summary points above that I believe can help to optimize your costs, the first 2 fairly easy to implement and the second 2 moving you closer to a fully fluid infrastructure using containers."
+
         ]
     }
 
