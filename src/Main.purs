@@ -67,4 +67,9 @@ main = do
     -- Get the page we just landed on
     route <- currentRoute
 
-    runWidgetInDom "root" $ actionHandler navInterface $ withNavbar $ renderPage $ routeToPage route
+    (runWidgetInDom "root" 
+        $ actionHandler navInterface 
+        $ withNavbar 
+        $ renderPage 
+        $ routeToPage route)
+        >>= (\_ -> applyHighlighting unit)

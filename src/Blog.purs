@@ -47,7 +47,6 @@ foreach (var name in names) {
         longest = name;
     }
 }
-
 """
         }
         , FlowParagraph "Why is it so cringe-worthy? Because it's buggy and full of assumptions. Its very hard to write code like that this that isn't buggy, and really this is grade 11 style programming (no disrespect to any talented grade 11'ers out there!). "
@@ -65,7 +64,6 @@ var longest = names
                 .First();
 
 Console.Out.WriteLine ("The longest name is: {0}", longest);
-
 """
         }
         , FlowParagraph "This version is so much safer - and much simpler to understand. There is no mutation occurring either. Either the variable _longest_ exists or it doesn't. No halfway state while the code is running."
@@ -190,7 +188,6 @@ int a = 10;
 reset(a);
 
 print ("A is " + a); // Should print '10'
-
 """
         }
         , FlowParagraph "If you are surprised that '10' is printed above, then you definitely need to research this topic. Basically, a copy of the value contained by the variable 'a' is assigned to the method parameter 'x', which is in it's own right a separate variable. Thus when the value 5 is assigned to the variable 'x', it does not magically get also assigned back to 'a'. Therefore 'a' remains as it was, set to it's original value of '10' when the reset() function returns."
@@ -216,7 +213,6 @@ Dog a = new Dog(10);
 reset(a);
 
 print ("A is " + a.v); // Should print '10' still...
-
 """
         }
         , FlowParagraph "Ok, so now we've introduced a _'reference'_ type to overcome our issue in the previous example, and it may now come as a big surprise that this approach still has not had the desired effect of setting our value in the reset() function. Infact, the problem is _EXACTLY_ the same as our previous one. The variable 'x' is a _COPY_ of the value of the variable 'a', the only difference being that it just so happens to contain a reference to an object. When you assign some other value to 'x', it simply takes on the new value, it _does not_ magically pass this value back onto 'a'."
@@ -227,7 +223,6 @@ void reset(Dog x)
 {
     x.v = 5;
 }
-
 """
         }
         , FlowParagraph "If this seems basic and obvious - then good, you get it. If it doesn't, please re-produce this example and play with it until you're comfortable with the concept."
@@ -258,7 +253,6 @@ if ('1' == true) {
     x = 5;     // win! you have polluted global
     var y = 5; // fail! you kept it local...
 }
-
 """
         }
 
@@ -293,7 +287,6 @@ data Person = Person {
     mother :: Maybe Person,
     father :: Maybe Person
 }
-
 """
         }
         , FlowParagraph "So it's super simple. A Person has a name, and optionally has a mother and/or father, specified by the type Maybe Person for each."
@@ -329,13 +322,12 @@ gemma = Person {
         }
     }
 }
-
 """
         }
         , FlowParagraph "Sorry that uber terse, but it's simply:"
-        , FlowSourceCode { lang: Haskell, body: 
+        , FlowSourceCode { lang: Pseudo, body: 
 """
-                    Sandy
+.                   Sandy
                    /
          Michelle <
        /           \
@@ -344,7 +336,6 @@ Gemma <      Kate   Tim
        Tom <
             \
              Bob
-
 """
         }
         , FlowParagraph "Next lets write a function which finds the the maternal grandparent (i.e. the mother of the mother):"
@@ -358,7 +349,6 @@ maternalgrandmother p =
             case mother mom of
                 Nothing -> Nothing
                 Just granny -> Just granny
-
 """
         }
         , FlowParagraph "The above is the simplest implementation, and simply solves the question by asking the following questions:"
@@ -369,7 +359,6 @@ maternalgrandmother p =
 2b. If so, then does the mother have a mother?
 3a. If not, then return Nothing.
 3b. If so, then return that person (the granny).
-
 """
         }
         , FlowParagraph "And of course this would go on and on if we were looking for the grandgrandmother, and grandgrandgrandmother etc. So this is the sort of repetition where a monad might be useful. So in the above example, let me highlight the crap that we'd like to abstract out:"
@@ -383,7 +372,6 @@ maternalgrandmother p =
             case mother mom of
                 Nothing -> Nothing
                 Just granny -> Just granny
-
 """
         }
         , FlowParagraph "I.e. we just want the mother of the passed in person, and then the mother of that person - any interim value that happens to be Nothing should return Nothing back to the caller. Simple. So at best we want something like this:"
@@ -396,7 +384,6 @@ maternalgrandmother p = mother $ mother p
     -- Nothing. 'mother mother p' may be Nothing too
     -- but thats ok, because we return a Maybe Person
     -- so all good there
-
 """
         }
         , FlowParagraph "So this is basically our ideal implementation, but we're missing the mechanism to implement the 'return Nothing when interim results are Nothing' bit. It's captured nicely in the comment, but the compiler unfortunately isn't that clever. So this is where MONADS come in!"
@@ -410,7 +397,6 @@ maternalgrandmother2 p =
     mother p >>=
         (\m -> mother m >>=
             (\g -> return (g)))
-            
 """
         }
         ]

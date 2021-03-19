@@ -8,10 +8,11 @@ import Concur.React.DOM as DOM
 import Concur.React.Props as Props
 import Control.Alt ((<|>))
 import Data.Maybe (fromMaybe)
+import Data.String (trim)
 import TomWellsOrg.Art as Art
 import TomWellsOrg.Blog (articles)
 import TomWellsOrg.CV (content) as CV
-import TomWellsOrg.Domain (Article(..), FlowComponent(..), Page(..), PageActions(..), StreamEntry)
+import TomWellsOrg.Domain (Article(..), FlowComponent(..), Language(..), Page(..), PageActions(..), StreamEntry)
 import TomWellsOrg.Functions (printDate, sortedByMostRecent)
 import TomWellsOrg.Stream (content) as Stream
 
@@ -36,9 +37,18 @@ renderFlowComponent (FlowYouTube video) =
         , Props.allowFullScreen true
         ] []
 renderFlowComponent (FlowSourceCode { lang, body }) =
+    let
+        langClass = 
+            case lang of
+                Haskell -> "haskell"
+                PureScript -> "haskell"
+                JavaScript -> "javascript"
+                CSharp -> "csharp"
+                Pseudo -> "plaintext"
+    in
     DOM.pre [] 
-        [ DOM.code [ Props.className "javascript" ]
-            [ DOM.text body 
+        [ DOM.code [ Props.className $ "language-" <> langClass ]
+            [ DOM.text $ trim body 
             ]
         ]
 
