@@ -10,10 +10,10 @@ import Control.Alt ((<|>))
 import Data.Maybe (fromMaybe)
 import TomWellsOrg.Art as Art
 import TomWellsOrg.Blog (articles)
+import TomWellsOrg.CV (content) as CV
 import TomWellsOrg.Domain (Article(..), FlowComponent(..), Page(..), PageActions(..), StreamEntry)
 import TomWellsOrg.Functions (printDate, sortedByMostRecent)
 import TomWellsOrg.Stream (content) as Stream
-import TomWellsOrg.CV (content) as CV 
 
 renderFlowComponent :: forall a. FlowComponent -> Widget HTML a
 renderFlowComponent (FlowParagraph text) = DOM.p [] [ DOM.text text ]
@@ -36,7 +36,11 @@ renderFlowComponent (FlowYouTube video) =
         , Props.allowFullScreen true
         ] []
 renderFlowComponent (FlowSourceCode { lang, body }) =
-    DOM.pre [] [ DOM.text body ]
+    DOM.pre [] 
+        [ DOM.code [ Props.className "javascript" ]
+            [ DOM.text body 
+            ]
+        ]
 
 renderFlowComponent _ = DOM.h2 [] [ DOM.text "COMPONENT HERE" ]
 
