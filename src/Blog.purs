@@ -15,7 +15,8 @@ tomwells =
 
 articles :: Array Article
 articles =
-    [ restful_in_peace
+    [ imperative_programming_is_just_a_monad
+    , restful_in_peace
     , what_i_look_for_in_a_developer
     , practical_functional_programming
     , intro_to_fluid_infrastructure
@@ -23,6 +24,47 @@ articles =
     , livescript_rocking_your_world
     , a_word_on_monads
     ]
+
+imperative_programming_is_just_a_monad :: Article
+imperative_programming_is_just_a_monad = Article
+    { slug: ""
+    , title: "It's just a monad"
+    , keywords: []
+    , cover: { src: "/images/covers/code_haskell_2.png", alt: "code", caption: Nothing }
+    , author: tomwells
+    , date: constructDate 2021 2 16
+    , summary: "No summary yet"
+    , body: [ FlowParagraph "I'm getting back into Haskell since giving up on it around 2015 - of course due to work distractions, but mainly having the wrong expectation of what it would require from my brain to wrangle the fundamentals. At the time I found the syntax easy and beautiful, the paradigm of reductive programming very natural and the ability to describe and process data structures so elegant that I was absolutely smitten going through the beginner level tutorials and scratch programs."
+            , FlowParagraph "You hit the wall pretty quickly however, as you start to learn Functors, Applicatives, Monoids and finally Monads. And although those seem ok in principle, my head was at it's limit trying to embed these new ideas. Very quickly though you discover that this is the tip of the iceberg, and in practise I ended up fighting and fighting - really just trying to get code compiling. If I couldn't get the basic stuff to compile, how the hell was I going to write real stuff?"
+            , FlowParagraph "There was something I did not understand, and it was fundamental. I had a hole in my brain, I was missing the building blocks, the intuition, the big picture. I gave up."
+            , FlowSection "Enter Elm"
+            , FlowParagraph "All was not lost however - as I found solace in other languages such as Javascript and Scala where I was able to apply a bunch of those basic ideas I had learned from Haskell. I wrote better, more pure, less buggy and more concurrent code. Life was good again for many years, until one day I was working on a project using React with Redux on the front-end connected via Websockets to KStreams based stream processing on the backend (trying to build a fully event-driven architecture) I discovered Elm. It turns out that Elm really invented the Redux pattern - and had built an entirely new language and framwork around this idea nicknamed The Elm Architecture - or TEA for short. Elm clicked immediately for me, I think in part due to it looking familiar and waking up that old dormant Haskelley part of my mind - but it was also really easy to pickup, and so perfectly fit-for-purpose it was easy to understand and just get productive."
+            , FlowParagraph "It didn't take long and I was whacking out web front-ends using ELM in no time. Small internal projects, hobby projects, anything that wasn't 'customer' or needed to be 'production' or 'maintainable' much. It turns out I had a few, and within a few months I had written thousands of lines and Elm and was really ontop of it. Elm is the future!"
+            , FlowSection "Exit Elm"
+            , FlowParagraph "I quickly discovered its limits though - and especially the difficulty in writing single-page-apps - i.e. the kind where you have one app, but many different 'pages' with many different 'model-update-view' type loops in it based upon the context, and typically some sort of 'router' that can move you between contexts. Elm really sucks for this - and I really tried hard to make it work - but fundamentally it's predicated on the single mega update loop idea, and so you quite quickly start to make a huge mess of your data structures as you need to munge everything together into a single model, for that single update call. Blegh. So Elm is awesome, but only for really simple web apps - and I had to reclassify it in my mind as a fun academic experiment, and no longer as a potential tool for real work."
+            , FlowSection "Enter Purescript"
+            , FlowParagraph "Ahh this was the gateway drug for me. With Purescript I could write a very simple TEA type app, BUT I could also choose to combine many TEAs together to create a bigger single-page-app architecture. And Purescript looked basically the same as Elm from a syntax perspective so it was easy to switch quickly, and mostly could be made to fit into my mental model I had been building on. Purescript turns out to be MUCH more open and MUCH more general purpose - not limited to web application alone, but also able to be compiled to Javascript and executed by Nodejs. And although there was good Elm-like clones for Purescript, there are other potentially more interesting web models, such as Concur - which is closer to a webcomponents model, and so there is tons of choice."
+            , FlowSection "Back to Haskell"
+            , FlowParagraph "Through writing more console based stuff you soon encounter Effect and Aff in the Purescript world - which are the very interesting containers for holding synchronous and asynchronous 'side-effects' respectively. These are actually really easy to grasp initially, but soon become difficult when you need to do stuff a little more complex than 'hello world'. Another area that knocked me off track was understanding how you mix code in each of these 'containers', and very soon Monad Transformers (aka mtl) get mentioned and once again you are back to square 1 of feeling like a noob, and all those old feelings from 2015 come rushing back. This time however, I'm ready for it. I am more well-rounded. I can see the value. I know the curve is steep. But I am committed."
+            ]
+    }
+
+new_one :: Article
+new_one = Article
+    { slug: ""
+    , title: "A strategy of relevance"
+    , keywords: []
+    , cover: { src: "/images/articles/strategy_relevance/Cynefin_framework_by_Edwin_Stoop.jpg", alt: "The Cynefin Framework", caption: Just "By Edwin Stoop (User:Marillion!!62) - [1], CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=53810658" }
+    , author: tomwells
+    , date: constructDate 2021 4 30
+    , summary: "No summary yet"
+    , body: 
+        [ FlowParagraph "One of the recurring challenges of running a software development company is the dreaded 'But what is our strategy?' discussion. As the lead of innovation at Synthesis, I have personally never struggled with needing to answer this as it always seemed obvious to me. But given the question rears it's head so often (and moreso in recent years - as we have grown in numbers) that it has triggered me to think more deeply about it, figure out a way to articulate it, and try to understand why it is that it's not so obvious to others."
+        , FlowParagraph "Fundamentally we are a company that believes in technological evolution - we believe that technology changes quickly, "
+        , FlowParagraph "One of the models I really like is called the Cynefin Framework (pronounced 'Kin-evan'), developed in the late 90's and incubated inside the IBM initially as a tool to help leaders make better decisions, but taking into account the "
+        , FlowImage $ { src: "/images/articles/strategy_relevance/Cynefin_framework_by_Edwin_Stoop.jpg", alt: "The Cynefin Framework", caption: Just "The Cynefin Framework according to Wikipedia - Drawn by Edwin Stoop, CC BY-SA 4.0" }
+        ]
+    }
 
 practical_functional_programming :: Article
 practical_functional_programming = Article
