@@ -153,12 +153,13 @@ content =
 
     , FlowSection "Artillery Fire Control System"
     , FlowParagraph "Worked in the Ground-Based Command and Control Department as a software developer on an artillery command and control system. The system was written in Java using Sun Microsystems’ NetBeans Platform and targeted at the Linux platform. I was a member of the architecture team and was instrumental in redesigning the entire system from scratch after identifying a number of critical flaws in the prototype design. My responsibility on the project involved developing the core module infrastructure of the framework in order to support a pluggable and modular application. Later I was tasked with developing a digital elevation data processing module in C++ integrated into the core product (using Java Native Interface), as well as taking on the role of software configuration manager for the project."
-    , FlowParagraph "This fire control system was intended for use by the G5 and G6 Howitzer guns produced in South Africa at the time.g6"
+    , FlowParagraph "This fire control system was intended for use by the G5 and G6 Howitzer guns produced in South Africa at the time."
     , FlowImage { src: "/images/cv/g6.jpeg", alt: "G6 Howitzer", caption: Just "The G6 Howitzer" }
 
     , FlowSection "Combat Team Trainer"
     , FlowParagraph "Worked in the Simulator Systems Department as a Junior Software Developer on a combat-team trainer for the South African Navy’s Patrol Corvette (SANPC) Programme. I was solely responsible for the synthetic environment subsystem which provides the entire system with emulated real-world data of the vessel’s current situation. This simulation engine also allows visualization and modification of the surface situation by an instructor. I was partially responsible for writing both the surface-to-surface and surface-to-air missile console simulators which emulated the actual combat consoles linked to the vessel’s combat management system. This involved writing human-machine interface code as well as simulation of ballistics, flight-path and collision-detection code. The simulator was a complete success and I was instrumental in the delivery and rollout process which occurred over a period of 3 months in Simonstown, Cape Town."
     , FlowImage { src: "/images/cv/sanpc.jpeg", alt: "SANPC", caption: Just "South African Navy Patrol Corvette" }
+    , FlowParagraph "Check out a video made of a live test-firing of the surface-to-surface missile below:"
     , FlowYouTube { id: "KrW1oQq9f3k" }
 
     , FlowMajorHeader "Outside of work"
