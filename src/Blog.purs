@@ -15,7 +15,8 @@ tomwells =
 
 articles :: Array Article
 articles =
-    [ imperative_programming_is_just_a_monad
+    [ 
+      its_just_a_monad
     , restful_in_peace
     , what_i_look_for_in_a_developer
     , practical_functional_programming
@@ -27,6 +28,19 @@ articles =
 
 imperative_programming_is_just_a_monad :: Article
 imperative_programming_is_just_a_monad = Article
+    { slug: ""
+    , title: "Imperative programming is Just A Monad™"
+    , keywords: []
+    , cover: { src: "/images/covers/code_haskell_3.png", alt: "code", caption: Nothing }
+    , author: tomwells
+    , date: constructDate 2021 6 2
+    , summary: "No summary yet"
+    , body: [ FlowParagraph "Is it?"
+            ]
+    }
+
+its_just_a_monad :: Article
+its_just_a_monad = Article
     { slug: ""
     , title: "It's just a monad"
     , keywords: []
@@ -46,6 +60,8 @@ imperative_programming_is_just_a_monad = Article
             , FlowParagraph "Ahh this was the gateway drug for me. With Purescript I could write a very simple TEA type app, BUT I could also choose to combine many TEAs together to create a bigger single-page-app architecture. And Purescript looked basically the same as Elm from a syntax perspective so it was easy to switch quickly, and mostly could be made to fit into my mental model I had been building on. Purescript turns out to be MUCH more open and MUCH more general purpose - not limited to web application alone, but also able to be compiled to Javascript and executed by Nodejs. And although there was good Elm-like clones for Purescript, there are other potentially more interesting web models, such as Concur - which is closer to a webcomponents model, and so there is tons of choice."
             , FlowSection "Back to Haskell"
             , FlowParagraph "Through writing more console based stuff you soon encounter Effect and Aff in the Purescript world - which are the very interesting containers for holding synchronous and asynchronous 'side-effects' respectively. These are actually really easy to grasp initially, but soon become difficult when you need to do stuff a little more complex than 'hello world'. Another area that knocked me off track was understanding how you mix code in each of these 'containers', and very soon Monad Transformers (aka mtl) get mentioned and once again you are back to square 1 of feeling like a noob, and all those old feelings from 2015 come rushing back. This time however, I'm ready for it. I am more well-rounded. I can see the value. I know the curve is steep. But I am committed."
+            , FlowImage $ { src: "/images/articles/just_a_monad/book.png", alt: "Practical Haskell Book", caption: Just "Practical Haskell - A Real World Guide to Programming - By Alejandro Serrano Mena" }
+            , FlowParagraph "Hopefully the above helps!"
             ]
     }
 

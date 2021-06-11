@@ -8,7 +8,14 @@ import TomWellsOrg.Functions (constructDate)
 
 content :: Array StreamEntry
 content = 
-    [ { date: constructDate 2021 3 23
+    [ 
+      { date: constructDate 2021 3 23
+      , entry: 
+        [ FlowParagraph "I was invited to talk about the Future of Banking on the Synthesis Podcast with Howard Feldman - check it out below!"
+        , FlowYouTube { id: "DrcHAMpoZSY" }
+        ]
+      } 
+    , { date: constructDate 2021 3 23
       , entry: 
         [ FlowParagraph "Episode #12 of Learning PureScript together is out!"
         , FlowParagraph "In this one we take a round-trip around Functor, Apply, Applicative and Bind (solid foundational type classes)"
