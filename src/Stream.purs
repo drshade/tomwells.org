@@ -9,7 +9,7 @@ import TomWellsOrg.Functions (constructDate)
 content :: Array StreamEntry
 content = 
     [ 
-      { date: constructDate 2021 3 23
+      { date: constructDate 2021 6 11
       , entry: 
         [ FlowParagraph "I was invited to talk about the Future of Banking on the Synthesis Podcast with Howard Feldman - check it out below!"
         , FlowYouTube { id: "DrcHAMpoZSY" }
