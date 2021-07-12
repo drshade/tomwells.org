@@ -9,7 +9,13 @@ import TomWellsOrg.Functions (constructDate)
 content :: Array StreamEntry
 content = 
     [ 
-      { date: constructDate 2021 6 11
+      { date: constructDate 2021 7 12
+      , entry: 
+        [ FlowParagraph "I got pretty hung-up on a particular topic during an interview around the payments landscape and couldn't stop talking about the 'Distributed Economy'. Was a good opportunity to get my thoughts in order with a willing listener - turned out to be some pearls of wisedom in there (or madness??)!"
+        , FlowYouTube { id: "nek4EOCOzvE" }
+        ]
+      } 
+    , { date: constructDate 2021 6 11
       , entry: 
         [ FlowParagraph "I was invited to talk about the Future of Banking on the Synthesis Podcast with Howard Feldman - check it out below!"
         , FlowYouTube { id: "DrcHAMpoZSY" }
