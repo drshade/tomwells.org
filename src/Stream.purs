@@ -14,7 +14,13 @@ content =
         [ FlowParagraph "I got pretty hung-up on a particular topic during an interview around the payments landscape and couldn't stop talking about the 'Distributed Economy'. Was a good opportunity to get my thoughts in order with a willing listener - turned out to be some pearls of wisedom in there (or madness??)!"
         , FlowYouTube { id: "nek4EOCOzvE" }
         ]
-      } 
+      }
+    , { date: constructDate 2021 7 10
+      , entry:
+        [ FlowParagraph "My Future of Banking Podcast interview was translated into an article."
+        , FlowLink { title: "Brave Banking", link: "https://www.bbrief.co.za/2021/07/02/brave-banking/" }
+        ]
+      }
     , { date: constructDate 2021 6 11
       , entry: 
         [ FlowParagraph "I was invited to talk about the Future of Banking on the Synthesis Podcast with Howard Feldman - check it out below!"
