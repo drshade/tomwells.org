@@ -18,7 +18,7 @@ content =
     , { date: constructDate 2021 7 2
       , entry:
         [ FlowParagraph "My Future of Banking Podcast interview was translated into an article."
-        , FlowLink { title: "Brave Banking", link: "https://www.bbrief.co.za/2021/07/02/brave-banking/" }
+        , FlowLink { title: ">> Brave Banking <<", link: "https://www.bbrief.co.za/2021/07/02/brave-banking/" }
         ]
       }
     , { date: constructDate 2021 6 11
