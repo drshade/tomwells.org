@@ -101,7 +101,7 @@ renderPage (Stream content) =
         render' { date, entry } =
             (DOM.div [] 
                 (entry <#> renderFlowComponent)
-                <|> DOM.div [] [ DOM.text $ "(uploaded " <> printDate date <> ")" ]
+                <|> DOM.div [ Props.className "centered", Props.className "caption" ] [ DOM.text $ "(uploaded " <> printDate date <> ")" ]
             )
     in
         DOM.div []
