@@ -9,7 +9,13 @@ import TomWellsOrg.Functions (constructDate)
 content :: Array StreamEntry
 content = 
     [ 
-      { date: constructDate 2021 7 22
+      { date: constructDate 2021 7 29
+      , entry: 
+        [ FlowParagraph "A 'fun' tech session I gave at Synthesis stretching JavaScript to use it in a pure functional way - eventually implementing what looks a bunch like the State Monad."
+        , FlowYouTube { id: "S7_ahn2CGnA" }
+        ]
+      }
+    , { date: constructDate 2021 7 22
       , entry: 
         [ FlowParagraph "A 15 minute primer on the Synthesis Technical Innovation Strategy (tm, hehe) that has worked for us for the last 22 years!"
         , FlowYouTube { id: "RFWeMwEopvE" }
