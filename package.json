@@ -9,9 +9,9 @@
     "clean": "rm -rf output dist .parcel-cache .psci_modules .spago",
 
     "build": "spago build",
-    "bundle": "parcel build --no-scope-hoist public/index.html public/images/*.* public/images/**/*.* public/images/**/**/*.*",
+    "bundle": "parcel build --no-scope-hoist public/index.html public/favicon.ico public/images/*.* public/images/**/*.* public/images/**/**/*.*",
     "deploy": "s3-deploy './dist/**'  --distId E2PGG8VSI8PKOT --invalidate '/' --cwd './dist/' --region eu-west-1 --bucket www.tomwells.org --deleteRemoved",
-    "serve": "parcel serve public/index.html public/images/*.* public/images/**/*.* public/images/**/**/*.* --open"
+    "serve": "parcel serve public/index.html public/favicon.ico public/images/*.* public/images/**/*.* public/images/**/**/*.* --open"
   },
   "author": "Tom Wells <tom@tomwells.org>",
   "license": "ISC",

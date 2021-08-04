@@ -4,6 +4,7 @@
   transformers: {
     '*.png': ['@parcel/transformer-raw'],
     '*.jpg': ['@parcel/transformer-raw'],
-    '*.jpeg': ['@parcel/transformer-raw']
+    '*.jpeg': ['@parcel/transformer-raw'],
+    '*.ico': ['@parcel/transformer-raw']
   }
 }
