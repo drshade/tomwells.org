@@ -30,9 +30,21 @@ h2 {
 	text-align: right;
 	margin-top: 30px;
 }
-iframe {
-	display: block;
-	margin: 0 auto;
+/* 
+   Allows for responsive re-sizing of embedded iframes
+   primarily for youtube videos
+*/
+.iframewrapper {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	height: 0;
+}
+.iframewrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }
 .caption {
 	text-align: center;

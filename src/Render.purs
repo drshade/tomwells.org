@@ -29,13 +29,16 @@ renderFlowComponent (FlowBullets bullets) =
     DOM.p [] [ DOM.text bullets.start ]
     <|> (DOM.ul [] (bullets.points <#> \point -> DOM.li [] [ DOM.text point ]))
 renderFlowComponent (FlowYouTube video) =
-    DOM.iframe 
-        [ Props.width "800"
-        , Props.height "450"
-        , Props.src ("https://www.youtube.com/embed/" <> video.id) 
-        , Props.frameBorder "0"
-        , Props.allowFullScreen true
-        ] []
+    DOM.div 
+        [ Props.className "iframewrapper" ] 
+        [ DOM.iframe 
+            [ Props.src ("https://www.youtube.com/embed/" <> video.id) 
+            , Props.frameBorder "0"
+            , Props.allowFullScreen true
+            , Props.width "560"
+            , Props.height "349"
+            ] []
+        ]
 renderFlowComponent (FlowSourceCode { lang, body }) =
     let
         langClass = 
