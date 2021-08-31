@@ -41,8 +41,8 @@ imperative_programming_is_just_a_monad = Article
 
 its_just_a_monad :: Article
 its_just_a_monad = Article
-    { slug: ""
-    , title: "It's just a monad"
+    { slug: "finding-purity-again"
+    , title: "Finding purity again"
     , keywords: []
     , cover: { src: "/images/covers/code_haskell_2.png", alt: "code", caption: Nothing }
     , author: tomwells
