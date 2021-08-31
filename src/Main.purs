@@ -13,6 +13,7 @@ import Routing.PushState (PushStateInterface, makeInterface)
 import TomWellsOrg.Blog (articles)
 import TomWellsOrg.Domain (Article(..), Page(..), PageActions(..)) as Domain
 import TomWellsOrg.Functions (fuzzyFindArticleBySlug)
+import TomWellsOrg.GoogleAnalytics (track)
 import TomWellsOrg.Highlight (applyHighlighting)
 import TomWellsOrg.Nav (Route(..), currentRoute, parseRoute, printRoute)
 import TomWellsOrg.Render (renderPage, withNavbar)
@@ -62,6 +63,7 @@ main = do
             $ routeToPage newRoute)
             -- Apply code highlighting after render
             >>= (\_ -> applyHighlighting unit)
+            >>= (\_ -> track $ printRoute newRoute)
     )
 
     -- Get the page we just landed on
@@ -73,3 +75,4 @@ main = do
         $ renderPage 
         $ routeToPage route)
         >>= (\_ -> applyHighlighting unit)
+        >>= (\_ -> track $ printRoute route)

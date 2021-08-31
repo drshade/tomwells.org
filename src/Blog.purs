@@ -15,7 +15,7 @@ tomwells =
 
 articles :: Array Article
 articles =
-    [ 
+    [ --imperative_is_jam   
       its_just_a_monad
     , restful_in_peace
     , what_i_look_for_in_a_developer
@@ -26,17 +26,33 @@ articles =
     , a_word_on_monads
     ]
 
-imperative_programming_is_just_a_monad :: Article
-imperative_programming_is_just_a_monad = Article
-    { slug: ""
-    , title: "Imperative programming is Just A Monad™"
+imperative_is_jam :: Article
+imperative_is_jam = Article
+    { slug: "imperative-is-jam"
+    , title: "Imperative is JaM™ (just a monad)"
     , keywords: []
     , cover: { src: "/images/covers/code_haskell_3.png", alt: "code", caption: Nothing }
     , author: tomwells
-    , date: constructDate 2021 6 2
+    , date: constructDate 2021 9 1
     , summary: "No summary yet"
-    , body: [ FlowParagraph "Is it?"
-            ]
+    , body: [ FlowParagraph "I recently presented a session entitled 'JavaScript Gymnastics' to our team, which you can find embedded below. It was very long and probably way too complicated to get through interactively and in realtime and as I reviewed the video I realise there were probably a few fundamental ideas I missed."
+            , FlowYouTube { id: "S7_ahn2CGnA" }
+            , FlowParagraph "The idea is that a programmer CAN STILL write an 'Imperative Program', using a pure functional style. And my 'great-idea' was to try to describe this using JavaScript, which IS an imperative language to prove that. I.e. Use an Imperative Language in a Pure Functional Style to write an Imperative Program. Sounds crazy? Yes probably. But it was also fun to see, and I don't think the results were too bad! JavaScript is pretty awesome and would still be my go-to choice if I had to pick an all-rounder language."
+            , FlowParagraph "So how do you write an Imperative Program in a Pure Functional Style? Thats the State Monad. So lets start with a very simple program:"
+        , FlowSourceCode { lang: JavaScript, body: 
+"""
+const program = () => {
+    var x = 1	// store 1 as x
+    var y = 2	// store 2 as y
+    x = x + 1	// lookup x, compute x + 1, store as x
+    y = y * 2   // lookup y, compute y * 2, store as y
+    return x + y
+}
+"""
+          }
+        , FlowParagraph ""
+        , FlowParagraph ""
+        ]
     }
 
 its_just_a_monad :: Article
