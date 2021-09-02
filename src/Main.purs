@@ -50,6 +50,7 @@ actionHandler navInterface component = do
 
 main :: Effect Unit
 main = do
+
     -- Setup hooks so that we can handle navigating using pushState() (incl back + forward browser buttons)
     navInterface <- makeInterface
     _ <- navInterface.listen (\location ->
