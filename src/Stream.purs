@@ -9,7 +9,13 @@ import TomWellsOrg.Functions (constructDate)
 content :: Array StreamEntry
 content = 
     [ 
-      { date: constructDate 2021 10 7
+      { date: constructDate 2021 10 14
+      , entry: 
+        [ FlowParagraph "Pure FP Sessions - Intro to ELM #5"
+        , FlowYouTube { id: "01lt9jYqXM8" }
+        ]
+      }
+    , { date: constructDate 2021 10 7
       , entry: 
         [ FlowParagraph "Pure FP Sessions - Intro to ELM #4"
         , FlowYouTube { id: "40iYFCf0Jt4" }
