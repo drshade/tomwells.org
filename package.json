@@ -17,11 +17,11 @@
   "license": "ISC",
   "devDependencies": {
     "parcel": "^2.0.0-beta.1",
-    "purescript": "^0.14.0",
+    "purescript": "^0.14.5",
     "purty": "^6.3.0",
     "s3-deploy": "^1.4.0",
     "serve": "^11.3.2",
-    "spago": "^0.19.1"
+    "spago": "^0.20.3"
   },
   "dependencies": {
     "react": "^17.0.1",

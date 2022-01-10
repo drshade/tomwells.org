@@ -8,7 +8,13 @@ import TomWellsOrg.Functions (constructDate)
 
 content :: Array StreamEntry
 content = 
-    [ { date: constructDate 2021 11 16
+    [ { date: constructDate 2022 1 11
+      , entry: 
+        [ FlowParagraph "A re-post of my DEVconf May 2019 talk about Stream Architecture"
+        , FlowYouTube { id: "yVXpa-KhbaY" }
+        ]
+      }
+    , { date: constructDate 2021 11 16
       , entry: 
         [ FlowParagraph "Using Unity to generate training data for image processing ML"
         , FlowParagraph "Very rough prototype of generating annotated ship gauge images for training a machine learning model"
