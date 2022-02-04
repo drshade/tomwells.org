@@ -8,7 +8,15 @@ import TomWellsOrg.Functions (constructDate)
 
 content :: Array StreamEntry
 content = 
-    [ { date: constructDate 2022 1 11
+    [
+      { date: constructDate 2022 2 4
+      , entry: 
+        [ FlowParagraph "Web3 for developers"
+        , FlowParagraph "A deep dive into Web3 from first principles, understanding why it exists, what it is trying to solve, and then ending up with building a very simple Hello World smart-contract and wiring it up to a basic web application to form a complete dApp."
+        , FlowYouTube { id: "Bh_jFToqvoU" }
+        ]
+      }
+    , { date: constructDate 2022 1 11
       , entry: 
         [ FlowParagraph "A re-post of my DEVconf May 2019 talk about Stream Architecture"
         , FlowYouTube { id: "yVXpa-KhbaY" }
