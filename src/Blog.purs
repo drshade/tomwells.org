@@ -15,8 +15,9 @@ tomwells =
 
 articles :: Array Article
 articles =
-    [ --imperative_is_jam   
-      its_just_a_monad
+    [ --imperative_is_jam
+      haskell_for_prototyping
+    , its_just_a_monad
     , restful_in_peace
     , what_i_look_for_in_a_developer
     , practical_functional_programming
@@ -25,6 +26,106 @@ articles =
     , livescript_rocking_your_world
     , a_word_on_monads
     ]
+
+haskell_for_prototyping :: Article
+haskell_for_prototyping = Article
+    { slug: "haskell_for_prototyping"
+    , title: "Haskell for extreme idea brainstorming"
+    , keywords: []
+    , cover: { src: "/images/covers/code_haskell_3.png", alt: "code", caption: Nothing }
+    , author: tomwells
+    , date: constructDate 2022 3 4
+    , summary: "No summary yet"
+    , body: [ FlowParagraph "A friend, named Gavin, wanted me to help him with a cool chess analysis thing he was playing with - and I suggested we extreme program a prototype using haskell - it was pretty amazing to pair program with because it's so frikkin simple to describe data structures / algorithms with. "
+            , FlowParagraph "For background, Gavin wouldn't call himself a programmer, and he doesn't have much interest in writing code generally - but he is certainly a hacker and not afraid to dive into, as he does have a good grasp of technology, understanding data structures, algorithms etc - just very little experience writing any real code."
+            , FlowParagraph "So to start off - we simply described the 'data structures' of chess and we came up with the following:"
+            , FlowSourceCode { lang: Haskell, body:
+"""
+data Position =   H1 | H2 | H3 | H4 | H5 | H6 | H7 | H8
+                | G1 | G2 | G3 | G4 | G5 | G6 | G7 | G8
+                | F1 | F2 | F3 | F4 | F5 | F6 | F7 | F8
+                | E1 | E2 | E3 | E4 | E5 | E6 | E7 | E8
+                | D1 | D2 | D3 | D4 | D5 | D6 | D7 | D8
+                | C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8
+                | B1 | B2 | B3 | B4 | B5 | B6 | B7 | B8
+                | A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8
+
+data Colour = White | Black
+data Type   = Pawn | Bishop | Knight | Rook | Queen | King
+
+type Col    = Int
+type Row    = Int
+type Coord  = (Col, Row)
+
+type Piece  = (Colour, Type)
+type Board  = Map.Map Position Piece
+"""           }
+            , FlowParagraph "I guess we could have just implicitly used (x,y) coordinates for board positions, but I felt it would be cooler to just enumerate all the positions by name, especially as it's such a limited set. I personally ummm-ed and ahhh-ed around this for a while (i guess while Gavin groaned silently on the other side of the discord call). Eventually came up with the above and decided it would be best to simply just build some functions to convert from (x,y) coords to and from board positions, as well as do some basic arithmetic on them (eg. adding them). I'm pretty sure I dropped the word 'isomorphic' at this point of the conversation, which no doubt made me feel cleverer to myself, but certainly at the cost of another groan over discord."
+            , FlowSourceCode { lang: Haskell, body:
+"""
+toCoord :: Position -> Coord
+toCoord pos = positionCoords Map.! pos
+
+fromCoord :: Coord -> Maybe Position
+fromCoord colrow = 
+    fst <$> List.find (\(p, colrow') -> colrow == colrow') (Map.toList positionCoords)
+
+-- Escape hatch for when we are feeling really lazy!
+unsafeFromCoord :: Coord -> Position
+unsafeFromCoord = fromJust . fromCoord
+
+-- Make coords (+)able
+(|+|) :: (Col, Row) -> (Col, Row) -> (Col, Row)
+(col1, row1) |+| (col2, row2) = (col1 + col2, row1 + row2)
+infixl 6 |+|
+"""           }
+            , FlowParagraph "So once we have that out of the way, it's just a matter of encoding all the possible moves a chess piece can make. And how unbelievably terse is this:"
+            , FlowSourceCode { lang: Haskell, body:
+"""
+calc :: [Coord] -> Position -> [Position]
+calc deltas pos = mapMaybe (\d -> fromCoord $ toCoord pos |+| d) deltas
+
+moves :: Piece -> Position -> [Position]
+moves (White, Pawn)  = calc [(-1, 1), (1, 1)]
+moves (Black, Pawn)  = calc [(-1, -1), (1, -1)]
+moves (_, Knight)    = calc [(-1, 2), (1, 2), (-2, -1), (-2, 1), (-1, -2), (1, -2), (2, 1), (2, -1)]
+moves (_, Rook)      = calc $ join [[(x, 0), (-x, 0), (0, x), (0, -x)] | x <- [1..8]]
+moves (_, Bishop)    = calc $ join [[(x, x), (-x, x), (x, -x), (-x, -x)] | x <- [1..8]]
+moves (_, Queen)     = calc $ join [[(x, 0), (-x, 0), (0, x), (0, -x), (x, x), (-x, x), (x, -x), (-x, -x)] | x <- [1..8]]
+moves (_, King)      = calc [(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1)]
+"""            }
+            , FlowParagraph "Ok, so this is a bit of a cheat - because it doesn't take into account any other pieces - it's just all the possible moves. But this is good enough for our basic analysis we were wanting to play with (which i don't have time to explain, and is out of scope of this article!)."
+            , FlowParagraph "The point being - it was really easy and quick to collaboratively code up and have a conversation around a particular chess analysis within a very short period (just over 2 hours) - simply using a language which is so expressive and easily understandable by a non-programmer. And although it wasn't about the code being written, it was a very nice way of 'whiteboarding' some chess analysis ideas that Gavin had, by giving him a few easy to understand type primitives, and then jointly thinking about the algorithms that might be interesting to apply to those types."
+            , FlowParagraph "Some example outputs of being able to print a simple chess board:"
+            , FlowSourceCode { lang: Haskell, body:
+"""
+_______1_____2_____3_____4_____5_____6_____7_____8
+H|    BR    BK    BB    BK    BQ    BB    BK    BR
+G|    BP    BP    BP    BP    BP    BP    BP    BP
+F|
+E|
+D|
+C|
+B|    WP    WP    WP    WP    WP    WP    WP    WP
+A|    WR    WK    WB    WK    WQ    WB    WK    WR
+"""         }
+            , FlowParagraph "And a more interesting version where we are printing a particular analysis of board position (a simple count of potential attacking pieces, per position):"
+            , FlowSourceCode { lang: Haskell, body:
+"""
+_______1_____2_____3_____4_____5_____6_____7_____8
+H|  BR=1  BK=0  BB=0  BK=0  BQ=1  BB=0  BK=0  BR=1
+G|  BP=1  BP=0  BP=0  BP=0  BP=1  BP=0  BP=0  BP=1
+F|    =2    =0    =0    =0    =1    =0    =0    =2
+E|    =2    =1    =0    =0    =1    =0    =1    =1
+D|    =1    =1    =1    =0    =1    =1    =0    =2
+C|    =4    =2    =4    =3    =4    =3    =3    =4
+B|  WP=1  WP=1  WP=1  WP=4  WP=4  WP=1  WP=1  WP=1
+A|  WR=2  WK=3  WB=4  WK=3  WQ=3  WB=3  WK=3  WR=2
+"""         }
+            , FlowParagraph "Maybe the only thing I might be differently is start with PureScript, or maybe some sort of Haskell Notebook style editor - as the visualisation of data started to suck up too much time and got in our way."
+            , FlowParagraph "Anyways, cool language for this type of approach and will definitely use this style again."
+        ]
+    }
 
 imperative_is_jam :: Article
 imperative_is_jam = Article
