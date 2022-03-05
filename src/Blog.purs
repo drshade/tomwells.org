@@ -37,7 +37,7 @@ haskell_for_prototyping = Article
     , date: constructDate 2022 3 4
     , summary: "No summary yet"
     , body: [ FlowParagraph "A friend, named Gavin, wanted me to help him with a cool chess analysis thing he was playing with - and I suggested we extreme program a prototype using haskell - it was pretty amazing to pair program with because it's so frikkin simple to describe data structures / algorithms with. "
-            , FlowParagraph "For background, Gavin wouldn't call himself a programmer, and he doesn't have much interest in writing code generally - but he is certainly a hacker and not afraid to dive into, as he does have a good grasp of technology, understanding data structures, algorithms etc - just very little experience writing any real code."
+            , FlowParagraph "For background, Gavin wouldn't call himself a programmer, and he doesn't have much interest in writing code generally - but he is certainly a hacker and not afraid to dive in, as he does have a good grasp of technology, understanding data structures, algorithms etc - just very little career experience writing code."
             , FlowParagraph "So to start off - we simply described the 'data structures' of chess and we came up with the following:"
             , FlowSourceCode { lang: Haskell, body:
 """
@@ -60,7 +60,7 @@ type Coord  = (Col, Row)
 type Piece  = (Colour, Type)
 type Board  = Map.Map Position Piece
 """           }
-            , FlowParagraph "I guess we could have just implicitly used (x,y) coordinates for board positions, but I felt it would be cooler to just enumerate all the positions by name, especially as it's such a limited set. I personally ummm-ed and ahhh-ed around this for a while (i guess while Gavin groaned silently on the other side of the discord call). Eventually came up with the above and decided it would be best to simply just build some functions to convert from (x,y) coords to and from board positions, as well as do some basic arithmetic on them (eg. adding them). I'm pretty sure I dropped the word 'isomorphic' at this point of the conversation, which no doubt made me feel cleverer to myself, but certainly at the cost of another groan over discord."
+            , FlowParagraph "I guess we could have just implicitly used (x,y) coordinates for board positions, but I felt it would be cooler to just enumerate all the positions by name, especially as it's such a limited set. I personally ummm-ed and ahhh-ed around this for a while (i guess while Gavin groaned silently on the other side of the discord call). Eventually came up with the above and decided it would be best to simply just build some functions to convert from (x,y) coords to and from board positions, as well as do some basic maths on them (eg. adding them). I'm pretty sure I dropped the word 'isomorphic' at this point of the conversation, which no doubt made me feel cleverer to myself, but almost certainly at the cost of another groan over discord."
             , FlowSourceCode { lang: Haskell, body:
 """
 toCoord :: Position -> Coord
