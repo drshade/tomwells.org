@@ -9,6 +9,7 @@ data Page
     | Stream (Array StreamEntry)
     | CV
     | Contact
+    | Guestbook
     | NotFound
 
 data PageActions

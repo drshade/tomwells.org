@@ -7,6 +7,7 @@ import Concur.React (HTML)
 import Concur.React.DOM as DOM
 import Concur.React.Props as Props
 import Control.Alt ((<|>))
+import TomWellsOrg.Dapps.GuestMint.Main as GuestMint
 import Data.Maybe (fromMaybe)
 import Data.String (trim)
 import TomWellsOrg.Art as Art
@@ -62,6 +63,8 @@ withNavbar component = do
     DOM.div [ Props.className "centered" ]
         [ DOM.a [ (GotoPage (Stream Stream.content)) <$ Props.onClick ] [ DOM.text "Stream" ]
         , DOM.text " | "
+        , DOM.a [ (GotoPage (Guestbook)) <$ Props.onClick ] [ DOM.text "Guestbook" ]
+        , DOM.text " | "
         , DOM.a [ (GotoPage (ListOfArticles articles)) <$ Props.onClick ] [ DOM.text "Blog" ]
         , DOM.text " | "
         , DOM.a [ (GotoPage CV) <$ Props.onClick ] [ DOM.text "About me" ]
@@ -83,6 +86,26 @@ renderPage (SingleArticle (Article article)) =
             ]
         )
 
+renderPage (Stream content) =
+    let
+        render' :: StreamEntry -> Widget HTML PageActions
+        render' { date, entry } =
+            (DOM.div [] 
+                (entry <#> renderFlowComponent)
+                <|> DOM.div [ Props.className "centered", Props.className "caption" ] [ DOM.text $ "(uploaded " <> printDate date <> ")" ]
+            )
+    in
+        DOM.div []
+            [ DOM.pre [ Props.className "centered" ] [ DOM.text Art.stream ]
+            ]
+            <|> DOM.div [] (content <#> render')
+
+renderPage Guestbook =
+    DOM.div [] [ DOM.pre [ Props.className "centered" ] [ DOM.text Art.guestbook ] ]
+    <|> (DOM.div [] [ DOM.text "My guestbook runs on the NEAR protocol blockchain, please try it out!" ] )
+    <|> (DOM.div [] [ DOM.text "------------------------" ] )
+    <|> (GuestMint.root)
+
 renderPage (ListOfArticles articles) =
     let
         render' :: Article -> Widget HTML PageActions
@@ -97,20 +120,6 @@ renderPage (ListOfArticles articles) =
     <|> (DOM.div [] [ DOM.text "Things i've written down" ] )
     <|> (DOM.div [] [ DOM.text "------------------------" ] )
     <|> (DOM.div [] (articles # sortedByMostRecent <#> render'))
-
-renderPage (Stream content) =
-    let
-        render' :: StreamEntry -> Widget HTML PageActions
-        render' { date, entry } =
-            (DOM.div [] 
-                (entry <#> renderFlowComponent)
-                <|> DOM.div [ Props.className "centered", Props.className "caption" ] [ DOM.text $ "(uploaded " <> printDate date <> ")" ]
-            )
-    in
-        DOM.div []
-            [ DOM.pre [ Props.className "centered" ] [ DOM.text Art.stream ]
-            ]
-            <|> DOM.div [] (content <#> render')
 
 renderPage CV = 
     DOM.div []

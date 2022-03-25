@@ -26,6 +26,7 @@ routeToPage (BlogArticle slug) =
         found = fuzzyFindArticleBySlug articles slug
     in
     maybe Domain.NotFound Domain.SingleArticle found
+routeToPage Guestbook = Domain.Guestbook
 routeToPage Stream = Domain.Stream content
 routeToPage Résumé = Domain.CV
 routeToPage Contact = Domain.Contact
@@ -35,6 +36,7 @@ routeToPage NotFound = Domain.NotFound
 pageToRoute :: Domain.Page -> Route
 pageToRoute (Domain.ListOfArticles _) = BlogSummary
 pageToRoute (Domain.SingleArticle (Domain.Article a)) = BlogArticle a.slug
+pageToRoute (Domain.Guestbook) = Guestbook
 pageToRoute (Domain.Stream _) = Stream
 pageToRoute (Domain.CV) = Résumé
 pageToRoute (Domain.Contact) = Contact

@@ -4,7 +4,8 @@ You can edit this file as you like.
 -}
 { name = "my-project"
 , dependencies =
-  [ "arrays"
+  [ "aff"
+  , "arrays"
   , "concur-core"
   , "concur-react"
   , "console"
@@ -22,9 +23,11 @@ You can edit this file as you like.
   , "prelude"
   , "psci-support"
   , "rationals"
+  , "react"
   , "routing"
   , "routing-duplex"
   , "strings"
+  , "transformers"
   , "tuples"
   , "web-html"
   ]

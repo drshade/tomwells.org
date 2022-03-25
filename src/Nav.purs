@@ -17,6 +17,7 @@ data Route
     | Stream
     | Résumé
     | Contact
+    | Guestbook
     | NotFound
 
 derive instance genericRoute :: Generic Route _
@@ -28,6 +29,7 @@ routes = root $ sum
     , "Stream": noArgs
     , "Résumé": path "cv" noArgs
     , "Contact": path "contact" noArgs
+    , "Guestbook": path "guestbook" noArgs
     , "NotFound": path "notfound" noArgs
     }
 

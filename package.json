@@ -7,7 +7,6 @@
   },
   "scripts": {
     "clean": "rm -rf output dist .parcel-cache .psci_modules .spago",
-
     "build": "spago build",
     "bundle": "parcel build --no-scope-hoist public/index.html public/favicon.ico public/images/*.* public/images/**/*.* public/images/**/**/*.*",
     "deploy": "s3-deploy './dist/**'  --distId E2PGG8VSI8PKOT --invalidate '/' --cwd './dist/' --region eu-west-1 --bucket www.tomwells.org --deleteRemoved",
@@ -16,6 +15,7 @@
   "author": "Tom Wells <tom@tomwells.org>",
   "license": "ISC",
   "devDependencies": {
+    "near-cli": "^3.2.0",
     "parcel": "^2.0.0-beta.1",
     "purescript": "^0.14.5",
     "purty": "^6.3.0",
@@ -24,6 +24,7 @@
     "spago": "^0.20.3"
   },
   "dependencies": {
+    "near-api-js": "^0.44.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }
