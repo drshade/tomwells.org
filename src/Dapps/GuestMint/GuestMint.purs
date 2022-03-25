@@ -8,20 +8,15 @@ import Concur.React.DOM as DOM
 import Concur.React.Props (unsafeTargetValue)
 import Concur.React.Props as Props
 import Control.Alt ((<|>))
-import Control.Monad.Except (runExcept)
 import Control.Monad.Except.Trans (ExceptT(..), runExceptT)
 import Data.Array ((!!))
 import Data.Either (Either(..))
 import Data.Generic.Rep (class Generic)
 import Data.Maybe (fromMaybe)
 import Data.Show.Generic (genericShow)
-import Data.Tuple (Tuple)
-import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Aff.Class (liftAff)
 import Effect.Aff.Compat (EffectFnAff, fromEffectFnAff)
-import Effect.Class (liftEffect)
-import React.DOM.Dynamic (a)
 
 type NearWeb3 a = ExceptT NearFailure Aff a
 
@@ -91,12 +86,15 @@ guestbook = do
                     [ listMessagesWidget
                     , connectWalletThen $ addMessageWidget "" 
                     ]
-    stuff <- DOM.text "Executing..." <|> (liftAff $ runExceptT $ addMessage newMessage)
+    _ <- DOM.text "Executing..." <|> (liftAff $ runExceptT $ addMessage newMessage)
     guestbook
 
 root :: forall a. Widget HTML a
 root = guestbook
 
+type ForeignFunction a = ((NearFailure → Either NearFailure a) → (a → Either NearFailure a) → EffectFnAff (Either NearFailure a))
+
+wrap :: forall a. ForeignFunction a -> NearWeb3 a
 wrap f = ExceptT $ fromEffectFnAff $ f Left Right
 
 messages :: NearWeb3 (Array (Array String))
@@ -117,10 +115,10 @@ signOutWallet = wrap _signOutWallet
 accountId :: NearWeb3 String
 accountId = wrap _accountId
 
-foreign import _messages :: forall a. (NearFailure -> Either NearFailure a) -> (a -> Either NearFailure a) -> EffectFnAff (Either NearFailure a)
-foreign import _addMessage :: forall a. String -> (NearFailure -> Either NearFailure a) -> (a -> Either NearFailure a) -> EffectFnAff (Either NearFailure a)
+foreign import _messages :: ForeignFunction (Array (Array String))
+foreign import _addMessage :: String -> ForeignFunction Unit
 
-foreign import _walletConnected :: forall a. (NearFailure -> Either NearFailure a) -> (a -> Either NearFailure a) -> EffectFnAff (Either NearFailure Boolean)
-foreign import _signInWallet :: forall a. (NearFailure -> Either NearFailure a) -> (a -> Either NearFailure a) -> EffectFnAff (Either NearFailure Unit)
-foreign import _signOutWallet :: forall a. (NearFailure -> Either NearFailure a) -> (a -> Either NearFailure a) -> EffectFnAff (Either NearFailure Unit)
-foreign import _accountId :: forall a. (NearFailure -> Either NearFailure a) -> (a -> Either NearFailure a) -> EffectFnAff (Either NearFailure String)
+foreign import _walletConnected :: ForeignFunction Boolean
+foreign import _signInWallet :: ForeignFunction Unit
+foreign import _signOutWallet :: ForeignFunction Unit
+foreign import _accountId :: ForeignFunction String

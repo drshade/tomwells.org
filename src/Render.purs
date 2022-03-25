@@ -56,8 +56,6 @@ renderFlowComponent (FlowSourceCode { lang, body }) =
             ]
         ]
 
-renderFlowComponent _ = DOM.h2 [] [ DOM.text "COMPONENT HERE" ]
-
 withNavbar :: Widget HTML PageActions -> Widget HTML PageActions
 withNavbar component = do
     DOM.div [ Props.className "centered" ]

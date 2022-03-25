@@ -1,10 +1,5 @@
 module TomWellsOrg.Art where
 
-import Prelude
-
-import Data.String (trim)
-import Effect.Console (log)
-
 tomwellsOrg :: String
 tomwellsOrg = """  __                               .__  .__                                  
 _/  |_  ____   _______  _  __ ____ |  | |  |   ______     ___________  ____  
