@@ -64,3 +64,9 @@ a:hover {
 pre > code {
 	font-size: 1.4em;
 }
+
+.ascii-art {
+	/* for ascii art */
+	white-space: pre;
+	text-align: center;
+}

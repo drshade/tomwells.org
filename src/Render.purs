@@ -7,12 +7,12 @@ import Concur.React (HTML)
 import Concur.React.DOM as DOM
 import Concur.React.Props as Props
 import Control.Alt ((<|>))
-import TomWellsOrg.Dapps.GuestMint.Main as GuestMint
 import Data.Maybe (fromMaybe)
 import Data.String (trim)
 import TomWellsOrg.Art as Art
 import TomWellsOrg.Blog (articles)
 import TomWellsOrg.CV (content) as CV
+import TomWellsOrg.Dapps.GuestMint.Main as GuestMint
 import TomWellsOrg.Domain (Article(..), FlowComponent(..), Language(..), Page(..), PageActions(..), StreamEntry)
 import TomWellsOrg.Functions (printDate, sortedByMostRecent)
 import TomWellsOrg.Stream (content) as Stream
@@ -74,8 +74,8 @@ withNavbar component = do
 renderPage :: Page -> Widget HTML PageActions
 renderPage (SingleArticle (Article article)) =
     DOM.h1 [] 
-        [ DOM.img [ Props.src article.cover.src, Props.alt article.cover.alt, Props.width "100%" ]
-        , DOM.text article.title 
+        [ -- DOM.img [ Props.src article.cover.src, Props.alt article.cover.alt, Props.width "100%" ]
+         DOM.text article.title 
         ]
     <|> (DOM.div [] (article.body <#> renderFlowComponent))
     <|> (DOM.h3 [] 
@@ -93,16 +93,18 @@ renderPage (Stream content) =
                 <|> DOM.div [ Props.className "centered", Props.className "caption" ] [ DOM.text $ "(uploaded " <> printDate date <> ")" ]
             )
     in
-        DOM.div []
-            [ DOM.pre [ Props.className "centered" ] [ DOM.text Art.stream ]
+        DOM.div [ Props.className "ascii-art" ] [ Art.rainbow Art.stream ]
+        <|> DOM.p []
+            [ DOM.div [] (content <#> render')
             ]
-            <|> DOM.div [] (content <#> render')
 
 renderPage Guestbook =
-    DOM.div [] [ DOM.pre [ Props.className "centered" ] [ DOM.text Art.guestbook ] ]
-    <|> (DOM.div [] [ DOM.text "My guestbook runs on the NEAR protocol blockchain, please try it out!" ] )
-    <|> (DOM.div [] [ DOM.text "------------------------" ] )
-    <|> (GuestMint.root)
+    DOM.div [ Props.className "ascii-art" ] [ Art.rainbow Art.guestbook ]
+    <|> DOM.p [] 
+        [ DOM.div [] [ DOM.text "My guestbook runs on the NEAR protocol blockchain, please try it out!" ]
+        , DOM.div [] [ DOM.text "------------------------" ]
+        , GuestMint.root
+        ]
 
 renderPage (ListOfArticles articles) =
     let
@@ -114,33 +116,35 @@ renderPage (ListOfArticles articles) =
                 , DOM.text $ " (" <> printDate article.date <> ")"
                 ]
     in
-    DOM.div [] [ DOM.pre [ Props.className "centered" ] [ DOM.text Art.blog ] ]
-    <|> (DOM.div [] [ DOM.text "Things i've written down" ] )
-    <|> (DOM.div [] [ DOM.text "------------------------" ] )
-    <|> (DOM.div [] (articles # sortedByMostRecent <#> render'))
+    DOM.div [ Props.className "ascii-art" ] [ Art.rainbow Art.blog ]
+    <|> DOM.p []
+        [ DOM.div [] [ DOM.text "Things i've written down" ]
+        , DOM.div [] [ DOM.text "------------------------" ]
+        , DOM.div [] (articles # sortedByMostRecent <#> render')
+        ]
 
 renderPage CV = 
-    DOM.div []
-        [ DOM.pre [ Props.className "centered" ] [ DOM.text Art.cv ]
-        , (DOM.div [] (CV.content <#> renderFlowComponent))
+    DOM.div [ Props.className "ascii-art" ] [ Art.rainbow Art.cv ]
+    <|> DOM.p []
+        [ DOM.div [] (CV.content <#> renderFlowComponent)
         ]
 
 renderPage Contact = 
-    DOM.div [] [ DOM.pre [ Props.className "centered" ] [ DOM.text Art.contact ] ]
-    <|> (DOM.div [] [ DOM.text "email $> tom(>>=)tomwells.org" ])
-    <|> (DOM.div [] 
+    DOM.div [ Props.className "ascii-art" ] [ Art.rainbow Art.contact ]
+    <|> DOM.p []
+        [ DOM.div [] [ DOM.text "email $> tom(>>=)tomwells.org" ]
+        , DOM.div [] 
             [ DOM.text "linkedin $> " 
             , DOM.a 
                 [ Props.href "https://www.linkedin.com/in/tomwells80/" ]
                 [ DOM.text "https://www.linkedin.com/in/tomwells80/" ]
             ]
-        )
-    <|> (DOM.div [] 
+        , DOM.div [] 
             [ DOM.text "youtube $> "
             , DOM.a
                 [ Props.href "https://www.youtube.com/c/TomWells" ]
                 [ DOM.text "https://www.youtube.com/c/TomWells" ]
             ]
-        )
+        ]
 
-renderPage NotFound = DOM.h1 [] [ DOM.text "NOT FOUND!" ]
+renderPage NotFound = DOM.div [ Props.className "ascii-art" ] [ Art.rainbow Art.notFound ]

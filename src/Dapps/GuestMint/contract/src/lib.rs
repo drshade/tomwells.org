@@ -6,12 +6,12 @@ near_sdk::setup_alloc!();
 
 #[near_bindgen]
 #[derive(Default, BorshDeserialize, BorshSerialize)]
-pub struct Counter {
+pub struct Guestbook {
     guestbook: Vec<(String, String)>
 }
 
 #[near_bindgen]
-impl Counter {
+impl Guestbook {
     #[init]
     pub fn new() -> Self {
         let mut res = Self::default();

@@ -1,5 +1,42 @@
 module TomWellsOrg.Art where
 
+import Prelude
+
+import Color (fromInt, rgb, toHexString)
+import Concur.Core (Widget)
+import Concur.React (HTML)
+import Concur.React.DOM as DOM
+import Concur.React.Props as Props
+import Control.Alt ((<|>))
+import Data.Array (head)
+import Data.Array (zip, (..), length) as Array
+import Data.Char (toCharCode)
+import Data.Int (floor, round, toNumber)
+import Data.Maybe (fromMaybe)
+import Data.Monoid ((<>))
+import Data.String (Pattern(..), Replacement(..), replaceAll, split, takeWhile, length) as String
+import Data.String.CodeUnits (singleton, toCharArray)
+import Data.Tuple (Tuple(..))
+
+-- Generate your own at
+-- https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
+
+nbsp :: String
+nbsp = "\x00A0"
+
+-- This is a truly horrible function that hacks together a gradient effect
+rainbow :: forall a. String -> Widget HTML a
+rainbow input =
+    let ratio :: Int -> Int -> Int -> Int -> Int -> Int
+        ratio t_min t_max v_min v_max v = round $ (toNumber v / toNumber ((v_max - v_min) + 1)) * toNumber ((t_max - t_min) + 1)
+        rows :: Int
+        rows = Array.length $ String.split (String.Pattern "\n") input
+        cols = (String.length $ fromMaybe "" $ head $ String.split (String.Pattern "\n") input) + 1
+        colour index = toHexString $ rgb (ratio 0 255 0 (cols - 1) (index `mod` cols)) 20 140
+        point (Tuple index value) = DOM.span [ Props.style { color: colour index } ] [ DOM.text $ singleton value ]
+    in 
+        (DOM.div [] (point <$> Array.zip (Array.(..) 0 (String.length input)) (toCharArray input))) --DOM.text "dog"
+
 tomwellsOrg :: String
 tomwellsOrg = """  __                               .__  .__                                  
 _/  |_  ____   _______  _  __ ____ |  | |  |   ______     ___________  ____  
@@ -33,12 +70,12 @@ blog = """___.   .__
      \/           /_____/  """
 
 cv :: String
-cv = """                           .__             .__                        .__  __                 
-  ____  __ ________________|__| ____  __ __|  |  __ __  _____   ___  _|__|/  |______    ____  
-_/ ___\|  |  \_  __ \_  __ \  |/ ___\|  |  \  | |  |  \/     \  \  \/ /  \   __\__  \ _/ __ \ 
-\  \___|  |  /|  | \/|  | \/  \  \___|  |  /  |_|  |  /  Y Y  \  \   /|  ||  |  / __ \\  ___/ 
- \___  >____/ |__|   |__|  |__|\___  >____/|____/____/|__|_|  /   \_/ |__||__| (____  /\___  >
-     \/                            \/                       \/                      \/     \/ """
+cv = """      ___.                  __                    
+_____ \_ |__   ____  __ ___/  |_    _____   ____  
+\__  \ | __ \ /  _ \|  |  \   __\  /     \_/ __ \ 
+ / __ \| \_\ (  <_> )  |  /|  |   |  Y Y  \  ___/ 
+(____  /___  /\____/|____/ |__|   |__|_|  /\___  >
+     \/    \/                           \/     \/ """
 
 contact :: String
 contact = """.__    .__  __                                 ._.
@@ -47,3 +84,11 @@ contact = """.__    .__  __                                 ._.
 |   Y  \  ||  |   |  Y Y  \  ___/  |  |  /  |_> >|
 |___|  /__||__|   |__|_|  /\___  > |____/|   __/__
      \/                 \/     \/        |__|   \/"""
+
+notFound :: String
+notFound = """                         _____  _______      _____  
+  __________________    /  |  | \   _  \    /  |  | 
+_/ __ \_  __ \_  __ \  /   |  |_/  /_\  \  /   |  |_
+\  ___/|  | \/|  | \/ /    ^   /\  \_/   \/    ^   /
+ \___  >__|   |__|    \____   |  \_____  /\____   | 
+     \/                    |__|        \/      |__| """
