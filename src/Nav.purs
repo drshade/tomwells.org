@@ -36,6 +36,7 @@ routes = root $ sum
 -- Our lekker handlers for turning URLs into Pages and back again
 parseRoute :: String -> Route
 parseRoute pathname = either (\_ -> NotFound) identity $ parse routes pathname
+
 printRoute :: Route -> String
 printRoute = print routes
 

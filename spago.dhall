@@ -23,7 +23,6 @@ You can edit this file as you like.
   , "maybe"
   , "newtype"
   , "prelude"
-  , "psci-support"
   , "rationals"
   , "routing"
   , "routing-duplex"

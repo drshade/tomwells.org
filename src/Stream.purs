@@ -8,8 +8,14 @@ import TomWellsOrg.Functions (constructDate)
 
 content :: Array StreamEntry
 content = 
-    [
-      { date: constructDate 2022 2 1
+    [ { date: constructDate 2022 4 14
+      , entry: 
+        [ FlowParagraph "The Matt Brown Show Interview"
+        , FlowParagraph "Invited to talk on the Matt Brown show around the future of payments, including Halo - our innovative tap-on-phone product"
+        , FlowYouTube { id: "_qN2nEsu-RY" }
+        ]
+      }
+    , { date: constructDate 2022 2 1
       , entry: 
         [ FlowParagraph "Web3 for developers - Q&A Session"
         , FlowParagraph "An interesting Q&A session following the previous Web3 session."
