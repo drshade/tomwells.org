@@ -94,13 +94,13 @@ renderPage (Stream content) =
             )
     in
         DOM.div [ Props.className "ascii-art" ] [ Art.rainbow Art.stream ]
-        <|> DOM.p []
+        <|> DOM.div []
             [ DOM.div [] (content <#> render')
             ]
 
 renderPage Guestbook =
     DOM.div [ Props.className "ascii-art" ] [ Art.rainbow Art.guestbook ]
-    <|> DOM.p [] 
+    <|> DOM.div [] 
         [ DOM.div [] [ DOM.text "My guestbook runs on the NEAR protocol blockchain, please try it out!" ]
         , DOM.div [] [ DOM.text "------------------------" ]
         , GuestMint.root
@@ -117,7 +117,7 @@ renderPage (ListOfArticles articles) =
                 ]
     in
     DOM.div [ Props.className "ascii-art" ] [ Art.rainbow Art.blog ]
-    <|> DOM.p []
+    <|> DOM.div []
         [ DOM.div [] [ DOM.text "Things i've written down" ]
         , DOM.div [] [ DOM.text "------------------------" ]
         , DOM.div [] (articles # sortedByMostRecent <#> render')
@@ -125,13 +125,13 @@ renderPage (ListOfArticles articles) =
 
 renderPage CV = 
     DOM.div [ Props.className "ascii-art" ] [ Art.rainbow Art.cv ]
-    <|> DOM.p []
+    <|> DOM.div []
         [ DOM.div [] (CV.content <#> renderFlowComponent)
         ]
 
 renderPage Contact = 
     DOM.div [ Props.className "ascii-art" ] [ Art.rainbow Art.contact ]
-    <|> DOM.p []
+    <|> DOM.div []
         [ DOM.div [] [ DOM.text "email $> tom(>>=)tomwells.org" ]
         , DOM.div [] 
             [ DOM.text "linkedin $> " 

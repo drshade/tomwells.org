@@ -31,7 +31,7 @@ content =
       }
     , { date: constructDate 2022 1 11
       , entry: 
-        [ FlowParagraph "A re-post of my DEVconf May 2019 talk about Stream Architecture"
+        [ FlowParagraph "A re-post of my DEVconf May 2019 talk about Streaming Architecture"
         , FlowYouTube { id: "yVXpa-KhbaY" }
         ]
       }
