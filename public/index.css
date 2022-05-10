@@ -2,10 +2,24 @@ html {
 	overflow-y: scroll;
 }
 
+/* Light mode */
+@media (prefers-color-scheme: light) {
+	body {
+		background-color: #fffffff0;
+		color: #000000f0;
+	}
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: #000000f0;
+		color: #fffffff0;
+	}
+}
+
 body {
 	font-family: 'IBM Plex Mono', monospace;
-	color: #000000;
-	background-color: #ffffff53;
 	font-size: 1.01em;
 	margin-left: 20%;
 	margin-right: 20%;
