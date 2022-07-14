@@ -36,9 +36,18 @@ content =
     , FlowParagraph "Elm is a language for building web applications, nothing else. It really invented the 'redux' pattern which is now so popular in other Javascript based frameworks like React or Angular. However - because Elm is a specialist language it can provide a whole bunch of language support to keep it really simple and remove any ability for the developer to make mistakes in the pattern. It's a pure functional language - meaning absolutely no ability to generate side effects. The author (Evan Czaplicki) is obsessed with designing a language that is simple, easy to use and delightful for developers. It's an absolute pleasure to work with and it has a special place in my heart. Would I use it for real worky type stuff? Probably not. Would I use it for toy worky type stuff? Absolutely you betcha."
     , FlowParagraph "What I love about ELM is that it punishes you for over thinking, or over structuring your solution. Literally code up feature by feature, and extend your solution as you go - refactoring is really easy. It really demonstrates how powerful a proper type system can be, and will certainly make anyone a better programmer in other languages."
 
+    , FlowSection "Haskell"
+    , FlowParagraph "I'd say I'm an 'intermediate' Haskeller! I am pretty comfortable with the basics, including effects, monads, transformers, plus some more advanced stuff like lenses - however I'd say I have still quite a long way to go to fully grasp category theory and some of the more advanced type theory stuff I read about. However I absolutely love this language and it has become one of my primary tools I reach for."
+
     , FlowSection "PureScript"
     , FlowParagraph "Is PureScript + Halogen the solution to using TEA (The ELM Architecture) in production / project type code bases? Maybe! PureScript is heavily inspired by Haskell, syntactically but also from a pure and very strongly typed perspective. What that means is that it's really powerful and allows for much less debugging and testing as most bugs that are produced sit in the 'logic' category. The downside is you need to probably get comfortable with Category Theory, Monads, Higher Kinded Types, etc to really become proficient, and this can be a big ask for general programmers on a team."
-    , FlowParagraph "I run a beginners course on Learning PureScript and post my videos on YouTube - take a watch!"
+    , FlowLink { title : "I run a beginners course on Learning PureScript and post my videos on YouTube - take a watch!"
+               , link : "https://www.youtube.com/playlist?list=PLBAMhqKy7jTvGxQSnUMmgUHTABuqXm4_a"
+               }
+    , FlowParagraph "Plus..."
+    , FlowLink { title : "This blog is written 100% in PureScript! (Primarily using a very cool project called purescript-concur, plus my very own very simple blog framework)"
+               , link : "https://github.com/drshade/tomwells.org"
+               }
 
     , FlowSection "C, C++"
     , FlowParagraph "Although less frequently in recent years, I have been required to write a fair amount of C / C++ code - generally to be run within customized hardware security modules. It takes a couple days to get back into it, but I soon get into the groove and love the language (especially C - for it's simplicity). In my past in the early 2000s I wrote an absolute ton of pure C, back then in a pseudo object-oriented style (function pointers in structs ftw!)."
