@@ -1,6 +1,6 @@
 "use strict";
 
-exports.applyHighlighting = unit => () => {
+export const applyHighlighting = unit => () => {
 	// console.log(hljs.listLanguages())
 	hljs.highlightAll();
 	return unit;

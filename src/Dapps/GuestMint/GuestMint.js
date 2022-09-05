@@ -17,7 +17,7 @@ const config = {
 const connectNear = connect(config)
 const connectWallet = connectNear.then((near) => new WalletConnection(near))
 
-const contract = 
+const contract =
     connectWallet
         .then((wallet) =>
             new nearAPI.Contract(
@@ -31,7 +31,7 @@ const contract =
             )
         )
 
-exports._walletConnected = left => right => (_, resolve) => {
+export const _walletConnected = left => right => (_, resolve) => {
     try {
         connectWallet
             .then((wallet) => {
@@ -45,16 +45,16 @@ exports._walletConnected = left => right => (_, resolve) => {
     return (cancelError, onCancelerError, onCancelerSuccess) => onCancelerSuccess();
 }
 
-exports._signInWallet = left => right => (_, resolve) => {
+export const _signInWallet = left => right => (_, resolve) => {
     try {
         connectWallet
-            .then((wallet) => 
+            .then((wallet) =>
                 wallet.requestSignIn({
                     contractId: accountName,
                     methodNames: ["add_message"],
                 })
             )
-            .then((result) => 
+            .then((result) =>
                 resolve(right(result))
             )
     }
@@ -65,13 +65,13 @@ exports._signInWallet = left => right => (_, resolve) => {
     return (cancelError, onCancelerError, onCancelerSuccess) => onCancelerSuccess();
 }
 
-exports._signOutWallet = left => right => (_, resolve) => {
+export const _signOutWallet = left => right => (_, resolve) => {
     try {
         connectWallet
-            .then((wallet) => 
+            .then((wallet) =>
                 wallet.signOut()
             )
-            .then((result) => 
+            .then((result) =>
                 resolve(right(result))
             )
     }
@@ -82,13 +82,13 @@ exports._signOutWallet = left => right => (_, resolve) => {
     return (cancelError, onCancelerError, onCancelerSuccess) => onCancelerSuccess();
 }
 
-exports._accountId = left => right => (_, resolve) => {
+export const _accountId = left => right => (_, resolve) => {
     try {
         connectWallet
-            .then((wallet) => 
+            .then((wallet) =>
                 wallet.getAccountId()
             )
-            .then((result) => 
+            .then((result) =>
                 resolve(right(result))
             )
     }
@@ -99,7 +99,7 @@ exports._accountId = left => right => (_, resolve) => {
     return (cancelError, onCancelerError, onCancelerSuccess) => onCancelerSuccess();
 }
 
-exports._messages = left => right => (_, resolve) => {
+export const _messages = left => right => (_, resolve) => {
     try {
         contract
             .then((contract) => contract.get_messages())
@@ -116,7 +116,7 @@ exports._messages = left => right => (_, resolve) => {
     return (cancelError, onCancelerError, onCancelerSuccess) => onCancelerSuccess();
 }
 
-exports._addMessage = message => left => right => (_, resolve) => {
+export const _addMessage = message => left => right => (_, resolve) => {
     try {
         console.log("add message called")
         contract

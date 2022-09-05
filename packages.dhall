@@ -105,34 +105,58 @@ in  upstream
 -------------------------------
 -}
 let upstream =
-      https://github.com/purescript/package-sets/releases/download/psc-0.14.0-20210313/packages.dhall sha256:ba6368b31902aad206851fec930e89465440ebf5a1fe0391f8be396e2d2f1d87
+      https://github.com/purescript/package-sets/releases/download/psc-0.15.4-20220901/packages.dhall
+        sha256:f1531b29c21ac437ffe5666c1b6cc76f0a9c29d3c9d107ff047aa2567744994f
 
 in  upstream
-  with simple-json = 
-    { dependencies = 
-      [ "variant"
-      , "globals"
-      ]
-    , repo = "https://github.com/justinwoo/purescript-simple-json.git"
-    , version = "v7.0.0"
-    }
-  with fuzzy = 
-    { repo = "https://github.com/drshade/purescript-fuzzy.git"
-    , version = "6fa72cb4b696c8ad179614522d577a8b0f3eaa3b"
-    , dependencies =
-      [ "console"
+  with concur-core =
+    { dependencies =
+      [ "aff"
+      , "aff-bus"
+      , "arrays"
+      , "avar"
+      , "console"
+      , "control"
       , "datetime"
       , "effect"
+      , "either"
+      , "exceptions"
       , "foldable-traversable"
-      , "foreign-object"
+      , "free"
+      , "identity"
+      , "lazy"
+      , "maybe"
       , "newtype"
-      , "ordered-collections"
+      , "parallel"
       , "prelude"
-      , "psci-support"
-      , "rationals"
-      , "strings"
-      , "test-unit"
+      , "profunctor-lenses"
+      , "tailrec"
+      , "transformers"
       , "tuples"
       ]
+    , repo = "https://github.com/purescript-concur/purescript-concur-core"
+    , version = "v0.5.0"
     }
-
+  with concur-react =
+    { dependencies =
+      [ "aff"
+      , "arrays"
+      , "concur-core"
+      , "console"
+      , "effect"
+      , "either"
+      , "exceptions"
+      , "maybe"
+      , "prelude"
+      , "react"
+      , "react-dom"
+      , "transformers"
+      , "tuples"
+      , "unsafe-coerce"
+      , "web-dom"
+      , "web-events"
+      , "web-html"
+      ]
+    , repo = "https://github.com/purescript-concur/purescript-concur-react"
+    , version = "v0.5.0"
+    }

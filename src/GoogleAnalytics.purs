@@ -1,6 +1,6 @@
 module TomWellsOrg.GoogleAnalytics where
 
-import Prelude (Unit)
 import Effect (Effect)
+import Prelude (Unit)
 
-foreign import track :: String -> Effect Unit
+foreign import track ∷ String → Effect Unit

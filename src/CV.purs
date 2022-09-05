@@ -3,8 +3,8 @@ module TomWellsOrg.CV where
 import Data.Maybe (Maybe(..))
 import TomWellsOrg.Domain (FlowComponent(..))
 
-content :: Array FlowComponent
-content = 
+content ∷ Array FlowComponent
+content =
     [ FlowImage { src: "/images/cv/its_me.jpeg", alt: "Its me!", caption: Just "It's me!" }
     , FlowMajorHeader "TL;DR"
     , FlowParagraph "I'm a well rounded technologist who is effective at bridging the development and business worlds. Able to solve problems rapidly by drawing upon my extensive knowledge base of programming languages, frameworks and experience building large hyper-scale, distributed, realtime and data-driven platforms."
@@ -28,7 +28,7 @@ content =
 
     , FlowSection "Javascript"
     , FlowParagraph "Javascript displaced Python as my scripting language of choice around 2010. I'm super comfortable with nodejs, ES6, promises and the asynchronous programming paradigm - and find this complimenting my functional style completely. I spent many years with LiveScript (a functional language compiling down to Javascript - it's got an amazing prelude, and really simplies code) - but it seems to have lost it's traction, so I've gravitated back to plain old ES6 for plain old Javascript scripting. Although I might be tempted to use PureScript where possible!"
-    
+
     , FlowSection "Scala"
     , FlowParagraph "Although I'm not a big fan of the clunk of Java in general (jar files, package management, classpaths, yuck) I really love the Scala language and have been following it for many years. SBT makes jar hell semi-tolerable (once you manage the learning curve), and once you're through the setup cost Scala is really a joy to use. Decent pattern matching, the Option type, a workable type system - it's not haskell or elm, but it's totally usable! Implicit magic is fantastic - it would be great to see proper discriminated unions one day, and also a few small niggles like function parameter tuple destructuring (and friends - e.g. case Some((a, b)) -> { blah } == e.g. the (a, b) is destructured. Not currently supported in 2.12."
 
@@ -41,13 +41,15 @@ content =
 
     , FlowSection "PureScript"
     , FlowParagraph "Is PureScript + Halogen the solution to using TEA (The ELM Architecture) in production / project type code bases? Maybe! PureScript is heavily inspired by Haskell, syntactically but also from a pure and very strongly typed perspective. What that means is that it's really powerful and allows for much less debugging and testing as most bugs that are produced sit in the 'logic' category. The downside is you need to probably get comfortable with Category Theory, Monads, Higher Kinded Types, etc to really become proficient, and this can be a big ask for general programmers on a team."
-    , FlowLink { title : "I run a beginners course on Learning PureScript and post my videos on YouTube - take a watch!"
-               , link : "https://www.youtube.com/playlist?list=PLBAMhqKy7jTvGxQSnUMmgUHTABuqXm4_a"
-               }
+    , FlowLink
+          { title: "I run a beginners course on Learning PureScript and post my videos on YouTube - take a watch!"
+          , link: "https://www.youtube.com/playlist?list=PLBAMhqKy7jTvGxQSnUMmgUHTABuqXm4_a"
+          }
     , FlowParagraph "Plus..."
-    , FlowLink { title : "This blog is written 100% in PureScript! (Primarily using a very cool project called purescript-concur, plus my very own very simple blog framework)"
-               , link : "https://github.com/drshade/tomwells.org"
-               }
+    , FlowLink
+          { title: "This blog is written 100% in PureScript! (Primarily using a very cool project called purescript-concur, plus my very own very simple blog framework)"
+          , link: "https://github.com/drshade/tomwells.org"
+          }
 
     , FlowSection "C, C++"
     , FlowParagraph "Although less frequently in recent years, I have been required to write a fair amount of C / C++ code - generally to be run within customized hardware security modules. It takes a couple days to get back into it, but I soon get into the groove and love the language (especially C - for it's simplicity). In my past in the early 2000s I wrote an absolute ton of pure C, back then in a pseudo object-oriented style (function pointers in structs ftw!)."
@@ -56,7 +58,6 @@ content =
     , FlowSection "Objective-C"
     , FlowParagraph "A surprisingly cool language that I needed to pickup while looking at IOS development for a proof of concept project I worked on. I ultra-love the ability to switch into C, but also the language is super modern with automatic reference counting, and asynchronous constructs optionally built in. I absolutely love the objective-c language additions - they are quirky and show their amazing history."
     , FlowParagraph "Probably nowadays Swift is a better (functional) choice!"
-
 
     , FlowSection "C#, F#, Java"
     , FlowParagraph "A great, solid, practical and easy to use bunch of languages for everyday use. These are the languages that I tend to recommend for most of the projects which I bootstrap, because of running least risk generally. Microsoft have done a great job of including a monumentally awesome standard library into the runtime, but produced an amazingly powerful core runtime."

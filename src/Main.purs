@@ -19,21 +19,20 @@ import TomWellsOrg.Nav (Route(..), currentRoute, parseRoute, printRoute)
 import TomWellsOrg.Render (renderPage, withNavbar)
 import TomWellsOrg.Stream (content)
 
-routeToPage :: Route -> Domain.Page
+routeToPage ∷ Route → Domain.Page
 routeToPage BlogSummary = Domain.ListOfArticles articles
 routeToPage (BlogArticle slug) =
     let
         found = fuzzyFindArticleBySlug articles slug
     in
-    maybe Domain.NotFound Domain.SingleArticle found
+        maybe Domain.NotFound Domain.SingleArticle found
 routeToPage Guestbook = Domain.Guestbook
 routeToPage Stream = Domain.Stream content
 routeToPage Résumé = Domain.CV
 routeToPage Contact = Domain.Contact
 routeToPage NotFound = Domain.NotFound
 
-
-pageToRoute :: Domain.Page -> Route
+pageToRoute ∷ Domain.Page → Route
 pageToRoute (Domain.ListOfArticles _) = BlogSummary
 pageToRoute (Domain.SingleArticle (Domain.Article a)) = BlogArticle a.slug
 pageToRoute (Domain.Guestbook) = Guestbook
@@ -42,40 +41,45 @@ pageToRoute (Domain.CV) = Résumé
 pageToRoute (Domain.Contact) = Contact
 pageToRoute (Domain.NotFound) = NotFound
 
-actionHandler :: PushStateInterface -> Widget HTML Domain.PageActions -> Widget HTML Domain.PageActions
+actionHandler ∷ PushStateInterface → Widget HTML Domain.PageActions → Widget HTML Domain.PageActions
 actionHandler navInterface component = do
-    action <- component
+    action ← component
     case action of
-        Domain.GotoPage page -> do
-            _ <- liftEffect $ navInterface.pushState (unsafeToForeign {}) (printRoute $ pageToRoute $ page)
+        Domain.GotoPage page → do
+            _ ← liftEffect $ navInterface.pushState (unsafeToForeign {}) (printRoute $ pageToRoute $ page)
             actionHandler navInterface component
 
-main :: Effect Unit
+main ∷ Effect Unit
 main = do
 
     -- Setup hooks so that we can handle navigating using pushState() (incl back + forward browser buttons)
-    navInterface <- makeInterface
-    _ <- navInterface.listen (\location ->
-        let newRoute = parseRoute location.pathname in
-        
-        -- If we wanted to pop the location.state here we could do so first
-        (runWidgetInDom "root" 
-            $ actionHandler navInterface 
-            $ withNavbar 
-            $ renderPage 
-            $ routeToPage newRoute)
-            -- Apply code highlighting after render
-            >>= (\_ -> applyHighlighting unit)
-            >>= (\_ -> track $ printRoute newRoute)
-    )
+    navInterface ← makeInterface
+    _ ← navInterface.listen
+        ( \location →
+              let
+                  newRoute = parseRoute location.pathname
+              in
+
+                  -- If we wanted to pop the location.state here we could do so first
+                  ( runWidgetInDom "root"
+                        $ actionHandler navInterface
+                        $ withNavbar
+                        $ renderPage
+                        $ routeToPage newRoute
+                  )
+                      -- Apply code highlighting after render
+                      >>= (\_ → applyHighlighting unit)
+                      >>= (\_ → track $ printRoute newRoute)
+        )
 
     -- Get the page we just landed on
-    route <- currentRoute
+    route ← currentRoute
 
-    (runWidgetInDom "root" 
-        $ actionHandler navInterface 
-        $ withNavbar 
-        $ renderPage 
-        $ routeToPage route)
-        >>= (\_ -> applyHighlighting unit)
-        >>= (\_ -> track $ printRoute route)
+    ( runWidgetInDom "root"
+          $ actionHandler navInterface
+          $ withNavbar
+          $ renderPage
+          $ routeToPage route
+    )
+        >>= (\_ → applyHighlighting unit)
+        >>= (\_ → track $ printRoute route)

@@ -20,9 +20,9 @@ data Route
     | Guestbook
     | NotFound
 
-derive instance genericRoute :: Generic Route _
+derive instance genericRoute ∷ Generic Route _
 
-routes :: RouteDuplex' Route
+routes ∷ RouteDuplex' Route
 routes = root $ sum
     { "BlogSummary": path "blog" noArgs
     , "BlogArticle": path "blog" (string segment)
@@ -34,14 +34,14 @@ routes = root $ sum
     }
 
 -- Our lekker handlers for turning URLs into Pages and back again
-parseRoute :: String -> Route
-parseRoute pathname = either (\_ -> NotFound) identity $ parse routes pathname
+parseRoute ∷ String → Route
+parseRoute pathname = either (\_ → NotFound) identity $ parse routes pathname
 
-printRoute :: Route -> String
+printRoute ∷ Route → String
 printRoute = print routes
 
 -- Find the Route that reflects the current location (i.e. the one currently in window.location)
-currentRoute :: Effect Route
+currentRoute ∷ Effect Route
 currentRoute = do
     -- Get the page we just landed on (from window.location basically)
     window >>= location >>= pathname <#> parseRoute

@@ -12,24 +12,23 @@ data Page
     | Guestbook
     | NotFound
 
-data PageActions
-    = GotoPage Page
+data PageActions = GotoPage Page
 
 newtype Article = Article
-    { slug :: String
-    , title :: String
-    , keywords :: Array String
-    , cover :: Image
-    , summary :: String
-    , body :: Array FlowComponent
-    , author :: Author
-    , date :: Date
+    { slug ∷ String
+    , title ∷ String
+    , keywords ∷ Array String
+    , cover ∷ Image
+    , summary ∷ String
+    , body ∷ Array FlowComponent
+    , author ∷ Author
+    , date ∷ Date
     }
 
 type Author =
-    { name :: String
-    , email :: String
-    , bio :: String
+    { name ∷ String
+    , email ∷ String
+    , bio ∷ String
     }
 
 data Language
@@ -40,38 +39,38 @@ data Language
     | Haskell
 
 type SourceCode =
-    { lang :: Language
-    , body :: String
+    { lang ∷ Language
+    , body ∷ String
     }
 
-type Image = 
-    { src :: String
-    , alt :: String
-    , caption :: Maybe String
+type Image =
+    { src ∷ String
+    , alt ∷ String
+    , caption ∷ Maybe String
     }
 
 type YouTube =
-    { id :: String
+    { id ∷ String
     }
 
 type Link =
-    { title :: String
-    , link :: String
+    { title ∷ String
+    , link ∷ String
     }
 
 type Quote =
-    { quote :: String
-    , author :: String
+    { quote ∷ String
+    , author ∷ String
     }
 
-type Bullets = 
-    { start :: String
-    , points :: Array String
+type Bullets =
+    { start ∷ String
+    , points ∷ Array String
     }
 
 type StreamEntry =
-    { date :: Date
-    , entry :: Array FlowComponent 
+    { date ∷ Date
+    , entry ∷ Array FlowComponent
     }
 
 data FlowComponent
