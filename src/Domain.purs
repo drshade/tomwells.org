@@ -76,6 +76,7 @@ type StreamEntry =
 data FlowComponent
     = FlowParagraph String
     | FlowMajorHeader String
+    | FlowMinorHeader String
     | FlowSection String
     | FlowLink Link
     | FlowQuote Quote
@@ -83,3 +84,4 @@ data FlowComponent
     | FlowSourceCode SourceCode
     | FlowImage Image
     | FlowYouTube YouTube
+    | FlowYouTubeShorts YouTube

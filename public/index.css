@@ -42,21 +42,25 @@ h1 {
 	font-size: 2em;
 	text-align: center;
 }
+
 h2 {
 	font-family: 'IBM Plex Mono', monospace;
 	font-size: 1.4em;
 	text-align: right;
 	margin-top: 30px;
 }
+
 /* 
    Allows for responsive re-sizing of embedded iframes
    primarily for youtube videos
 */
 .iframewrapper {
 	position: relative;
-	padding-bottom: 56.25%; /* 16:9 */
+	padding-bottom: 56.25%;
+	/* 16:9 */
 	height: 0;
 }
+
 .iframewrapper iframe {
 	position: absolute;
 	top: 0;
@@ -64,22 +68,25 @@ h2 {
 	width: 100%;
 	height: 100%;
 }
+
 .caption {
 	text-align: center;
 	font-style: italic;
 	font-size: small;
 	margin-bottom: 30px;
 }
+
 a {
 	cursor: pointer;
 	color: inherit;
 	text-decoration: none;
 }
+
 a:hover {
 	text-decoration: underline;
 }
 
-pre > code {
+pre>code {
 	font-size: 1.4em;
 }
 
@@ -87,4 +94,14 @@ pre > code {
 	/* for ascii art */
 	white-space: pre;
 	text-align: center;
+}
+
+.load-more-button {
+	text-align: center;
+}
+
+.load-more-button>button {
+	font-family: 'IBM Plex Mono', monospace;
+	font-size: 1.4em;
+	margin-bottom: 5%;
 }

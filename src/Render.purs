@@ -7,6 +7,7 @@ import Concur.React (HTML)
 import Concur.React.DOM as DOM
 import Concur.React.Props as Props
 import Control.Alt ((<|>))
+import Data.Array (take)
 import Data.Maybe (fromMaybe)
 import Data.String (trim)
 import TomWellsOrg.Art as Art
@@ -20,6 +21,7 @@ import TomWellsOrg.Stream (content) as Stream
 renderFlowComponent ∷ ∀ a. FlowComponent → Widget HTML a
 renderFlowComponent (FlowParagraph text) = DOM.p [] [ DOM.text text ]
 renderFlowComponent (FlowMajorHeader text) = DOM.h1 [] [ DOM.text text ]
+renderFlowComponent (FlowMinorHeader text) = DOM.h3 [] [ DOM.text text ]
 renderFlowComponent (FlowSection text) = DOM.h2 [] [ DOM.text text ]
 renderFlowComponent (FlowLink link) = DOM.a [ Props.href link.link ] [ DOM.text link.title ]
 renderFlowComponent (FlowQuote quote) = DOM.p [] [ DOM.text $ "\"" <> quote.quote <> "\" - " <> quote.author ]
@@ -38,6 +40,18 @@ renderFlowComponent (FlowYouTube video) =
               , Props.allowFullScreen true
               , Props.width "560"
               , Props.height "349"
+              ]
+              []
+        ]
+renderFlowComponent (FlowYouTubeShorts video) =
+    DOM.div
+        [ Props.className "iframewrapper-shorts" ]
+        [ DOM.iframe
+              [ Props.src ("https://www.youtube.com/embed/" <> video.id)
+              , Props.frameBorder "0"
+              , Props.allowFullScreen true
+              , Props.width "560"
+              , Props.height "1000"
               ]
               []
         ]
@@ -89,17 +103,26 @@ renderPage (SingleArticle (Article article)) =
 
 renderPage (Stream content) =
     let
-        render' ∷ StreamEntry → Widget HTML PageActions
+        render' ∷ ∀ a. StreamEntry → Widget HTML a
         render' { date, entry } =
             ( DOM.div []
                   (entry <#> renderFlowComponent)
                   <|> DOM.div [ Props.className "centered", Props.className "caption" ] [ DOM.text $ "(uploaded " <> printDate date <> ")" ]
             )
+
+        paginate ∷ ∀ a. Int → Array StreamEntry → Widget HTML a
+        paginate n as = do
+            _ ← DOM.div []
+                [ DOM.div [] (take n as <#> render')
+                , DOM.div
+                      [ Props.className "load-more-button" ]
+                      [ DOM.button [ Props.onClick ] [ DOM.text "Load more" ]
+                      ]
+                ]
+            paginate (n + 3) as
     in
         DOM.div [ Props.className "ascii-art" ] [ Art.rainbow Art.stream ]
-            <|> DOM.div []
-                [ DOM.div [] (content <#> render')
-                ]
+            <|> paginate 3 content
 
 renderPage Guestbook =
     DOM.div [ Props.className "ascii-art" ] [ Art.rainbow Art.guestbook ]
