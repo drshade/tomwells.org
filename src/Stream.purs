@@ -7,7 +7,42 @@ import TomWellsOrg.Functions (constructDate)
 
 content ∷ Array StreamEntry
 content =
-    [ { date: constructDate 2022 6 15
+    [ { date: constructDate 2023 3 2
+      , entry:
+            [ FlowParagraph "Tom talks Rust - Episode 5"
+            , FlowParagraph "Ownership"
+            , FlowYouTube { id: "xVq5I3Ceyy8" }
+            ]
+      }
+    , { date: constructDate 2023 3 2
+      , entry:
+            [ FlowParagraph "Tom talks Rust - Episode 4"
+            , FlowParagraph "Syntax and features"
+            , FlowYouTube { id: "qsauK6j3pIk" }
+            ]
+      }
+    , { date: constructDate 2023 3 2
+      , entry:
+            [ FlowParagraph "Tom talks Rust - Episode 3"
+            , FlowParagraph "Getting started"
+            , FlowYouTube { id: "GddOvNtFB1E" }
+            ]
+      }
+    , { date: constructDate 2023 3 2
+      , entry:
+            [ FlowParagraph "Tom talks Rust - Episode 2"
+            , FlowParagraph "Overview and sales pitch"
+            , FlowYouTube { id: "ePbp_wco-w4" }
+            ]
+      }
+    , { date: constructDate 2023 3 2
+      , entry:
+            [ FlowParagraph "Tom talks Rust - Episode 1"
+            , FlowParagraph "Introduction and setting the scene"
+            , FlowYouTube { id: "0gOJVNH2Lzo" }
+            ]
+      }
+    , { date: constructDate 2022 6 15
       , entry:
             [ FlowParagraph "Learn Haskell Together! Episode 1 - Lambda Calculus"
             , FlowParagraph "Working through the Haskell Book (haskellbook.com) - starting with Chapter 1!"
