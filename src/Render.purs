@@ -8,7 +8,7 @@ import Concur.React.DOM as DOM
 import Concur.React.Props as Props
 import Control.Alt ((<|>))
 import Data.Array (take)
-import Data.Maybe (fromMaybe)
+import Data.Maybe (Maybe(..), fromMaybe)
 import Data.String (trim)
 import TomWellsOrg.Art as Art
 import TomWellsOrg.Blog (articles)
@@ -158,7 +158,8 @@ renderPage CV =
 renderPage Contact =
     DOM.div [ Props.className "ascii-art" ] [ Art.rainbow Art.contact ]
         <|> DOM.div []
-            [ DOM.div [] [ DOM.text "email $> tom(>>=)tomwells.org" ]
+            [ renderFlowComponent $ FlowImage { src: "/images/cv/its_me-midjourney.png", alt: "Its me!", caption: Just "It's me!" }
+            , DOM.div [] [ DOM.text "email $> tom(>>=)tomwells.org" ]
             , DOM.div []
                   [ DOM.text "linkedin $> "
                   , DOM.a

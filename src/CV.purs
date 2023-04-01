@@ -29,12 +29,8 @@ content =
     , FlowSection "Javascript"
     , FlowParagraph "Javascript displaced Python as my scripting language of choice around 2010. I'm super comfortable with nodejs, ES6, promises and the asynchronous programming paradigm - and find this complimenting my functional style completely. I spent many years with LiveScript (a functional language compiling down to Javascript - it's got an amazing prelude, and really simplies code) - but it seems to have lost it's traction, so I've gravitated back to plain old ES6 for plain old Javascript scripting. Although I might be tempted to use PureScript where possible!"
 
-    , FlowSection "Scala"
-    , FlowParagraph "Although I'm not a big fan of the clunk of Java in general (jar files, package management, classpaths, yuck) I really love the Scala language and have been following it for many years. SBT makes jar hell semi-tolerable (once you manage the learning curve), and once you're through the setup cost Scala is really a joy to use. Decent pattern matching, the Option type, a workable type system - it's not haskell or elm, but it's totally usable! Implicit magic is fantastic - it would be great to see proper discriminated unions one day, and also a few small niggles like function parameter tuple destructuring (and friends - e.g. case Some((a, b)) -> { blah } == e.g. the (a, b) is destructured. Not currently supported in 2.12."
-
-    , FlowSection "Elm Lang"
-    , FlowParagraph "Elm is a language for building web applications, nothing else. It really invented the 'redux' pattern which is now so popular in other Javascript based frameworks like React or Angular. However - because Elm is a specialist language it can provide a whole bunch of language support to keep it really simple and remove any ability for the developer to make mistakes in the pattern. It's a pure functional language - meaning absolutely no ability to generate side effects. The author (Evan Czaplicki) is obsessed with designing a language that is simple, easy to use and delightful for developers. It's an absolute pleasure to work with and it has a special place in my heart. Would I use it for real worky type stuff? Probably not. Would I use it for toy worky type stuff? Absolutely you betcha."
-    , FlowParagraph "What I love about ELM is that it punishes you for over thinking, or over structuring your solution. Literally code up feature by feature, and extend your solution as you go - refactoring is really easy. It really demonstrates how powerful a proper type system can be, and will certainly make anyone a better programmer in other languages."
+    , FlowSection "Rust"
+    , FlowParagraph "Rust is my super weapon of choice for most tasks. Its a difficult language, but has everything you need to produce high quality, high performance code that works first time. There is enough of a type system to also build fairly expressive solutions."
 
     , FlowSection "Haskell"
     , FlowParagraph "I'd say I'm an 'intermediate' Haskeller! I am pretty comfortable with the basics, including effects, monads, transformers, plus some more advanced stuff like lenses - however I'd say I have still quite a long way to go to fully grasp category theory and some of the more advanced type theory stuff I read about. However I absolutely love this language and it has become one of my primary tools I reach for."
@@ -50,6 +46,13 @@ content =
           { title: "This blog is written 100% in PureScript! (Primarily using a very cool project called purescript-concur, plus my very own very simple blog framework)"
           , link: "https://github.com/drshade/tomwells.org"
           }
+
+    , FlowSection "Scala"
+    , FlowParagraph "Although I'm not a big fan of the clunk of Java in general (jar files, package management, classpaths, yuck) I really love the Scala language and have been following it for many years. SBT makes jar hell semi-tolerable (once you manage the learning curve), and once you're through the setup cost Scala is really a joy to use. Decent pattern matching, the Option type, a workable type system - it's not haskell or elm, but it's totally usable! Implicit magic is fantastic - it would be great to see proper discriminated unions one day, and also a few small niggles like function parameter tuple destructuring (and friends - e.g. case Some((a, b)) -> { blah } == e.g. the (a, b) is destructured. Not currently supported in 2.12."
+
+    , FlowSection "Elm Lang"
+    , FlowParagraph "Elm is a language for building web applications, nothing else. It really invented the 'redux' pattern which is now so popular in other Javascript based frameworks like React or Angular. However - because Elm is a specialist language it can provide a whole bunch of language support to keep it really simple and remove any ability for the developer to make mistakes in the pattern. It's a pure functional language - meaning absolutely no ability to generate side effects. The author (Evan Czaplicki) is obsessed with designing a language that is simple, easy to use and delightful for developers. It's an absolute pleasure to work with and it has a special place in my heart. Would I use it for real worky type stuff? Probably not. Would I use it for toy worky type stuff? Absolutely you betcha."
+    , FlowParagraph "What I love about ELM is that it punishes you for over thinking, or over structuring your solution. Literally code up feature by feature, and extend your solution as you go - refactoring is really easy. It really demonstrates how powerful a proper type system can be, and will certainly make anyone a better programmer in other languages."
 
     , FlowSection "C, C++"
     , FlowParagraph "Although less frequently in recent years, I have been required to write a fair amount of C / C++ code - generally to be run within customized hardware security modules. It takes a couple days to get back into it, but I soon get into the groove and love the language (especially C - for it's simplicity). In my past in the early 2000s I wrote an absolute ton of pure C, back then in a pseudo object-oriented style (function pointers in structs ftw!)."
@@ -67,6 +70,15 @@ content =
 
     , FlowMajorHeader "My passion"
     , FlowParagraph "I love building stuff. And this love is not limited to work related projects alone - however I have only one mind so it's sometimes hard to seperate. See below a list of some fun weekend projects which have swung from small prototypes to sometimes full blown obsessions:"
+
+    , FlowSection "Galactica"
+    , FlowParagraph "Caught up in the hype of OpenAI and Generative AI - I wanted to contribute something to world and so built a command line interface and developer oriented tool, primarily for my own technical teams to start using. We think it's an easy way to trial and integrate GPT-4 into any workflow, and the start of a larger initiative to build a more substantial prompt engineering and development tool for more advanced use-cases."
+    , FlowLink { title: "Learn more and download Galactica here", link: "https://galacticai.co" }
+
+    , FlowSection "unlockable.life"
+    , FlowParagraph "A fun personal project dedicated to building and sharing unlockable collectibles on the blockchain (sort of like NFTs, but not tradeable, only collectible!)."
+    , FlowParagraph "Without getting into a rant about how I feel about NFTs, I wanted to demonstrate a nicer and more social way of how we could use the idea of collectibles the way web3 is intented to work."
+    , FlowLink { title: "A very crude prototype is still available to play with here", link: "https://unlck.xyz/" }
 
     , FlowSection "The Kraken!"
     , FlowParagraph "Over COVID I got really keen to solve realtime communications. Stuff like Zoom, Teams etc are great and work well - but they are missing the adhoc, water-cooler type conversations which are more casual and unplanned. Zoom & Teams both follow a 'room' type analogue where the rules are simple, you can only have 1 speaker and everyone listens to that same speaker, one at a time. This works well for traditional board-room meetings - but is terrible for less formal interactions such as those you might find at a dinner party, conference reception, waiting room, kids party, walking down the street and sitting on a bus."
