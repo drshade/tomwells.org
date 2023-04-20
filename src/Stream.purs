@@ -7,7 +7,14 @@ import TomWellsOrg.Functions (constructDate)
 
 content ∷ Array StreamEntry
 content =
-    [ { date: constructDate 2023 3 21
+    [ { date: constructDate 2023 3 2
+      , entry:
+            [ FlowMinorHeader "Featured on: AI as part of the developers toolkit"
+            , FlowParagraph "Co-Founder of Responsive Digital, Andrew McElroy sits down for a virtual fireside chat with Synthesis Chief Disruption Officer Tom Wells to have a developer centric look at AI as well as programming language Rust."
+            , FlowYouTube { id: "HWqkfflCZxQ" }
+            ]
+      }
+    , { date: constructDate 2023 3 21
       , entry:
             [ FlowMinorHeader "Galactica Demo #shorts #gpt"
             , FlowParagraph "Galactica is a fun developer tool I developed using OpenAI GPT-4 to bring the power closer to your shell"
