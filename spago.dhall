@@ -29,6 +29,7 @@ You can edit this file as you like.
   , "strings"
   , "transformers"
   , "tuples"
+  , "web-events"
   , "web-html"
   ]
 , packages = ./packages.dhall

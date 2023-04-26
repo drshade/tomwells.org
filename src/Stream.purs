@@ -7,7 +7,14 @@ import TomWellsOrg.Functions (constructDate)
 
 content ∷ Array StreamEntry
 content =
-    [ { date: constructDate 2023 3 2
+    [ { date: constructDate 2023 4 26
+      , entry:
+            [ FlowMinorHeader "A vision for building AI-driven applications"
+            , FlowParagraph "A fun discussion around the state of building AI-driven applications today (in the AutoGPT / BabyAGI sense) and a vision of what we could expect to see the developer experience looking like in the future."
+            , FlowYouTube { id: "9_tqXgfgE1o" }
+            ]
+      }
+    , { date: constructDate 2023 4 16
       , entry:
             [ FlowMinorHeader "Featured on: AI as part of the developers toolkit"
             , FlowParagraph "Co-Founder of Responsive Digital, Andrew McElroy sits down for a virtual fireside chat with Synthesis Chief Disruption Officer Tom Wells to have a developer centric look at AI as well as programming language Rust."

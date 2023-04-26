@@ -10,6 +10,8 @@ import Control.Alt ((<|>))
 import Data.Array (take)
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.String (trim)
+import Effect.Class (liftEffect)
+import Effect.Console (log)
 import TomWellsOrg.Art as Art
 import TomWellsOrg.Blog (articles)
 import TomWellsOrg.CV (content) as CV
@@ -17,6 +19,10 @@ import TomWellsOrg.Dapps.GuestMint.Main as GuestMint
 import TomWellsOrg.Domain (Article(..), FlowComponent(..), Language(..), Page(..), PageActions(..), StreamEntry)
 import TomWellsOrg.Functions (printDate, sortedByMostRecent)
 import TomWellsOrg.Stream (content) as Stream
+import Web.Event.Event (EventType(..))
+import Web.Event.EventTarget (addEventListener, eventListener)
+import Web.HTML (window)
+import Web.HTML.Window (scrollX, scrollY, toEventTarget)
 
 renderFlowComponent ∷ ∀ a. FlowComponent → Widget HTML a
 renderFlowComponent (FlowParagraph text) = DOM.p [] [ DOM.text text ]
