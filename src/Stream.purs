@@ -7,7 +7,14 @@ import TomWellsOrg.Functions (constructDate)
 
 content ∷ Array StreamEntry
 content =
-    [ { date: constructDate 2023 4 26
+    [ { date: constructDate 2023 8 4
+      , entry:
+            [ FlowMinorHeader "So yeah rust... Why you should consider Rust next!"
+            , FlowParagraph "A nice and quick whirl-wind around the Rust programming language, and some of the features that should put it high up on your priority list of languages to learn next!"
+            , FlowYouTube { id: "LeA10SZPxJg" }
+            ]
+      }
+    , { date: constructDate 2023 4 26
       , entry:
             [ FlowMinorHeader "A vision for building AI-driven applications"
             , FlowParagraph "A fun discussion around the state of building AI-driven applications today (in the AutoGPT / BabyAGI sense) and a vision of what we could expect to see the developer experience looking like in the future."
