@@ -3,7 +3,7 @@ version: 2.1
 defaults: &defaults
   working_directory: ~/tomwells.org
   docker:
-    - image: cimg/node:15.11-browsers
+    - image: cimg/node:22.1.0-browsers
       user: root
 
 jobs:
