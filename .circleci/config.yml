@@ -13,13 +13,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - platform-patch-1
+            - a-platform-patch-1
       - restore_cache:
           keys:
-            - npm-install-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
+            - a-npm-install-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
       - restore_cache:
           keys:
-            - build-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
+            - a-build-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
       - run:
           # Need to install a tool called sysconfcpus to overwrite the number of
           # reported cpus - which purescript compiler uses (circleci reports 32, but
@@ -35,7 +35,7 @@ jobs:
               rm -rf libsysconfcpus
             fi
       - save_cache:
-          key: platform-patch-1
+          key: a-platform-patch-1
           paths:
             - /usr/local/bin/sysconfcpus
             - /usr/local/lib/
@@ -49,13 +49,13 @@ jobs:
       - run:
           command: npm install --no-save
       - save_cache:
-          key: npm-install-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
+          key: a-npm-install-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
       - run:
           command: sysconfcpus -n 2 npm run build
       - save_cache:
-          key: build-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
+          key: a-build-{{ checksum "spago.dhall" }}-{{ checksum "packages.dhall" }}
           paths:
             - .spago
             - output
