@@ -15,7 +15,7 @@ data Route
     = BlogSummary
     | BlogArticle String
     | Stream
-    | Résumé
+    | Resume
     | Contact
     | Guestbook
     | NotFound
@@ -27,7 +27,7 @@ routes = root $ sum
     { "BlogSummary": path "blog" noArgs
     , "BlogArticle": path "blog" (string segment)
     , "Stream": noArgs
-    , "Résumé": path "cv" noArgs
+    , "Resume": path "cv" noArgs
     , "Contact": path "contact" noArgs
     , "Guestbook": path "guestbook" noArgs
     , "NotFound": path "notfound" noArgs
