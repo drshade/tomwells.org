@@ -16,14 +16,14 @@
   "author": "Tom Wells <tom@tomwells.org>",
   "license": "ISC",
   "devDependencies": {
+    "purescript": "^0.15.15",
+    "spago": "^0.21.0",
     "near-cli": "^3.2.0",
     "parcel": "^2.5.0",
     "process": "^0.11.10",
-    "purescript": "^0.15.4",
     "purs-tidy": "^0.9.2",
     "s3-deploy": "^1.4.0",
-    "serve": "^14.0.1",
-    "spago": "^0.20.9"
+    "serve": "^14.0.1"
   },
   "dependencies": {
     "near-api-js": "^0.44.2",

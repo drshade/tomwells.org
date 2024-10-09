@@ -7,7 +7,14 @@ import TomWellsOrg.Functions (constructDate)
 
 content ∷ Array StreamEntry
 content =
-    [ { date: constructDate 2023 8 4
+    [ { date: constructDate 2024 10 9
+      , entry:
+            [ FlowMinorHeader "A whirl around Parsec (a popular haskell parsing module)"
+            , FlowParagraph "Parsec is a swiss army knife for building parsers in haskell - it can be scary when first starting out but very simple once you get over the initial curve. In this session we take a stab at hacking our way through building a basic parser for a simple MUD like set of actions. This was an open and interactive session with a group of haskell-curious guys of various levels so we also spend some time discussion general haskell features too as questions arise!"
+            , FlowYouTube { id: "ZqjmKpWEi0I" }
+            ]
+      }
+    , { date: constructDate 2023 8 4
       , entry:
             [ FlowMinorHeader "So yeah rust... Why you should consider Rust next!"
             , FlowParagraph "A nice and quick whirl-wind around the Rust programming language, and some of the features that should put it high up on your priority list of languages to learn next!"
