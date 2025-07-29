@@ -165,18 +165,18 @@ renderPage Contact =
     DOM.div [ Props.className "ascii-art" ] [ Art.rainbow Art.contact ]
         <|> DOM.div []
             [ renderFlowComponent $ FlowImage { src: "/images/cv/its_me-midjourney.png", alt: "Its me!", caption: Just "It's me!" }
-            , DOM.div [] [ DOM.text "email $> tom(>>=)tomwells.org" ]
+            , DOM.div [] [ DOM.text "let email = (++) <$> Just \"tom\" <*> (pure \"@tom\" >>= \\x -> Just (x ++ \"wells.org\"))" ]
             , DOM.div []
-                  [ DOM.text "linkedin $> "
+                  [ DOM.text "let linkedin = "
                   , DOM.a
                         [ Props.href "https://www.linkedin.com/in/tomwells80/" ]
-                        [ DOM.text "https://www.linkedin.com/in/tomwells80/" ]
+                        [ DOM.text "\"https://www.linkedin.com/in/tomwells80/\"" ]
                   ]
             , DOM.div []
-                  [ DOM.text "youtube $> "
+                  [ DOM.text "let youtube = "
                   , DOM.a
                         [ Props.href "https://www.youtube.com/c/TomWells" ]
-                        [ DOM.text "https://www.youtube.com/c/TomWells" ]
+                        [ DOM.text "\"https://www.youtube.com/c/TomWells\"" ]
                   ]
             ]
 
