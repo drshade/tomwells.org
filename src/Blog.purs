@@ -15,7 +15,9 @@ tomwells =
 
 articles ∷ Array Article
 articles =
-    [ --imperative_is_jam
+    [ 
+  --  planets_free_monad
+  --, imperative_is_jam
       haskell_for_prototyping
     , its_just_a_monad
     , restful_in_peace
@@ -26,6 +28,12 @@ articles =
     , livescript_rocking_your_world
     , a_word_on_monads
     ]
+
+-- planets_free_monad :: Article
+-- planets_free_monad = Article
+--       {
+            
+--       }
 
 haskell_for_prototyping ∷ Article
 haskell_for_prototyping = Article
@@ -622,6 +630,33 @@ maternalgrandmother2 p =
             (\g -> return (g)))
 """
                 }
+          , FlowParagraph "This is much cleaner! The bind operator (>>=) takes care of all the ugly case handling for us. If either `mother p` or `mother m` returns Nothing, the entire expression returns Nothing. Otherwise, we get our granny wrapped in Just."
+          , FlowParagraph "But we can make this even cleaner using do notation, which is syntactic sugar for chaining monadic operations:"
+          , FlowSourceCode
+                { lang: Haskell
+                , body:
+                      """
+maternalgrandmother3 :: Person -> Maybe Person
+maternalgrandmother3 p = do
+    m <- mother p
+    g <- mother m
+    return g
+"""
+                }
+          , FlowParagraph "The do notation makes the code read almost like imperative code, but with all the safety of monadic composition. Each line extracts the value from the Maybe, and if any step fails (returns Nothing), the entire computation short-circuits to Nothing."
+          , FlowParagraph "Finally, we can also express this using Kleisli composition (>=>), which allows us to compose monadic functions directly:"
+          , FlowSourceCode
+                { lang: Haskell
+                , body:
+                      """
+import Control.Monad ((>=>))
+
+maternalgrandmother4 :: Person -> Maybe Person
+maternalgrandmother4 = mother >=> mother
+"""
+                }
+          , FlowParagraph "This is the most elegant solution! The Kleisli composition operator (>=>) lets us compose `mother` with itself, creating a function that goes directly from a person to their maternal grandmother. It's beautifully concise and captures the essence of what we're trying to do: apply the mother function twice in sequence."
+          , FlowParagraph "All three approaches demonstrate the power of monads: they abstract away the boilerplate of checking for Nothing at each step, allowing us to focus on the essential logic of our computation. Whether you prefer the explicit bind operations, the readable do notation, or the elegant Kleisli composition depends on your style and the complexity of your monadic chain."
           ]
     }
 
