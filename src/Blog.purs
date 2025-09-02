@@ -15,10 +15,10 @@ tomwells =
 
 articles ∷ Array Article
 articles =
-    [ 
+    [ json_schema_rant
   --  planets_free_monad
   --, imperative_is_jam
-      haskell_for_prototyping
+    , haskell_for_prototyping
     , its_just_a_monad
     , restful_in_peace
     , what_i_look_for_in_a_developer
@@ -28,6 +28,136 @@ articles =
     , livescript_rocking_your_world
     , a_word_on_monads
     ]
+
+json_schema_rant ∷ Article
+json_schema_rant = Article
+    { slug: "json-schema-rant"
+    , title: "Smart tools, dumb design choices"
+    , keywords: ["json schema", "mcp", "anthropic", "api design", "validation"]
+    , cover: { src: "/images/covers/code.png", alt: "code", caption: Nothing }
+    , author: tomwells
+    , date: constructDate 2025 9 2
+    , summary: "No summary"
+    , body:
+          [ FlowParagraph "While learning about building Agents, MCP, etc I've come across a few patterns which tingle my spidey-sense, such as:"
+          , FlowSourceCode
+                { lang: JavaScript
+                , body:
+                      """
+{
+    ...
+    "tools": [
+      {
+        "name": "get_weather",
+        "description": "Get the current weather in a given location",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "location": {
+              "type": "string",
+              "description": "The city and state, e.g. San Francisco, CA"
+            }
+          },
+          "required": ["location"]
+        }
+      }
+    ],
+    ...
+}
+"""
+                }
+          , FlowParagraph "This is a direct paste from the Anthropic documentation, specifically for defining tools available to the LLM for invocation. Unsurprisingly this schema is almost identical to the MCP specification for tool calling too (as MCP was really popularised by Anthropic)."
+          , FlowParagraph "On the surface this probably looks fine to most developers - but it reveals a fundamental problem with how the AI tooling ecosystem approaches API definition. Reinventing the wheel poorly."
+          
+          , FlowSection "The Core Problem"
+          , FlowParagraph "JSON is just a data format that doesn't implicitly support schema validation. As long as you get the syntax right (keys are strings, objects use curly brackets, etc.), you can produce compliant JSON. This simplicity might fool you into thinking that's all there is, leading to the temptation to invent your own schema conventions when you need validation - exactly what Anthropic has done with their \"input_schema\" approach."
+          , FlowParagraph "This ad-hoc approach creates immediate problems:"
+          
+          , FlowSection "Problem 1: Ambiguous Edge Cases"
+          , FlowParagraph "Basic questions become unanswerable: \"How do I define a function with no arguments?\" Do I omit the \"input_schema\" property entirely? Include it as \"type\": \"empty\"? Use \"type\": \"object\" with empty \"properties\": {}? The specification doesn't clarify, and neither do the implementations. This ambiguity breeds compatibility issues as different tools make different assumptions."
+          
+          , FlowSection "Problem 2: Primitive Constraints"
+          , FlowParagraph "The \"required\": [...] array is too primitive to handle even simple real-world cases. Consider wanting to support weather lookup by either city or state:"
+          , FlowSourceCode
+                { lang: JavaScript
+                , body:
+                      """
+{ "state":"CA" } 
+or 
+{"city":"San Francisco"}
+"""
+                }
+          , FlowParagraph "This \"either A or B\" pattern cannot be properly expressed using Anthropic's subset. You're forced into weak workarounds like making both fields optional, losing the constraint that exactly one must be provided."
+          
+          , FlowSection "The Solution Already Exists"
+          , FlowParagraph "But! There is a standard called \"JSON Schema\" (https://json-schema.org/), which absolutely does support this:"
+          , FlowSourceCode
+                { lang: JavaScript
+                , body:
+                      """
+{
+    "oneOf": [
+        {
+            "type": "object",
+            "properties": { "city": { "type": "string" } },
+            "required": ["city"]
+        },
+        {
+            "type": "object", 
+            "properties": { "state": { "type": "string" } },
+            "required": ["state"]
+        }
+    ]
+}
+"""
+                }
+          
+          , FlowSection "Rich Validation Features"
+          , FlowParagraph "Plus a bunch of other important features such as validation too - e.g.:"
+          , FlowSourceCode
+                { lang: JavaScript
+                , body:
+                      """
+{
+    "type": "string",
+    "pattern": "^[A-Z]{2}$",
+    "description": "Two-letter US state code (e.g., CA, NY)"
+}
+"""
+                }
+          , FlowParagraph "or"
+          , FlowSourceCode
+                { lang: JavaScript
+                , body:
+                      """
+{
+    "type": "string",
+    "minLength": 2,
+    "maxLength": 2,
+    "pattern": "^[A-Z]+$",
+    "description": "Two-letter state code"
+}
+"""
+                }
+          , FlowParagraph "or"
+          , FlowSourceCode
+                { lang: JavaScript
+                , body:
+                      """
+{
+    "type": "string",
+    "enum": ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"],
+    "description": "Valid US state abbreviation"
+}
+"""
+                }
+          , FlowParagraph "All of the above are much much better than simply hoping that the LLM will specify the right format. Not only that - but you are actually self-documenting the field too and being very specific in what will be accepted."
+          
+          , FlowSection "The Frustrating Reality"
+          , FlowParagraph "The frustration here is that neither the Anthropic API nor most MCP clients currently support these JSON Schema features. Whether this is due to implementation complexity, compatibility concerns, or oversight, the result is the same - we're stuck with primitive subsets that can't express basic patterns. We are doomed to re-invent - and probably will eventually end up with JSON Schema (or something like it) being supported by these APIs - as we slowly re-learn all the lessons from our past."
+          , FlowParagraph "/rant"
+          ]
+    }
 
 -- planets_free_monad :: Article
 -- planets_free_monad = Article
