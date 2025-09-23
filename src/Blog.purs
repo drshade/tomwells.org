@@ -15,7 +15,8 @@ tomwells =
 
 articles ∷ Array Article
 articles =
-    [ json_schema_rant
+    [ agentic_dev_methodology 
+    , json_schema_rant
   --  planets_free_monad
   --, imperative_is_jam
     , haskell_for_prototyping
@@ -28,6 +29,91 @@ articles =
     , livescript_rocking_your_world
     , a_word_on_monads
     ]
+
+agentic_dev_methodology :: Article
+agentic_dev_methodology = Article
+    { slug: "agentic-engineering-discipline"
+    , title: "Engineering Discipline for the Agent Era"
+    , keywords: ["methodology", "agile", "agentic development", "ai-assisted programming"]
+    , cover: { src: "/images/covers/code.png", alt: "code", caption: Nothing }
+    , author: tomwells
+    , date: constructDate 2025 9 23
+    , summary: "No summary"
+    , body:
+          [ FlowParagraph "As a technology leader working for a software engineering company, it's becoming increasingly obvious that we need to revamp how we approach our work given the new agentic tools at our disposal. The old methodologies don't account for the unique challenges of human-agent collaboration in code generation."
+
+          , FlowParagraph "I've observed teams across various maturity levels of tool adoption, from complete beginners to advanced users. What's clear is that without explicit methodology, teams either get burned by unpredictable agent behavior or fail to leverage the real potential of these tools. Through trial and error, I've developed a framework for maintaining high productivity while retaining ownership over code that makes it to production."
+          
+          , FlowParagraph "This article outlines the core principles and practical approaches that work in practice."
+
+          , FlowSection "The Problem: Agent Freedom Creates Unpredictable Outcomes"
+          , FlowParagraph "Most teams start with agentic tools by giving agents maximum freedom. The results are predictably problematic:"
+          , FlowSourceCode
+                { lang: Pseudo
+                , body: 
+                      "> build me an app that makes applying for a mortgage easy"
+                }
+          , FlowParagraph "This approach leads to throwaway code, architectural decisions you didn't intend, and systems that feel foreign in your codebase."
+          , FlowParagraph "On the flip side, teams that get burned by this often overcorrect:"
+          , FlowSourceCode
+                { lang: Pseudo
+                , body: 
+                      """
+> update src/Component/Utils.hs to include a function with signature 
+sum :: [Int] -> Int that recursively adds up the integers in the list 
+provided. An empty list should result in 0.
+"""
+                }
+          , FlowParagraph "While safe, this approach treats agents like smart autocomplete and misses their real potential."
+          , FlowSection "A Framework: The Design × Implementation Matrix"
+          , FlowParagraph "The key insight is that agent autonomy isn't a single dimension. We need to think across at least two dimensions: Design × Implementation."
+          , FlowImage $ { src: "/images/articles/agentic_dev_methodology/dimensions.jpeg", alt: "Dimensions of Agentic Freedom", caption: Just "Dimensions of Agentic Freedom (Design ⨯ Implementation)" }          
+          , FlowBullets
+              { start: "Plotting our examples:"
+              , points:
+                      [ "The mortgage app sits in the upper right (maximum freedom, maximum chaos)"
+                      , "The Haskell function sits in the lower left (minimal freedom, minimal leverage)"
+                      ]
+              }
+          , FlowSection "High-risk Quadrants"
+          , FlowParagraph "Upper Right: Free to Design + Free to Implement -> This is where most teams start. Maximum agent autonomy means maximum unpredictability. The mortgage example demonstrates the core problem - the agent might choose completely different tech stacks, architectures, or business logic than intended. Code tends toward throwaway quality and feels disconnected from your existing systems."
+          , FlowParagraph "Lower Left: Constrained Design + Constrained Implementation -> This is traditional programming with agents as smart autocomplete. Completely safe but severely limited leverage of the agent's potential. Teams that get burned in the upper right often retreat here permanently."
+          
+          , FlowSection "Productive Quadrants"
+          , FlowParagraph "Upper Left: Constrained Design + Free to Implement -> The sweet spot for most development work. Developers define interfaces, function signatures, and architectural constraints. Agents figure out how to implement efficiently within those boundaries. Code remains fully understandable and developers retain ownership of system design."
+          , FlowParagraph "Lower Right: Free to Design + Constrained Implementation -> Interesting territory where agents explore alternative designs within strict implementation boundaries. Most useful for prototyping or architecture exploration in early stages of software projects, where you want creative input but within known technical constraints."
+
+          , FlowSection "The Compounding Error Problem"
+          , FlowParagraph "Multi-step problems reveal another critical issue: error compounding when agents hand off to other agents. Each handoff introduces compression and decompression of context, losing information and amplifying misunderstandings."
+          , FlowParagraph "The pattern human→agent→agent→human creates a telephone game effect. Errors and misassumptions compound rather than being caught early. Better to maintain human→agent→human cycles, staying in the loop to catch issues before they cascade."
+
+          , FlowSection "Context Management"
+          , FlowParagraph "Agents perform differently based on the scope of codebase context they receive. Too much context leads to unintended dependencies, optimization for irrelevant patterns, and code that couples to parts of the system outside the intended scope. Too little context results in code that breaks integration points, violates existing conventions, or duplicates functionality that already exists elsewhere."
+          , FlowParagraph "Unlike experienced developers who intuitively filter contextual information based on relevance, agents treat all provided context with equal weight. This means developers must become explicit about context boundaries when defining each scope of work."
+          , FlowParagraph "Effective context management requires specifying which files to include as reference, which APIs are relevant, which patterns to follow, and which architectural constraints apply. Done properly, this increases the probability that agents generate code that integrates cleanly while avoiding unnecessary coupling to unrelated parts of the codebase."
+
+          , FlowSection "TL;DR - Practical Implementation"
+          , FlowParagraph "Working with agents requires a fundamentally different approach to engineering methodology. Here's what works in practice:"
+          , FlowBullets
+                { start: "Control & Boundaries"
+                , points:
+                      [ "Choose your quadrant deliberately: either Human-owned Design with Agent-owned Implementation, or Agent-owned Design with Human-owned Implementation Constraints"
+                      , "Minimize Agent-to-Agent handoffs to prevent error compounding"
+                      , "Maintain explicit scope boundaries for each agent session"
+                      ]
+                }
+          , FlowBullets
+                { start: "Context Management"
+                , points:
+                      [ "Implement spec-driven development - manage context and design through explicit spec documents (e.g. new_feature.md) committed to the codebase"
+                      , "Use progressive disclosure - start with minimal context and add incrementally as necessary"
+                      , "Explicitly manage context on a per-increment basis (feature, epic, commit level)"
+                      ]
+                }
+          , FlowParagraph "The key insight is that methodology matters more than the tools. Teams that develop explicit processes for human-agent collaboration consistently outperform those that treat agents as magic black boxes."
+          ]
+    }
+      
 
 json_schema_rant ∷ Article
 json_schema_rant = Article

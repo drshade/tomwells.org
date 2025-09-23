@@ -18,17 +18,17 @@
   "devDependencies": {
     "buffer": "^6.0.3",
     "near-cli": "^3.2.0",
-    "parcel": "^2.12.0",
+    "parcel": "^2.16.0",
     "process": "^0.11.10",
     "purescript": "^0.15.15",
     "purs-tidy": "^0.11.0",
     "s3-deploy": "^1.4.0",
-    "serve": "^14.2.3",
+    "serve": "^14.2.5",
     "spago": "^0.21.0"
   },
   "dependencies": {
     "near-api-js": "^0.44.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }
