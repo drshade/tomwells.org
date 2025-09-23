@@ -47,7 +47,7 @@ agentic_dev_methodology = Article
           , FlowParagraph "This article outlines the core principles and practical approaches that work for me in practice."
 
           , FlowSection "The Problem: Agent Freedom Creates Unpredictable Outcomes"
-          , FlowParagraph "Most teams start with agentic tools by giving agents maximum freedom. The results are predictably problematic:"
+          , FlowParagraph "Most teams start with agentic tools by giving agents maximum freedom. I think this approach is called YOLO'ing and the results are predictably problematic:"
           , FlowSourceCode
                 { lang: Pseudo
                 , body: 
