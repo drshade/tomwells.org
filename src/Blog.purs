@@ -42,9 +42,9 @@ agentic_dev_methodology = Article
     , body:
           [ FlowParagraph "As a technology leader working for a software engineering company, it's becoming increasingly obvious that we need to revamp how we approach our work given the new agentic tools at our disposal. The old methodologies don't account for the unique challenges of human-agent collaboration in code generation."
 
-          , FlowParagraph "I've observed teams across various maturity levels of tool adoption, from complete beginners to advanced users. What's clear is that without explicit methodology, teams either get burned by unpredictable agent behavior or fail to leverage the real potential of these tools. Through trial and error, I've developed a framework for maintaining high productivity while retaining ownership over code that makes it to production."
+          , FlowParagraph "I've observed teams across various maturity levels of tool adoption, from complete beginners to advanced users. What's clear is that without explicit methodology, teams either get burned by unpredictable agent behavior or fail to leverage the real potential of these tools. Through trial and error, I've developed my own approach to maintaining high productivity while retaining ownership over code that still 'feels' like it's mine."
           
-          , FlowParagraph "This article outlines the core principles and practical approaches that work in practice."
+          , FlowParagraph "This article outlines the core principles and practical approaches that work for me in practice."
 
           , FlowSection "The Problem: Agent Freedom Creates Unpredictable Outcomes"
           , FlowParagraph "Most teams start with agentic tools by giving agents maximum freedom. The results are predictably problematic:"
