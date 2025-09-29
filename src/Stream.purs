@@ -7,7 +7,14 @@ import TomWellsOrg.Functions (constructDate)
 
 content ∷ Array StreamEntry
 content =
-    [ { date: constructDate 2024 10 9
+    [ { date: constructDate 2025 09 29
+      , entry:
+            [ FlowMinorHeader "Type Safety and Composition of Agents"
+            , FlowParagraph "A technical session presented to my team around building better Agents through leveraging type safety & composition. Familiar ideas to to functional programmers, and now through the lense of designing Agents."
+            , FlowYouTube { id: "3O_OfNDFa_Q" }
+            ]
+      }
+    , { date: constructDate 2024 10 9
       , entry:
             [ FlowMinorHeader "A whirl around Parsec (a popular haskell parsing module)"
             , FlowParagraph "Parsec is a swiss army knife for building parsers in haskell - it can be scary when first starting out but very simple once you get over the initial curve. In this session we take a stab at hacking our way through building a basic parser for a simple MUD like set of actions. This was an open and interactive session with a group of haskell-curious guys of various levels so we also spend some time discussion general haskell features too as questions arise!"
