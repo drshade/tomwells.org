@@ -7,7 +7,7 @@ import TomWellsOrg.Functions (constructDate)
 
 content ∷ Array StreamEntry
 content =
-    [ { date: constructDate 2025 09 29
+    [ { date: constructDate 2025 9 29
       , entry:
             [ FlowMinorHeader "Type Safety and Composition of Agents"
             , FlowParagraph "A technical session presented to my team around building better Agents through leveraging type safety & composition. Familiar ideas to to functional programmers, and now through the lense of designing Agents."
