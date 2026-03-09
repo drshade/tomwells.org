@@ -12,7 +12,7 @@ content =
             [ FlowMinorHeader "Agents Are Architecturally Blind - Effect Systems might help?"
             , FlowParagraph "As AI agents write more of our code, they silently erode the architectural layers we design. In this tech team talk, we explore how effect systems can make side effects visible in your codebase, turning your compiler into an architectural enforcer that keeps agents (and humans) on track, even over a multi-year project lifetime."
             , FlowLink { title: "Slides available here", link: "https://github.com/drshade/talk_agentic_effect_systems" }
-            , FlowYouTube { id: "CZCnICxzqA8" }
+            , FlowYouTube { id: "JaLAvoyjwoQ" }
             ]
       } 
     , { date: constructDate 2025 9 29
