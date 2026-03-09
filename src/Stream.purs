@@ -7,7 +7,15 @@ import TomWellsOrg.Functions (constructDate)
 
 content ∷ Array StreamEntry
 content =
-    [ { date: constructDate 2025 9 29
+    [ { date: constructDate 2026 3 9
+      , entry:
+            [ FlowMinorHeader "Agents Are Architecturally Blind - Effect Systems might help?"
+            , FlowParagraph "As AI agents write more of our code, they silently erode the architectural layers we design. In this tech team talk, we explore how effect systems can make side effects visible in your codebase, turning your compiler into an architectural enforcer that keeps agents (and humans) on track, even over a multi-year project lifetime."
+            , FlowLink { title: "Slides available here", link: "https://github.com/drshade/talk_agentic_effect_systems" }
+            , FlowYouTube { id: "CZCnICxzqA8" }
+            ]
+      } 
+    , { date: constructDate 2025 9 29
       , entry:
             [ FlowMinorHeader "Type Safety and Composition of Agents"
             , FlowParagraph "A technical session presented to my team around building better Agents through leveraging type safety & composition. Familiar ideas to to functional programmers, and now through the lense of designing Agents."
