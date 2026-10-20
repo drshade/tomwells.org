@@ -87,7 +87,7 @@ I build software with teams of AI agents, and the tooling and process that make 
 #entry("ASML", "Core configuration management, 2025")[
   Rebuilt ASML's core configuration management system, which captures and tracks configuration from sale through design and blueprint to factory and build. A hugely complex operation: a 14-month deep dive unpacking the full process while rebuilding it in flight, with the business continuing to run. #link("https://www.asml.com")[asml.com]
 ]
-#entry("Dynata", "First generative AI project, 2020")[
+#entry("Dynata", "Generative survey programming, 2020")[
   Programmatic survey generation for large retailers from textual client specifications, for the market research company, on GPT-2 and then GPT-3 with early access from OpenAI before its public launch, well before ChatGPT. Hugely successful. #link("https://www.dynata.com")[dynata.com]
 ]
 #entry("HALOdot", "Tap-on-phone payments kernel, 2019")[
