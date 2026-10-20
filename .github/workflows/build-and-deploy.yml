@@ -1,0 +1,83 @@
+name: build-and-deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  TYPST_VERSION: 0.15.1
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # The purescript npm binary expects libtinfo.so.5; modern Ubuntu ships .6.
+      - name: Symlink libtinfo.so.5
+        run: sudo ln -sf /usr/lib/x86_64-linux-gnu/libtinfo.so.6 /usr/lib/x86_64-linux-gnu/libtinfo.so.5
+
+      - name: Install typst
+        run: |
+          curl -sSL -o typst.tar.xz "https://github.com/typst/typst/releases/download/v${TYPST_VERSION}/typst-x86_64-unknown-linux-musl.tar.xz"
+          tar -xJf typst.tar.xz
+          sudo mv typst-x86_64-unknown-linux-musl/typst /usr/local/bin/typst
+          rm -rf typst.tar.xz typst-x86_64-unknown-linux-musl
+          typst --version
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npx purs --version
+          npx spago version
+
+      - name: Cache PureScript build
+        uses: actions/cache@v4
+        with:
+          path: |
+            .spago
+            output
+          key: purescript-${{ hashFiles('spago.dhall', 'packages.dhall') }}-${{ hashFiles('src/**/*.purs', 'test/**/*.purs') }}
+          restore-keys: |
+            purescript-${{ hashFiles('spago.dhall', 'packages.dhall') }}-
+
+      - name: Build PureScript
+        run: npm run build
+
+      - name: Build CV PDF
+        run: npm run cv
+
+      - name: Bundle
+        run: npm run bundle
+
+      - name: Upload site bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
+
+      - name: Deploy to S3 and invalidate CloudFront
+        if: github.event_name != 'pull_request' && env.AWS_ACCESS_KEY_ID != ''
+        run: npm run deploy
+
+      - name: Deploy skipped
+        if: github.event_name != 'pull_request' && env.AWS_ACCESS_KEY_ID == ''
+        run: echo "::warning::AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY secrets are not set; build succeeded but nothing was deployed."

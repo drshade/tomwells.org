@@ -10,8 +10,8 @@ Build: `npm run cv` → `public/cv/tom-wells.pdf` (gitignored).
 Iterate: `npm run cv:watch` and open the PDF in a viewer that auto-reloads.
 
 The document asserts it is exactly two pages; the build fails if it drifts.
-CI installs the pinned typst version and runs `npm run cv` before `npm run bundle`,
-so the PDF ships with the site at `/cv/tom-wells.pdf`.
+GitHub Actions (`.github/workflows/build-and-deploy.yml`) installs the pinned typst version
+and runs `npm run cv` before `npm run bundle`, so the PDF ships with the site at `/cv/tom-wells.pdf`.
 
 The contribution calendar under "Throughput" is drawn from `assets/contributions.json`.
 Refresh it with `cv/scripts/fetch-contributions.sh` (needs `gh auth login`) and commit the result.
