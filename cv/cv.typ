@@ -4,6 +4,8 @@
 #import "style.typ": *
 #show: cv
 
+#let gh = json("assets/contributions.json")
+
 #header(
   "Tom Wells",
   "Co-founder & Chief Technology Officer, Synthesis Software Technologies",
@@ -55,9 +57,9 @@ I build software with teams of AI agents, and the tooling and process that make 
 ]
 #v(4pt)
 #strength("Throughput")[
-  4,800+ GitHub contributions in the past twelve months across public and private repositories, including four actively maintained open source libraries and contributions to many, many more.
+  #thousands(calc.floor(gh.total / 100) * 100)+ GitHub contributions in the past twelve months across public and private repositories, including four actively maintained open source libraries and contributions to many, many more.
   #v(5pt)
-  #contributions(json("assets/contributions.json"))
+  #contributions(gh)
 ]
 
 #section("Technical strengths")

@@ -14,4 +14,7 @@ GitHub Actions (`.github/workflows/build-and-deploy.yml`) installs the pinned ty
 and runs `npm run cv` before `npm run bundle`, so the PDF ships with the site at `/cv/tom-wells.pdf`.
 
 The contribution calendar under "Throughput" is drawn from `assets/contributions.json`.
-Refresh it with `cv/scripts/fetch-contributions.sh` (needs `gh auth login`) and commit the result.
+Refresh it locally with `cv/scripts/fetch-contributions.sh` (needs `gh auth login`). CI refreshes it
+automatically on every build when the `CONTRIBUTIONS_TOKEN` secret (a classic PAT with only
+`read:user`) is set, and a weekly schedule redeploys the site so the calendar never goes stale.
+The committed file is the fallback when the token is absent or the fetch fails.
