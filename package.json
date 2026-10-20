@@ -9,9 +9,11 @@
     "clean": "rm -rf output node_modules dist .parcel-cache .psci_modules .spago ",
     "format": "purs-tidy format-in-place -cr 'src/**/*.purs' 'test/**/*.purs'",
     "build": "spago build",
-    "bundle": "parcel build --no-scope-hoist public/index.html public/favicon.ico public/images/*.* public/images/**/*.* public/images/**/**/*.*",
-    "deploy": "s3-deploy './dist/**'  --distId E2PGG8VSI8PKOT --invalidate '/' --cwd './dist/' --region eu-west-1 --bucket www.tomwells.org --deleteRemoved",
-    "serve": "parcel serve public/index.html public/favicon.ico public/images/*.* public/images/**/*.* public/images/**/**/*.* --open"
+    "cv": "mkdir -p public/cv && typst compile --font-path cv/fonts cv/cv.typ public/cv/tom-wells.pdf",
+    "cv:watch": "mkdir -p public/cv && typst watch --font-path cv/fonts cv/cv.typ public/cv/tom-wells.pdf",
+    "bundle": "parcel build --no-scope-hoist public/index.html public/favicon.ico public/cv/*.pdf public/images/*.* public/images/**/*.* public/images/**/**/*.*",
+    "deploy": "s3-deploy './dist/**'  --distId E2PGG8VSI8PKOT --invalidate '/ /cv/*' --cwd './dist/' --region eu-west-1 --bucket www.tomwells.org --deleteRemoved",
+    "serve": "parcel serve public/index.html public/favicon.ico public/cv/*.pdf public/images/*.* public/images/**/*.* public/images/**/**/*.* --open"
   },
   "author": "Tom Wells <tom@tomwells.org>",
   "license": "ISC",
